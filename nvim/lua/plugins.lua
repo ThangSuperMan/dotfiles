@@ -13,7 +13,8 @@ return require('packer').startup(function()
   use 'alvan/vim-closetag'
   use 'jiangmiao/auto-pairs'
   use 'tpope/vim-surround'
-  use 'ruanyl/vim-gh-line'
+  use 'tpope/vim-fugitive'
+  use 'tpope/vim-rhubarb'
   use 'nvim-lualine/lualine.nvim'
   use {"akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
   require("toggleterm").setup()
