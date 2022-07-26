@@ -60,10 +60,13 @@ local opts = { noremap = true }
 keymap('n', 'ss', ':split<Return><C-w>w', opts)
 keymap('n', 'sv', ':vsplit<Return><C-w>w', opts)
 
+-- turn spelling off or on
+keymap('n', ',s', ':setlocal spell!<Cr>', opts)
+
+keymap('i', '<c-l>', '<C-o>A', opts)
+
 -- Turn off the highlight on search
 keymap('n', '<Esc><Esc>', ':set nohlsearch<CR>', opts)
-  
-keymap('n', '<S-t>', ':NvimTreeToggle<CR>', opts)
 
 -- Move to the start/end of current line
 keymap('n', 'H', '^', opts)
@@ -94,15 +97,12 @@ keymap('n', ';r', "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
 keymap("n", "<Tab>", ":bnext<CR>", opts)
 keymap("n", "<S-Tab>", ":bprevious<CR>", opts)
 
--- Nvim Tree (explore files)
-keymap('n', '<C-f>', ':NvimTreeToggle<CR>', opts)
-
 keymap('n', '<leader>h', '<C-w>h', {})
 keymap('n', '<leader>l', '<C-w>l', {})
 
 -- Move the selected line
-keymap('v', 'J', ":m '>+1<CR>gv=gv", opts)
-keymap('v', 'K', ":m '>-2<CR>gv=gv", opts)
+-- keymap('v', 'J', ":m '>+1<CR>gv=gv", opts)
+-- keymap('v', 'K', ":m '>-2<CR>gv=gv", opts)
 
 -- Searching center window for the target thing
 keymap('n', 'n', 'nzzzv', opts)
@@ -344,7 +344,7 @@ nvim_tree.setup {
   },
 }
 
-keymap('n', ',t', ':NvimTreeToggle<CR>', { noremap = true })
+keymap('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true })
 
 -- Saga 
 local saga = require "lspsaga"
@@ -360,7 +360,7 @@ require'nvim-treesitter.configs'.setup {
     disable = {},
   },
 	indent = {
-    enable = false,
+    enable = true,
     disable = {},
   },
  ensure_installed = {
@@ -383,95 +383,106 @@ parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
 require('nvim-ts-autotag').setup()
 
 -- Setup nvim-cmp.
-local cmp = require'cmp'
+vim.completeopt = "menu,menuone,noselect,noinsert"
 
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      -- For `vsnip` user.
-      -- vim.fn["vsnip#anonymous"](args.body)
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0
+             and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s")
+             == nil
+end
 
-      -- For `luasnip` user.
-      -- require('luasnip').lsp_expand(args.body)
+  -- Setup nvim-cmp.
+	
+	  local cmp = require'cmp'
+	local lspkind = require'lspkind'
 
-      -- For `ultisnips` user.
-      -- vim.fn["UltiSnips#Anon"](args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-  }),
-  sources = {
-    { name = 'nvim_lsp' },
-
-    -- For vsnip user.
-    -- { name = 'vsnip' },
-
-    -- For luasnip user.
-    -- { name = 'luasnip' },
-
-    -- For ultisnips user.
-    -- { name = 'ultisnips' },
-
-    { name = 'buffer' },
-  }
-})
-
--- Icons for cmp
-require('lspkind').init({
-    -- DEPRECATED (use mode instead): enables text annotations
-    --
-    -- default: true
-    -- with_text = true,
-
-    -- defines how annotations are shown
-    -- default: symbol
-    -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
-    -- mode = 'symbol_text',
-    mode = 'symbol',
-
-    -- default symbol map
-    -- can be either 'default' (requires nerd-fonts font) or
-    -- 'codicons' for codicon preset (requires vscode-codicons font)
-    --
-    -- default: 'default'
-    preset = 'codicons',
-
-    -- override preset symbols
-    --
-    -- default: {}
-    symbol_map = {
-      Text = "",
-      Method = "",
-      Function = "",
-      Constructor = "",
-      Field = "ﰠ",
-      Variable = "",
-      Class = "ﴯ",
-      Interface = "",
-      Module = "",
-      Property = "ﰠ",
-      Unit = "塞",
-      Value = "",
-      Enum = "",
-      Keyword = "",
-      Snippet = "",
-      Color = "",
-      File = "",
-      Reference = "",
-      Folder = "",
-      EnumMember = "",
-      Constant = "",
-      Struct = "פּ",
-      Event = "",
-      Operator = "",
-      TypeParameter = ""
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      end,
     },
-})
+    window = {
+      -- completion = cmp.config.window.bordered(),
+      -- documentation = cmp.config.window.bordered(),
+    },
+		formatting = {
+			format = lspkind.cmp_format({
+      with_text = false,
+      maxwidth = 50,
+      menu = {buffer = "[Buf]", nvim_lsp = "[LSP]", dictionary = "[Dict]", vsnip = "[Vsnip]"}
+    })
+  },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-m>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+			["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif vim.fn["vsnip#available"]() == 1 then
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+      end
+    end, {"i", "s"}),
+
+    ["<S-Tab>"] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+        feedkey("<Plug>(vsnip-jump-prev)", "")
+      end
+    end, {"i", "s"})
+   }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'vsnip' }, -- For vsnip users.
+      -- { name = 'luasnip' }, -- For luasnip users.
+      -- { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'snippy' }, -- For snippy users.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  -- Set configuration for specific filetype.
+  cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
+
 
 local lspkind = require('lspkind')
 cmp.setup {
