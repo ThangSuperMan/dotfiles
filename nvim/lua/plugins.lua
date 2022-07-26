@@ -15,6 +15,17 @@ return require('packer').startup(function()
   use 'tpope/vim-surround'
   use 'ruanyl/vim-gh-line'
   use 'nvim-lualine/lualine.nvim'
+  use {"akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
+  require("toggleterm").setup()
+  end}
+
+	use 'ldelossa/buffertag'
+  use 'windwp/nvim-ts-autotag'
+
+	use 'kyazdani42/nvim-web-devicons' 
+	use 'kyazdani42/nvim-tree.lua'
+
+  -- File explores 
 
   -- Signature
   use 'ray-x/lsp_signature.nvim'
@@ -53,6 +64,12 @@ return require('packer').startup(function()
   use 'nvim-telescope/telescope.nvim'
 
   use 'onsails/lspkind-nvim'
+   use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+   }
 
 
   -- language server
@@ -68,6 +85,9 @@ return require('packer').startup(function()
 
   -- themes
   use 'sainnhe/everforest'
+
+	use 'tweekmonster/startuptime.vim'
+
 
   -- copilot
   -- Plug 'github/copilot.vim'
