@@ -1,0 +1,108 @@
+{
+	"Make center with position absolute": {
+		"prefix": "abs-center",
+		"body": [
+			"top: 50%;",
+			"left: 50%;",
+			"transform: translate(-50%, -50%);",
+			"position: absolute;",
+			""
+		],
+		"description": "Make center with position absolute"
+	},
+	"Absolute top left": {
+		"prefix": "abs-top-left",
+		"body": ["position: absolute;", "top: 0;", "left: 0;"],
+		"description": "Absolute top left"
+	},
+
+	"center horizontol": {
+		"prefix": "abs-centerx",
+		"body": [
+			"left: 50%;",
+			"transform: translateX(-50%);",
+			"position: absolute;"
+		],
+		"description": "center horizontol"
+	},
+
+	"center vertical": {
+		"prefix": "abs-centery",
+		"body": [
+			"top: 50%;",
+			"transform: translateY(-50%);",
+			"position: absolute;"
+		],
+		"description": "center vertical"
+	},
+
+	"Make center in flexbox": {
+		"prefix": "flex-center",
+		"body": [
+			"display: flex;",
+			"align-items: center;",
+			"justify-content: center;"
+		],
+		"description": "Make center in flexbox"
+	},
+
+	"Make center in grid": {
+		"prefix": "grid-center",
+		"body": ["display: grid;", "place-items: center;"],
+		"description": "Make center in grid"
+	},
+
+	"Make square": {
+		"prefix": "square",
+		"body": ["width: ${1:200px};", "height: ${1:200px};"],
+		"description": "Make square"
+	},
+
+	"Make circle": {
+		"prefix": "circle",
+		"body": ["width: $1;", "height: $1;", "border-radius: 100rem;"],
+		"description": "Make circle"
+	},
+
+	"Make width full": {
+		"prefix": "wfull",
+		"body": ["width: 100%;"],
+		"description": "Make width full"
+	},
+
+	"Make height full": {
+		"prefix": "hfull",
+		"body": ["height: 100%;"],
+		"description": "Make height full"
+	},
+
+	"Adding background": {
+		"prefix": "bg",
+		"body": ["background-color: $1;"],
+		"description": "Adding background"
+	},
+
+	"Image cover": {
+		"prefix": "img-cover",
+		"body": ["width: 100%;", "height: 100%;", "object-fit: cover;"],
+		"description": "Image cover"
+	},
+
+	"Media screen and min width 768px": {
+		"prefix": "@768",
+		"body": ["@media screen and (min-width: 768px) {", "  $1", "} "],
+		"description": "Media screen and min width 768px"
+	},
+
+	"Media screen and min width 1024px": {
+		"prefix": "@1024",
+		"body": ["@media screen and (min-width: 1024px) {", "  $1", "} "],
+		"description": "Media screen and min width 1024px"
+	},
+
+	"Media screen and min width 1280": {
+		"prefix": "@1280",
+		"body": ["@media screen and (min-width: 1280px) {", "  $1", "} "],
+		"description": "Media screen and min width 1280px"
+	}
+}
