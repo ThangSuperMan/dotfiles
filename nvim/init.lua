@@ -24,7 +24,7 @@ opt.termguicolors = true
 opt.ignorecase = true
 opt.smartcase = true
 opt.termguicolors = true
-opt.number = true
+-- opt.number = true
 opt.relativenumber = true
 -- opt.cursorline = true
 opt.smarttab = true
@@ -349,7 +349,7 @@ keymap('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true })
 -- Saga 
 local saga = require "lspsaga"
 
-keymap('n', '<C-j>', "<Cmd>Lspsaga diagnostic_jump_next<CR>", opts)
+keymap('n', '<C-e>', "<Cmd>Lspsaga diagnostic_jump_next<CR>", opts)
 keymap('n', 'gh', "<Cmd>Lspsaga lsp_finder<CR>", opts)
 keymap('n', 'gp', "<Cmd>Lspsaga preview_definition<CR>", opts)
 
