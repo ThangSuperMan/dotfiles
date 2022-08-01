@@ -8,6 +8,16 @@ vim.cmd [[ autocmd!]]
 vim.cmd [[ autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({higroup = "Substitute", timeout = 100})]]
 vim.cmd [[ augroup END]]
 
+-- Go
+-- au FileType go set noexpandtab
+-- au FileType go set shiftwidth=4
+-- au FileType go set softtabstop=4
+-- au FileType go set tabstop=4
+vim.cmd [[ au FileType go set noexpandtab]]
+vim.cmd [[ au FileType go set shiftwidth=4]]
+vim.cmd [[ au FileType go set softtabstop=4]]
+vim.cmd [[ au FileType go set tabstop=4]]
+
 -- vim.bo.expandtab = true
 opt.tabstop = 2
 vim.bo.shiftwidth = 2
@@ -19,7 +29,6 @@ vim.g.everforest_better_performance = 1
 vim.opt.background = 'dark'
 vim.cmd 'colorscheme everforest'
 
-opt.list = true
 opt.termguicolors = true
 opt.ignorecase = true
 opt.smartcase = true
@@ -28,8 +37,10 @@ opt.termguicolors = true
 opt.relativenumber = true
 -- opt.cursorline = true
 opt.smarttab = true
-vim.cmd('set listchars=tab:>-,space:·')
+-- opt.list = true
+-- opt.listchars = "tab:>-,space:·"
 vim.cmd('set scrolloff=8')
+vim.cmd('set scroll=10')
 vim.cmd('set completeopt=menu,menuone,noselect')
 vim.cmd('set formatoptions-=cro')
 vim.cmd('set mouse=a')
@@ -49,10 +60,10 @@ opt.clipboard = "unnamed"
 local keymap = vim.api.nvim_set_keymap 
 
 -- Moving betweens windows
--- keymap('n', 'sh', '<C-w>h', {})
--- keymap('n', 'sk', '<C-w>k', {})
--- keymap('n', 'sj', '<C-w>j', {})
--- keymap('n', 'sl', '<C-w>l', {})
+keymap('n', 'sh', '<C-w>h', {})
+keymap('n', 'sk', '<C-w>k', {})
+keymap('n', 'sj', '<C-w>j', {})
+keymap('n', 'sl', '<C-w>l', {})
 
 local opts = { noremap = true }
 
@@ -66,7 +77,7 @@ keymap('n', ',s', ':setlocal spell!<Cr>', opts)
 keymap('i', '<c-l>', '<C-o>A', opts)
 
 -- Turn off the highlight on search
-keymap('n', '<Esc><Esc>', ':set nohlsearch<CR>', opts)
+keymap('n', '<C-h>', ':set nohlsearch<CR>', opts)
 
 -- Move to the start/end of current line
 keymap('n', 'H', '^', opts)
@@ -74,24 +85,12 @@ keymap('n', 'L', 'g_', opts)
 keymap('v', 'H', '^', opts)
 keymap('v', 'L', 'g_', opts)
 
--- Ctrl-s to save
-keymap('n', '<C-s>', ':w!<CR>', opts)
-keymap('i', 'ww', '<ESC>:w!<CR>', opts)
-
--- Window navigation
-keymap('n', '<C-h>', ':wincmd h<CR>', opts)
-keymap('n', '<C-j>', ':wincmd j<CR>', opts)
-keymap('n', '<C-k>', ':wincmd k<CR>', opts)
-keymap('n', '<C-l>', ':wincmd l<CR>', opts)
-
 -- ESC with kj or jk
-vim.api.nvim_set_keymap('i', 'kj', '<esc>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', 'jk', '<esc>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('i', 'kj', '<esc>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('i', 'jk', '<esc>', { noremap = true, silent = true })
 
--- nnoremap  <silent> ;f <cmd>lua require('telescope.builtin').find_files()<cr>
--- nnoremap  <silent> ;r <cmd>lua require('telescope.builtin').live_grep()<cr>
-keymap('n', ',f', "<cmd>lua require('telescope.builtin').find_files()<cr>", opts)
-keymap('n', ';r', "<cmd>lua require('telescope.builtin').live_grep()<cr>", opts)
+-- Open the tree explore files for the first time
+-- vim.api.nvim_command [[autocmd VimEnter * NvimTreeToggle]]
 
 -- Navigate buffers
 keymap("n", "<Tab>", ":bnext<CR>", opts)
@@ -127,88 +126,210 @@ require('buffertag').enable()
 -- Comment
 require('Comment').setup()
 
+-- Neotree
+ require("neo-tree").setup({
+        close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+        popup_border_style = "rounded",
+        enable_git_status = true,
+        enable_diagnostics = false,
+        sort_case_insensitive = false, -- used when sorting files and directories in the tree
+        sort_function = nil, -- use a custom function for sorting files and directories in the tree 
+        -- sort_function = function (a,b)
+        --       if a.type == b.type then
+        --           return a.path > b.path
+        --       else
+        --           return a.type > b.type
+        --       end
+        --   end , -- this sorts files and directories descendantly
+        default_component_configs = {
+            container = {enable_character_fade = true},
+            indent = {
+                indent_size = 2,
+                padding = 1, -- extra padding on left hand side
+                -- indent guides
+                with_markers = true,
+                indent_marker = "│",
+                last_indent_marker = "└",
+                highlight = "NeoTreeIndentMarker",
+                -- expander config, needed for nesting files
+                with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
+                expander_collapsed = "",
+                expander_expanded = "",
+                expander_highlight = "NeoTreeExpander"
+            },
+            icon = {
+                folder_closed = "",
+                folder_open = "",
+                folder_empty = "ﰊ",
+                -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
+                -- then these will never be used.
+                default = "*",
+                highlight = "NeoTreeFileIcon"
+            },
+            modified = {symbol = "[+]", highlight = "NeoTreeModified"},
+            name = {
+                trailing_slash = false,
+                use_git_status_colors = true,
+                highlight = "NeoTreeFileName"
+            },
+            git_status = {
+                symbols = {
+                    -- Change type
+                    added = "✚", -- or "✚", but this is redundant info if you use git_status_colors on the name
+                    modified = "M", -- or "", but this is redundant info if you use git_status_colors on the name
+                    deleted = "✖", -- this can only be used in the git_status source
+                    renamed = "", -- this can only be used in the git_status source
+                    -- Status type
+                    untracked = "",
+                    ignored = "",
+                    unstaged = "", -- or 
+                    staged = "",
+                    conflict = ""
+                }
+            }
+        },
+        window = {
+            position = "float",
+            width = 40,
+            mapping_options = {noremap = true, nowait = true},
+            mappings = {
+                ["<space>"] = {
+                    "toggle_node",
+                    nowait = false -- disable `nowait` if you have existing combos starting with this char that you want to use 
+                },
+                ["<2-LeftMouse>"] = "open",
+                ["<cr>"] = "open",
+                ["S"] = "open_split",
+                ["s"] = "open_vsplit",
+                ["o"] = "open",
+                -- ["S"] = "split_with_window_picker",
+                -- ["s"] = "vsplit_with_window_picker",
+                -- ["t"] = "open_tabnew",
+                -- ["o"] = "open_with_window_picker",
+                ["C"] = "close_node",
+                -- ["z"] = "close_all_nodes",
+                -- ["Z"] = "expand_all_nodes",
+                ["a"] = {
+                    "add",
+                    -- some commands may take optional config options, see `:h neo-tree-mappings` for details
+                    config = {
+                        show_path = "none" -- "none", "relative", "absolute"
+                    }
+                },
+                ["n"] = "add_directory", -- also accepts the optional config.show_path option like "add".
+                ["d"] = "delete",
+                ["r"] = "rename",
+                ["c"] = "copy_to_clipboard",
+                ["m"] = "cut_to_clipboard",
+                ["p"] = "paste_from_clipboard",
+                -- ["c"] = "copy", -- takes text input for destination, also accepts the optional config.show_path option like "add":
+                -- ["c"] = {
+                --  "copy",
+                --  config = {
+                --    show_path = "none" -- "none", "relative", "absolute"
+                --  }
+                -- }
+                -- ["m"] = "move", -- takes text input for destination, also accepts the optional config.show_path option like "add".
+                ["q"] = "close_window",
+                ["R"] = "refresh",
+                ["?"] = "show_help"
+            }
+        },
+        nesting_rules = {},
+        filesystem = {
+            filtered_items = {
+                visible = false, -- when true, they will just be displayed differently than normal items
+                hide_dotfiles = true,
+                hide_gitignored = true,
+                hide_hidden = true, -- only works on Windows for hidden files/directories
+                hide_by_name = {
+                    -- "node_modules"
+                },
+                hide_by_pattern = { -- uses glob style patterns
+                    -- "*.meta"
+                },
+                never_show = { -- remains hidden even if visible is toggled to true
+                    -- ".DS_Store",
+                    -- "thumbs.db"
+                }
+            },
+            follow_current_file = true, -- This will find and focus the file in the active buffer every
+            -- time the current file is changed while the tree is open.
+            group_empty_dirs = false, -- when true, empty folders will be grouped together
+            hijack_netrw_behavior = "open_current", -- netrw disabled, opening a directory opens neo-tree
+            -- in whatever position is specified in window.position
+            -- "open_current",  -- netrw disabled, opening a directory opens within the
+            -- window like netrw would, regardless of window.position
+            -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
+            use_libuv_file_watcher = tru, -- This will use the OS level file watchers to detect changes
+            -- instead of relying on nvim autocmd events.
+            window = {
+                mappings = {
+                    ["U"] = "navigate_up",
+                    ["C"] = "set_root",
+                    ["."] = "toggle_hidden",
+                    ["/"] = "fuzzy_finder",
+                    ["D"] = "fuzzy_finder_directory",
+                    ["f"] = "filter_on_submit",
+                    ["<c-x>"] = "clear_filter",
+                    ["[g"] = "prev_git_modified",
+                    ["]g"] = "next_git_modified"
+                }
+            }
+        },
+        buffers = {
+            follow_current_file = true, -- This will find and focus the file in the active buffer every
+            -- time the current file is changed while the tree is open.
+            group_empty_dirs = true, -- when true, empty folders will be grouped together
+            show_unloaded = true,
+            window = {
+                mappings = {
+                    ["bd"] = "buffer_delete",
+                    ["<bs>"] = "navigate_up",
+                    ["."] = "set_root"
+                }
+            }
+        },
+        git_status = {
+            window = {
+                position = "float",
+                mappings = {
+                    ["A"] = "git_add_all",
+                    ["gu"] = "git_unstage_file",
+                    ["ga"] = "git_add_file",
+                    ["gr"] = "git_revert_file",
+                    ["gc"] = "git_commit",
+                    ["gp"] = "git_push",
+                    ["gg"] = "git_commit_and_push"
+                }
+            }
+        }
+    })
+
+    -- vim.cmd([[nnoremap \ :Neotree reveal<cr>]])
+    keymap('n', 'sf', ':Neotree toggle<cr>', opts)
+
 -- Lualine
--- require('lualine').setup {
---   options = {
---     theme = 'everforest'
---   }
--- }
-
-local status, lualine = pcall(require, "lualine")
-if (not status) then return end
-
-  local branch = {
-  "branch",
-  icons_enabled = true,
-  icon = "",
-}
-
-local hide_in_width = function()
-  return vim.fn.winwidth(0) > 80
-end
-
-local location = {
-  "location",
-  padding = 0,
-}
-
-local mode = {
-  "mode",
-  fmt = function(str)
-      -- return "-- " .. str .. " --"
-      return str
-  end,
-}
-
--- cool function for progress
-local progress = function()
-  local current_line = vim.fn.line "."
-  local total_lines = vim.fn.line "$"
-  local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
-  local line_ratio = current_line / total_lines
-  local index = math.ceil(line_ratio * #chars)
-  return chars[index]
-end
-
-local diagnostics = {
-	"diagnostics",
-	sources = { "nvim_diagnostic" },
-	sections = { "error", "info" },
-	symbols = { error = " ", info = " " },
-	colored = true,
-	update_in_insert = false,
-	always_visible = true,
-}
-
-lualine.setup {
+require('lualine').setup {
   options = {
     icons_enabled = true,
-		 theme= 'everforest',
-       section_separators = {left = '', right = ''},
-       component_separators = {left = '', right = ''},
-
+    theme = 'everforest',
+    section_separators = {left = '', right = ''},
+    component_separators = {left = '', right = ''},
     disabled_filetypes = {}
-},
+  },
   sections = {
-    lualine_a = {mode
-    },
-    lualine_b = {
-        branch,
-        diagnostics,
-    },
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff'},
     lualine_c = {{
       'filename',
       file_status = true, -- displays file status (readonly status, modified status)
-      path = 0, -- 0 = just filename, 1 = relative path, 2 = absolute path
-      hide_in_width,
+      path = 0 -- 0 = just filename, 1 = relative path, 2 = absolute path
     }},
-
     lualine_x = {
-         -- { 'diagnostics', sources = {"nvim_diagnostic"},
-         -- symbols = {error = ' ', warn = ' ', info = ' ', warn = ' '} },
-         -- symbols = {error = ' ', warn = ' ', info = ' ', warn = ' '} },
+      { 'diagnostics', sources = {"nvim_diagnostic"}, symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '} },
       'encoding',
-      'filetype',
+      'filetype'
     },
     lualine_y = {'progress'},
     lualine_z = {'location'}
@@ -219,17 +340,15 @@ lualine.setup {
     lualine_c = {{
       'filename',
       file_status = true, -- displays file status (readonly status, modified status)
-      path = 0, -- 0 = just filename, 1 = relative path, 2 = absolute path
+      path = 1 -- 0 = just filename, 1 = relative path, 2 = absolute path
     }},
     lualine_x = {'location'},
     lualine_y = {},
     lualine_z = {}
   },
-tabline = {
-  },
-  extensions = {}
+  tabline = {},
+  extensions = {'fugitive'}
 }
-
 
 -- Toggle terminal 
 local status_ok, toggleterm = pcall(require, "toggleterm")
@@ -344,7 +463,8 @@ nvim_tree.setup {
   },
 }
 
-keymap('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true })
+-- keymap('n', '<C-n>', ':NvimTreeToggle<CR>', { noremap = true })
+-- keymap('n', '<C-f>', ':NvimTreeFocus<CR>', { noremap = true })
 
 -- Saga 
 local saga = require "lspsaga"

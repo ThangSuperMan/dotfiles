@@ -6,7 +6,6 @@ end
 
 -- vim.cmd [[packadd packer.nvim]]
 
-
 return require('packer').startup(function()
   -- general
   use 'AndrewRadev/splitjoin.vim'
@@ -23,10 +22,42 @@ return require('packer').startup(function()
 	use 'ldelossa/buffertag'
   use 'windwp/nvim-ts-autotag'
 
-	use 'kyazdani42/nvim-web-devicons' 
-	use 'kyazdani42/nvim-tree.lua'
+	-- Debugging
+	use 'mfussenegger/nvim-dap'
 
   -- File explores 
+   use {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
+        requires = {
+            "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+            "MunifTanjim/nui.nvim", {
+                -- only needed if you want to use the commands with "_with_window_picker" suffix
+                's1n7ax/nvim-window-picker',
+                tag = "1.*",
+                config = function()
+                    require'window-picker'.setup({
+                        autoselect_one = true,
+                        include_current = false,
+                        filter_rules = {
+                            -- filter using buffer options
+                            bo = {
+                                -- if the file type is one of following, the window will be ignored
+                                filetype = {
+                                    'neo-tree', "neo-tree-popup", "notify",
+                                    "quickfix"
+                                },
+
+                                -- if the buffer type is one of following, the window will be ignored
+                                buftype = {'terminal'}
+                            }
+                        },
+                        other_win_hl_color = '#f3a14e'
+                    })
+                end
+            }
+        },
+    }
 
   -- Signature
   use 'ray-x/lsp_signature.nvim'
@@ -42,27 +73,9 @@ return require('packer').startup(function()
     end,
     })
 
-  -- sql
-  use 'shmup/vim-sql-syntax'
-
-  -- ruby
-  -- use 'vim-ruby/vim-ruby'
-  -- use 'tpope/vim-rails'
-  -- use 'RRethy/nvim-treesitter-endwise'
-
-  -- golang
-  -- use { 'fatih/vim-go', run = ':GoUpdateBinaries' }
-
   -- tree sitter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   -- use 'nvim-treesitter/playground'
-
-  -- telescope
-  -- dependencies
-  use 'nvim-lua/popup.nvim'
-  use 'nvim-lua/plenary.nvim'
-  -- telescope itself
-  use 'nvim-telescope/telescope.nvim'
 
   use 'onsails/lspkind-nvim'
    use {
@@ -71,7 +84,6 @@ return require('packer').startup(function()
         require('Comment').setup()
     end
    }
-
 
   -- language server
   use 'neovim/nvim-lspconfig'
@@ -85,17 +97,10 @@ return require('packer').startup(function()
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/cmp-vsnip'
 
-  -- use 'L3MON4D3/LuaSnip'
-
   -- themes
   use 'sainnhe/everforest'
-
 	use 'tweekmonster/startuptime.vim'
 
-
-  -- copilot
-  -- Plug 'github/copilot.vim'
-  --
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if packer_bootstrap then
