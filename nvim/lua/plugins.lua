@@ -8,11 +8,6 @@ vim.cmd [[packadd packer.nvim]]
 
 packer.startup(function(use)
   use 'wbthomason/packer.nvim'
-  use {
-    'svrana/neosolarized.nvim',
-    requires = { 'tjdevries/colorbuddy.nvim' }
-  }
-  use { 'ellisonleao/gruvbox.nvim' }
   use { 'sainnhe/everforest' }
   use { 'nvim-lualine/lualine.nvim' } -- Statusline
   use 'nvim-lua/plenary.nvim' -- Common utilities
@@ -22,6 +17,7 @@ packer.startup(function(use)
   use 'hrsh7th/nvim-cmp' -- Completion
   use 'neovim/nvim-lspconfig' -- LSP
   use 'jose-elias-alvarez/null-ls.nvim' -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua
+  use 'numToStr/Comment.nvim'
   use 'MunifTanjim/prettier.nvim' -- Prettier plugin for Neovim's built-in LSP client
   use 'williamboman/mason.nvim'
   use 'williamboman/mason-lspconfig.nvim'
