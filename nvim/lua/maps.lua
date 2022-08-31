@@ -42,6 +42,19 @@ keymap.set('', 'sk', '<C-w>k')
 keymap.set('', 'sj', '<C-w>j')
 keymap.set('', 'sl', '<C-w>l')
 
+-- Use tab with text block
+-- vmap <Tab> >gv
+-- vmap <S-Tab> <gv
+keymap.set('v', '<Tab>', '>gv')
+keymap.set('v', '<S-Tab>', '<gv')
+
+-- Move the selected line
+-- vnoremap J :m '>+1<CR>gv=gv
+-- vnoremap K :m '<-2<CR>gv=gv
+keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+
+
 -- Resize window
 keymap.set('n', '<C-w><left>', '<C-w><')
 keymap.set('n', '<C-w><right>', '<C-w>>')
