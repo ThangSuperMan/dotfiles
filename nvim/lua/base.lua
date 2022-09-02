@@ -5,6 +5,12 @@ vim.cmd [[ autocmd!]]
 vim.cmd [[ autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({higroup = "Substitute", timeout = 100})]]
 vim.cmd [[ augroup END]]
 
+vim.cmd [[ augroup BgHighlight]]
+vim.cmd [[ autocmd!]]
+vim.cmd [[ autocmd WinEnter * set cul]]
+vim.cmd [[ autocmd WinLeave * set nocul]]
+vim.cmd [[ augroup END]]
+
 -- Faster completion
 vim.cmd('set updatetime=300')
 vim.cmd('set timeoutlen=500')
