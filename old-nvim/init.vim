@@ -4,10 +4,11 @@ call plug#begin()
 
 if has("nvim")
    " Language server
+   " Plug 'neoclide/coc.nvim', {'branch': 'release'}
    Plug 'neovim/nvim-lspconfig'
    Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
    Plug 'onsails/lspkind-nvim'
-   Plug 'williamboman/nvim-lsp-installer'
+   " Plug 'williamboman/nvim-lsp-installer'
 
    " Cmp
    Plug 'hrsh7th/cmp-nvim-lsp'
@@ -33,6 +34,8 @@ if has("nvim")
    Plug 'kristijanhusak/defx-icons'
    Plug 'kristijanhusak/defx-git'
    Plug 'sainnhe/everforest'
+   Plug 'tobi-wan-kenobi/zengarden'
+   Plug 'Mofiqul/dracula.nvim'
    Plug 'andrewradev/splitjoin.vim'
    Plug 'AndrewRadev/tagalong.vim'
    Plug 'AndrewRadev/sideways.vim'
@@ -51,10 +54,9 @@ call plug#end()
 
 " Customization for the defx
 autocmd VimEnter * :hi PreProc ctermfg=9 guifg=#268bd2
-autocmd VimEnter * :hi CmpItemKindDefault guifg=#FF9F29
+autocmd VimEnter * :hi CmpItemKindDefault guifg=#7C8C8E
 
 lua << EOF
-
 require("nvim-autopairs").setup {}
 
 require("cheat-sheet").setup({
@@ -83,14 +85,14 @@ let g:closetag_filenames = '*.html, *.erb, *.tsx, *.js'
 
 source ~/.config/nvim/sets.vim
 source ~/.config/nvim/maps.vim
-" source ~/.config/nvim/after/plugins/treesitter.vim
+source ~/.config/nvim/after/plugins/treesitter.vim
 source ~/.config/nvim/after/plugins/lualine.vim
 source ~/.config/nvim/after/plugins/tabline.vim
 " source ~/.config/nvim/after/plugins/language-servers.vim
 source ~/.config/nvim/after/plugins/lspconfig.vim
 source ~/.config/nvim/after/plugins/lspsaga.vim
 source ~/.config/nvim/after/plugins/cmp.vim
-" source ~/.config/nvim/after/plugins/luasnip.vim
+source ~/.config/nvim/after/plugins/luasnip.vim
 source ~/.config/nvim/after/plugins/lspkind.vim
 source ~/.config/nvim/after/plugins/defx.vim
 source ~/.config/nvim/after/plugins/comment.vim
@@ -113,29 +115,29 @@ augroup BgHighlight
 augroup END
 
 " true color
-if exists("&termguicolors") && exists("&winblend")
-  syntax enable
-  set termguicolors
-  set winblend=0
-  set wildoptions=pum
-  set pumblend=5
-  set background=dark
-  " Use NeoSolarized
-  let g:neosolarized_termtrans=1
-  runtime ./colors/NeoSolarized.vim
-  colorscheme NeoSolarized
-endif
+" if exists("&termguicolors") && exists("&winblend")
+"   syntax enable
+"   set termguicolors
+"   set winblend=0
+"   set wildoptions=pum
+"   set pumblend=5
+"   set background=dark
+"   " Use NeoSolarized
+"   let g:neosolarized_termtrans=1
+"   runtime ./colors/NeoSolarized.vim
+"   colorscheme NeoSolarized
+" endif
 
 "}}}
 
 " Extras "{{{
 " ---------------------------------------------------------------------
-set exrc
+" set exrc
 "}}}
   
-" set termguicolors
-" set background=dark " or light if you want light mode
-" let g:everforest_background = 'hard'
-" let g:everforest_vi_constract = 'soft'
-" let g:everforest_better_performance = 1
-" colorscheme everforest
+set termguicolors
+set background=dark " or light if you want light mode
+let g:everforest_background = 'hard'
+let g:everforest_vi_constract = 'soft'
+let g:everforest_better_performance = 1
+colorscheme everforest

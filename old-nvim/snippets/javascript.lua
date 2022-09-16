@@ -75,7 +75,7 @@ local function_component = s(
       )
     }}
 
-    return {}
+    export default {}
   ]], 
     {
       i(1, "myComponent"),

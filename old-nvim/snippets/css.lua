@@ -14,7 +14,7 @@ local rep = require("luasnip.extras").rep
 local snippets, autosnippets = {}, {} --}}}
 
 local group = vim.api.nvim_create_augroup("Css Snippets", { clear = true })
-local file_pattern = "*.css, *.scss"
+local file_pattern = "*.css"
 
 -- Layout
 
@@ -55,7 +55,6 @@ local abs_center = s("abs-center", {
   t({"", "left: 50%;" }),
   t({"", "transform: translate(-50%, -50%);" }),
 })
-
 
 
 table.insert(snippets, grid_center)

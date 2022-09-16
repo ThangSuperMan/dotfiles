@@ -6,7 +6,7 @@ if (not status) then return end
 lualine.setup {
   options = {
     icons_enabled = true,
-     theme = 'solarized_dark',
+     theme = 'everforest',
     -- theme = 'gruvbox',
     -- theme = 'dracula-nvim',
     section_separators = {left = '', right = ''},

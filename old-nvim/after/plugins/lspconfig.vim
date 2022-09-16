@@ -68,6 +68,22 @@ lua << EOF
       }
 -- Setup html
 
+-- Error handling for solidity to slow
+require 'lspconfig'.solang.setup {}
+
+-- Solidity
+-- cmd: sudo npm install -g solidity-language-server
+local lspconfig = require 'lspconfig'
+nvim_lsp.solidity_ls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  default_config = {
+    cmd = { 'solidity-ls', '--stdio' },
+    filetypes = { 'solidity' },
+    root_dir = lspconfig.util.root_pattern('package.json', '.git'),
+  },
+}
+
 -- Ruby
 require'lspconfig'.solargraph.setup{
     on_attach = on_attach,

@@ -61,7 +61,7 @@ set shiftwidth=2
 set expandtab
 
 set encoding=UTF-8
-set cursorline
+" set cursorline
 set nowrap "No Wrap lines
 
 set number
