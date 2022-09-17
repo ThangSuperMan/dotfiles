@@ -8,7 +8,10 @@ lua << EOF
   -- after the language server attaches to the current buffer
   local on_attach = function(client, bufnr)
       -- require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
-
+      
+      local navic = require("nvim-navic")
+      navic.attach(client, bufnr)
+      
       local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
       local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -27,7 +30,6 @@ lua << EOF
         vim.api.nvim_command [[augroup END]]
       end
 
-
       -- Format on save
       -- if client.resolved_capabilities.document_formatting then
       --  vim.api.nvim_command [[augroup Format]]
@@ -35,7 +37,6 @@ lua << EOF
       --  vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
       --  vim.api.nvim_command [[augroup END]]
       -- end
-
  end
 
    --Enable (broadcasting) snippet capability for completion
@@ -58,7 +59,6 @@ lua << EOF
       staticcheck = true
     }
   }
-
 
 -- Setup html
       require'lspconfig'.html.setup {
@@ -100,8 +100,8 @@ require'lspconfig'.solargraph.setup{
           update_in_insert = false,
           -- This sets the spacing and the prefix, obviously.
           virtual_text = {
-             -- spacing = 4,
-          	 -- prefix = ''
+             spacing = 4,
+          	 prefix = ''
 
           }
       }

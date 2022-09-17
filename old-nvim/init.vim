@@ -6,6 +6,8 @@ if has("nvim")
    " Language server
    " Plug 'neoclide/coc.nvim', {'branch': 'release'}
    Plug 'neovim/nvim-lspconfig'
+   Plug 'SmiteshP/nvim-navic'
+   Plug 'SmiteshP/nvim-gps'
    Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
    Plug 'onsails/lspkind-nvim'
    " Plug 'williamboman/nvim-lsp-installer'
@@ -32,13 +34,14 @@ if has("nvim")
    " Plug 'windwp/nvim-ts-autotag'
    Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
    Plug 'kristijanhusak/defx-icons'
+   Plug 'lukas-reineke/indent-blankline.nvim'
    Plug 'kristijanhusak/defx-git'
    Plug 'sainnhe/everforest'
    Plug 'tobi-wan-kenobi/zengarden'
    Plug 'Mofiqul/dracula.nvim'
-   Plug 'andrewradev/splitjoin.vim'
-   Plug 'AndrewRadev/tagalong.vim'
-   Plug 'AndrewRadev/sideways.vim'
+   " Plug 'andrewradev/splitjoin.vim'
+   " Plug 'AndrewRadev/tagalong.vim'
+   " Plug 'AndrewRadev/sideways.vim'
    Plug 'kyazdani42/nvim-web-devicons'
    Plug 'numToStr/Comment.nvim'
    Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
@@ -53,10 +56,19 @@ if has("nvim")
 call plug#end()
 
 " Customization for the defx
-autocmd VimEnter * :hi PreProc ctermfg=9 guifg=#268bd2
-autocmd VimEnter * :hi CmpItemKindDefault guifg=#7C8C8E
+" autocmd VimEnter * :hi PreProc ctermfg=9 guifg=#268bd2
+" autocmd VimEnter * :hi PreProc ctermfg=9 guifg=#268bd2
+
+autocmd VimEnter * :hi PreProc ctermfg=9 guifg=#7fbbb3
+" autocmd VimEnter * :hi CmpItemKindDefault guifg=#7fbbb3
 
 lua << EOF
+require("indent_blankline").setup {
+    -- for example, context is off by default, use this to turn it on
+    show_current_context = true,
+    show_current_context_start = false,
+}
+
 require("nvim-autopairs").setup {}
 
 require("cheat-sheet").setup({
@@ -78,8 +90,8 @@ require("cheat-sheet").setup({
 
 EOF
 
-nnoremap <c-h> :SidewaysLeft<cr>
-nnoremap <c-l> :SidewaysRight<cr>
+" nnoremap <c-h> :SidewaysLeft<cr>
+" nnoremap <c-l> :SidewaysRight<cr>
 
 let g:closetag_filenames = '*.html, *.erb, *.tsx, *.js'
 
@@ -87,7 +99,7 @@ source ~/.config/nvim/sets.vim
 source ~/.config/nvim/maps.vim
 source ~/.config/nvim/after/plugins/treesitter.vim
 source ~/.config/nvim/after/plugins/lualine.vim
-source ~/.config/nvim/after/plugins/tabline.vim
+" source ~/.config/nvim/after/plugins/tabline.vim
 " source ~/.config/nvim/after/plugins/language-servers.vim
 source ~/.config/nvim/after/plugins/lspconfig.vim
 source ~/.config/nvim/after/plugins/lspsaga.vim
@@ -105,7 +117,7 @@ source ~/.config/nvim/after/plugins/comment.vim
 augroup highlight_yank
     autocmd!
     " higroup = "Substitute",
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({ higroup = "Search", timeout = 100})
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({ higroup = "Substitute", timeout = 200})
 augroup END
 
 augroup BgHighlight
