@@ -66,29 +66,36 @@ local general_function = s(
   )
 )
 
-local for_loop = s(
-  "for-loop", 
-  fmt([[
-    for (uint256 {} = 0; {} < {}; {}) {{
-      {}
-    }}
+local for_loop = s( -- for([%w_]+) JS For Loop snippet{{{
+	{ trig = "for([%w_]+)", regTrig = true, hidden = true },
+	fmt(
+		[[
+for (uint256 {} = 0; {} < {}; {}++) {{
+  {}
+}}
+{}
+    ]],
+		{
+			d(1, function(_, snip)
+				return sn(1, i(1, snip.captures[1]))
+			end),
+			rep(1),
+			c(2, { i(1, "num"), sn(1, { i(1, "arr"), t(".length") }) }),
+			rep(1),
+			i(3, "// TODO:"),
+			i(4),
+		}
+	)
+) --}}}
 
-  ]],
-    {
-      i(1, ""),
-      i(2, ""),
-      i(3, ""),
-      i(4, ""),
-      i(5, "// TODO"),
-    }
-  )
-)
 
 table.insert(snippets, licence)
 table.insert(snippets, solidity_version_compile)
 table.insert(snippets, contract)
 table.insert(snippets, general_function)
-table.insert(snippets, for_loop)
+
+-- Auto snippets when finished typed the whole key trigger (Regular expressions)
+table.insert(autosnippets, for_loop)
 
 -- End Refactoring --
 

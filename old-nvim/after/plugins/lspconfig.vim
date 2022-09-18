@@ -1,6 +1,12 @@
 set completeopt=menu,menuone,noselect
 
 lua << EOF
+local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+for type, icon in pairs(signs) do
+  local hl = "LspDiagnosticsSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
   local nvim_lsp = require('lspconfig')
   local protocol = require('vim.lsp.protocol')
 
@@ -8,9 +14,6 @@ lua << EOF
   -- after the language server attaches to the current buffer
   local on_attach = function(client, bufnr)
       -- require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
-      
-      local navic = require("nvim-navic")
-      navic.attach(client, bufnr)
       
       local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
       local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end

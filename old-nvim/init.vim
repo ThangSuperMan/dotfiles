@@ -6,8 +6,6 @@ if has("nvim")
    " Language server
    " Plug 'neoclide/coc.nvim', {'branch': 'release'}
    Plug 'neovim/nvim-lspconfig'
-   Plug 'SmiteshP/nvim-navic'
-   Plug 'SmiteshP/nvim-gps'
    Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
    Plug 'onsails/lspkind-nvim'
    " Plug 'williamboman/nvim-lsp-installer'
@@ -17,8 +15,10 @@ if has("nvim")
    Plug 'hrsh7th/cmp-buffer'
    Plug 'hrsh7th/nvim-cmp'
 
+   Plug 'phaazon/hop.nvim'
+
    " Ruby
-   Plug 'tpope/vim-rails'
+   " Plug 'tpope/vim-rails'
 
    " Snippet
    Plug 'L3MON4D3/LuaSnip'
@@ -34,6 +34,7 @@ if has("nvim")
    " Plug 'windwp/nvim-ts-autotag'
    Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
    Plug 'kristijanhusak/defx-icons'
+   " Plug 'Yggdroot/indentLine'
    Plug 'lukas-reineke/indent-blankline.nvim'
    Plug 'kristijanhusak/defx-git'
    Plug 'sainnhe/everforest'
@@ -99,6 +100,7 @@ source ~/.config/nvim/sets.vim
 source ~/.config/nvim/maps.vim
 source ~/.config/nvim/after/plugins/treesitter.vim
 source ~/.config/nvim/after/plugins/lualine.vim
+source ~/.config/nvim/after/plugins/hop.vim
 " source ~/.config/nvim/after/plugins/tabline.vim
 " source ~/.config/nvim/after/plugins/language-servers.vim
 source ~/.config/nvim/after/plugins/lspconfig.vim

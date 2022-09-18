@@ -11,6 +11,8 @@ map sk <C-w>k
 map sj <C-w>j
 map sl <C-w>l
 
+nnoremap zl :HopLineStart<cr>
+
 nnoremap <C-j> :ciw<cr>
 
 nnoremap <leader>C :CheatSH<CR>

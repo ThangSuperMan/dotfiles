@@ -1,10 +1,9 @@
 lua << EOF
 
 local saga = require 'lspsaga'
-
 EOF
 
-nnoremap <silent> <C-j> <Cmd>Lspsaga diagnostic_jump_next<CR>
+nnoremap <silent> <C-e> <Cmd>Lspsaga diagnostic_jump_next<CR>
 nnoremap <silent> gh <Cmd>Lspsaga lsp_finder<CR>
 nnoremap <silent> gp <Cmd>Lspsaga preview_definition<CR>
 " nnoremap <silent>K <Cmd>Lspsaga hover_doc<CR>
