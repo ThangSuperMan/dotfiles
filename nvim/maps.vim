@@ -8,9 +8,8 @@ let localleader="\\"
 " nnoremap gm :Tmodel<cr>
 
 " Org mode
-" Completed checkbox
-" nnoremap <space>cc :
-
+" Turn on the table mode toggle
+nnoremap <space>mt :TableModeToggle<CR>
 
 " Move window
 map sh <C-w>h

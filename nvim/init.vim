@@ -27,7 +27,10 @@ if has("nvim")
    Plug 'L3MON4D3/LuaSnip'
    Plug 'saadparwaiz1/cmp_luasnip'
 
-   Plug 'jceb/vim-orgmode'
+   " Plug 'jceb/vim-orgmode'
+   Plug 'nvim-orgmode/orgmode'
+   Plug 'akinsho/org-bullets.nvim'
+   Plug 'dhruvasagar/vim-table-mode'
 
    Plug 'Djancyp/cheat-sheet'
    Plug 'ap/vim-css-color'
@@ -55,9 +58,15 @@ if has("nvim")
 
 call plug#end()
 
-lua << EOF
+" syntax match OrgHeadlineStar1 /^\*\ze\s/me=e-1 conceal cchar=◉ containedin=OrgHeadlineLevel1 contained
+" syntax match OrgHeadlineStar2 /^\*\{2}\ze\s/me=e-1 conceal cchar=○ containedin=OrgHeadlineLevel2 contained
+" syntax match OrgHeadlineStar3 /^\*\{3}\ze\s/me=e-1 conceal cchar=✸ containedin=OrgHeadlineLevel3 contained
+" syntax match OrgHeadlineStar4 /^\*{4}\ze\s/me=e-1 conceal cchar=✿ containedin=OrgHeadlineLevel4 contained
 
-local icons = require "nvim-nonicons"
+lua << EOF
+require("org-bullets").setup {
+    concealcursor = true, -- If false then when the cursor is on a line underlying characters are visible
+  }
 
 require("nvim-autopairs").setup {}
 
@@ -83,6 +92,7 @@ EOF
 source ~/.config/nvim/sets.vim
 source ~/.config/nvim/maps.vim
 source ~/.config/nvim/after/plugins/treesitter.vim
+source ~/.config/nvim/after/plugins/org-mode.vim
 " source ~/.config/nvim/after/plugins/lualine.vim
 source ~/.config/nvim/after/plugins/galaxy-line.vim
 source ~/.config/nvim/after/plugins/vscode-colorscheme.vim
@@ -121,19 +131,19 @@ function SetVimPresentationMode()
   nmap <C-p> :set number! showcmd! hidden! ruler!<CR>
 endfunction
 
-autocmd BufNewFile,BufRead *.org call SetOrgMode()
-function SetOrgMode()
-
-" Insert timestamp
-nnoremap <space>it :OrgDateInsertTimestampActiveCmdLine<CR>
-
-" Checkbox toggle
-nnoremap <space>ct :OrgCheckBoxToggle<CR>
-
-" Agenda Timeline
-nnoremap <space>tl :OrgAgendaTimeline<CR>
-
-endfunction
+" autocmd BufNewFile,BufRead *.org call SetOrgMode()
+" function SetOrgMode()
+"
+" " Insert timestamp
+" nnoremap <space>it :OrgDateInsertTimestampActiveCmdLine<CR>
+"
+" " Checkbox toggle
+" nnoremap <space>ct :OrgCheckBoxToggle<CR>
+"
+" " Agenda Timeline
+" nnoremap <space>tl :OrgAgendaTimeline<CR>
+"
+" endfunction
 
 
 set termguicolors

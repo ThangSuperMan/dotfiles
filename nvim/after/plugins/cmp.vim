@@ -54,6 +54,8 @@ cmp.setup({
   sources = {
     { name = 'nvim_lsp' },
 
+    { name = 'orgmode' },
+
     -- For vsnip user.
     -- { name = 'vsnip' },
 
