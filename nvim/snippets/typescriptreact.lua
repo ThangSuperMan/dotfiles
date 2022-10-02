@@ -13,8 +13,8 @@ local rep = require("luasnip.extras").rep
 
 local snippets, autosnippets = {}, {} --}}}
 
-local group = vim.api.nvim_create_augroup("Javascript Snippets", { clear = true })
-local file_pattern = "*.js"
+local group = vim.api.nvim_create_augroup("Typescript React Snippets", { clear = true })
+local file_pattern = "*.tsx"
 
 local myFirstSnippet = s("myFirstSnippet", { 
   t("Hi! This is my first snippet in lua"),
@@ -48,7 +48,7 @@ local normal_function = s(
 )
 
 local const_function = s(
-{ trig = "constf", regTrig = true, hidden = true },
+ "constf",
   fmt([[
     const {} = ({}) => {{
       {}
@@ -91,38 +91,28 @@ local const_function = s(
 -- Use state
 
 local use_state = s(
-  { trig = "uses", regTrig = true, hidden = true },
+ "uses",
   fmt([[
-    const [{}, {}] = React.useState({})
+    const [{}, {}] = React.useState<{}>({});
   ]], 
     {
       i(1, ""),
       i(2, ""),
-      i(3, ""),
+      c(3, { i(1, "TypeOf"), i(1, "")} ),
+      i(4, ""),
     }
   )
 )
 
 local use_effect = s(
-  { trig = "usee", regTrig = true, hidden = true },
+ "usee",
   fmt([[
     React.useEffect(() => {{
       {}
-    }}, [])
+    }}, []);
   ]], 
     {
       i(1, "// TODO:"),
-    }
-  )
-)
-
-local class_name = s(
-  { trig = "cl", regTrig = true, hidden = true },
-  fmt([[
-    className={}
-  ]], 
-    {
-      i(1, ""),
     }
   )
 )
@@ -144,7 +134,7 @@ local class_name = s(
  local console_log = s(
   { trig = "jj", regTrig = true },
   fmt([[
-    console.log({})
+    console.log({});
   ]], 
     {
       i(1, ""),
@@ -156,15 +146,15 @@ local function_component = s(
 	{ trig = "fc", regTrig = true, hidden = true },
   fmt(
     [[
-    import React from 'react' 
+    import React from 'react'; 
 
     const {} = ({}) => {{
       return (
         {}
-      )
+      );
     }} 
 
-    export default {}
+    export default {};
     ]],
     {
       i(1, "functionComponentName"),
@@ -210,7 +200,7 @@ local if_fmt_arg = { --{{{
 
 local if_fmt_1 = fmt(
 	[[
-{}if ({} {} {}) {}
+{}if ({} {} {}) {};
     ]],
 	vim.deepcopy(if_fmt_arg)
 )
@@ -266,19 +256,19 @@ function {}({}) {{
 local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) --}}}
 
 -- table.insert(snippets, normal_function)
+table.insert(snippets, const_function)
+table.insert(snippets, use_state)
+table.insert(snippets, use_effect)
 
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 table.insert(autosnippets, console_log)
-table.insert(autosnippets, const_function)
 table.insert(autosnippets, for_loop)
--- table.insert(autosnippets, if_snippet)
--- table.insert(autosnippets, function_snippet_func)
+table.insert(autosnippets, if_snippet)
+table.insert(autosnippets, function_snippet_func)
 table.insert(autosnippets, function_component)
 table.insert(autosnippets, short_hand_if_statement)
-table.insert(autosnippets, use_state)
-table.insert(autosnippets, use_effect)
-table.insert(autosnippets, class_name)
 
 -- End Refactoring --
 
 return snippets, autosnippets
+

@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: Arrow function
-# key: constf
-# condition: t
-# --
-
-const ${1:functionName} = (${2:}) => {
-      ${3: //TODO}
-}

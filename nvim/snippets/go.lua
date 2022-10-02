@@ -38,44 +38,72 @@ local select_all = s(
   )
 )
 
-local if_statement = s(
- "if-s",
+local function_snippet = s(
+  { trig = "func", regTrig = true },
   fmt([[
-    if {} {{
+    func {}({}) {{
       {}
     }}
   ]], 
     {
       i(1, ""),
-      i(2, "// TODO"),
+      c(2, { i(1, "arg"), i(1, "")}),
+      i(3, "//TODO:"),
     }
   )
 )
 
-local if_else_statement = s(
- "if-es",
+local if_fmt_arg = { --{{{
+	i(1, ""),
+	c(2, { i(1, "LHS"), i(1, "10") }),
+	c(3, { i(1, "==="), i(1, "<"), i(1, ">"), i(1, "<="), i(1, ">="), i(1, "!==") }),
+	i(4, "RHS"),
+	i(5, "//TODO:"),
+}
+
+local if_fmt_1 = fmt(
+	[[
+{}if ({} {} {}) {};
+    ]],
+	vim.deepcopy(if_fmt_arg)
+)
+
+local if_fmt_2 = fmt(
+	[[
+{}if ({} {} {}) {{
+  {};
+}}
+    ]],
+	vim.deepcopy(if_fmt_arg)
+)
+
+local if_snippet = s(
+	{ trig = "ifs", regTrig = false, hidden = true },
+	c(1, {
+    if_fmt_2,
+		if_fmt_1,
+	})
+) --}}}
+
+ local print_format = s(
+  { trig = "jj", regTrig = true },
   fmt([[
-    if {} {{
-      {}
-    }} else {{
-      {}
-    }}
+    fmt.Println("{}")
   ]], 
     {
       i(1, ""),
-      i(2, "// TODO"),
-      i(3, "// TODO"),
     }
   )
 )
-
 
 table.insert(snippets, select_all)
 table.insert(snippets, drop_table)
-table.insert(snippets, if_statement)
 table.insert(snippets, if_else_statement)
 
-
+-- Auto snippets when finished typed the whole key trigger (Regular expressions)
+table.insert(autosnippets, print_format )
+table.insert(autosnippets, if_snippet)
+table.insert(autosnippets, function_snippet)
 
 -- End Refactoring --
 

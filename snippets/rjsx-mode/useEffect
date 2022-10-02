@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: React useEffect
-# key: usee
-# condition: t
-# --
-
-useEffect(() => {
-   ${1: // TODO}
-}, []);
