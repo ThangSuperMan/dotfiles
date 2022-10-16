@@ -17,7 +17,9 @@ require'nvim-treesitter.configs'.setup {
     "javascript",
     "go",
     "css",
+    "json",
     "solidity",
+    "prisma",
   },
   autotag = {
     enable = true,

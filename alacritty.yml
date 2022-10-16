@@ -92,7 +92,7 @@ window:
   # - transparent: title bar, transparent background and title bar buttons
   # - buttonless: title bar, transparent background, but no title bar buttons
   decorations: full
-  opacity: 1
+  opacity: 0.90
   dynamic_title: true
 
   # Startup Mode (changes require restart)
@@ -110,16 +110,10 @@ env:
   TERM: xterm-256color
 schemes:
   everforest_dark_hard: &everforest_dark_hard
-    # cursor:
-      # cursor: "#073642"
-      # cursor: "#d3c6aa"
-      # cursor: "#e99b25"
-       # cursor: "#7fbbb3"
-      # cursor: "#0B94F2"
-      # cursor: "#F9A698"
+    cursor:
+      cursor: "#82BEEF"
 
     primary:
-      # Default
       # background: "#2b3339"
       background: "#202223"
       foreground: "#d3c6aa"
@@ -130,7 +124,7 @@ schemes:
       green: "#a7c080"
       yellow: "#dbbc7f"
       blue: "#7fbbb3"
-      magenta: "#d699b6"
+      magenta: "#F02F8B"
       cyan: "#83c092"
       white: "#d3c6aa"
     bright:
@@ -153,6 +147,7 @@ schemes:
       yellow: "#dbbc7f"
       blue: "#7fbbb3"
       magenta: "#d699b6"
+      magenta: "#D62A7C"
       cyan: "#83c092"
       white: "#d3c6aa"
     bright:
@@ -252,6 +247,37 @@ schemes:
       magenta: "#df69ba"
       cyan: "#35a77c"
       white: "#dfddc8"
+
+    solarized_dark: &solarized_dark
+      cursor:
+        cursor: "#FFFFFF"
+      # Default colors
+      primary:
+        background: '0x002b36'
+        foreground: '0x839496'
+
+      # Normal colors
+      normal:
+        black:   '0x073642'
+        red:     '0xdc322f'
+        green:   '0x859900'
+        yellow:  '0xb58900'
+        blue:    '0x268bd2'
+        magenta: '0xd33682'
+        cyan:    '0x2aa198'
+        white:   '0xeee8d5'
+
+      # Bright colors
+      bright:
+        black:   '0x002b36'
+        red:     '0xcb4b16'
+        green:   '0x586e75'
+        yellow:  '0x657b83'
+        blue:    '0x839496'
+        magenta: '0x6c71c4'
+        cyan:    '0x93a1a1'
+        white:   '0xfdf6e3'
+
 
 # Apply
 colors: *everforest_dark_hard

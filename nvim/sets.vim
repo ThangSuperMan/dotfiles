@@ -14,6 +14,9 @@ set wildignore+=**/node_modules/*
 
 set backspace=2
 
+set conceallevel=2
+set concealcursor=nc
+
 " Allow neovim title file adapted to the title of terminal
 set title
 
@@ -24,7 +27,7 @@ set inccommand=split
 " set listchars=tab:>-,space:⋅
 
 " Show the tabline when at lease two tab open
-set showtabline=1
+set showtabline=2
 
 set ignorecase
 set smartcase
@@ -57,18 +60,6 @@ set t_Co=256
 " always show statusline
 set laststatus=2
 
- " Clear status line when vimrc is reloaded.
-" set statusline=
-
-" Status line left side.
-" set statusline+=\ %F\ %M\ %Y\ %R
-"
-" " Use a divider to separate the left side from the right side.
-" set statusline+=%=
-"
-" " Status line right side.
-" set statusline+=\ ascii:\ %b\ %{strftime('%H:%M')}
-
 set timeoutlen=500
 
 set tabstop=2 softtabstop=2
@@ -79,7 +70,7 @@ set encoding=UTF-8
 set cursorline
 set nowrap "No Wrap lines
 
-" set number
+set number
 " set relativenumber
 " set ruler
 " set numberwidth=5

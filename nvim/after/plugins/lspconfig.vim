@@ -1,11 +1,7 @@
 set completeopt=menu,menuone,noselect
 
 lua << EOF
-local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
-for type, icon in pairs(signs) do
-  local hl = "LspDiagnosticsSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
+
 
   local nvim_lsp = require('lspconfig')
   local protocol = require('vim.lsp.protocol')
@@ -63,6 +59,14 @@ end
     }
   }
 
+
+
+-- npm install -g @prisma/language-server
+require'lspconfig'.prismals.setup{
+  on_attach = on_attach,
+  capabilities = capabilities 
+}
+
 -- Setup html
       require'lspconfig'.html.setup {
             on_attach= on_attach,
@@ -97,15 +101,22 @@ require'lspconfig'.solargraph.setup{
   filetypes = { "typescript",  "typescriptreact", "typescript.tsx", "typescript.jsx",  "javascript" },
 }
 
+-- Diagnostic symbols in the sign column (gutter)
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
       -- Hanle disappear the lspconfig when using the insertmode
       vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
           vim.lsp.diagnostic.on_publish_diagnostics, {
-          update_in_insert = false,
+          update_in_insert = true,
           -- This sets the spacing and the prefix, obviously.
           virtual_text = {
              spacing = 4,
-          	 -- prefix = ''
-          	 prefix = '💡'
+          	 prefix = '',
+          	 -- prefix = '●'
           }
       }
     )
