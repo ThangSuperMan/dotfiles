@@ -25,6 +25,7 @@ if has("nvim")
 
    " Plug 'mg979/vim-visual-multi', {'branch': 'master'}
    " Plug 'mhinz/vim-startify'
+   " Plug 'mhinz/vim-startify'
 
    Plug 'nvim-lualine/lualine.nvim'
    Plug 'phaazon/hop.nvim'
