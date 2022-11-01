@@ -117,7 +117,7 @@ local use_effect = s(
   )
 )
 
--- Website for lua pattern matching
+-- Website fGr lua pattern matching
 -- https://www.educba.com/lua-regex/
 
 -- Notes: () symbol sign means capture group
@@ -262,7 +262,7 @@ table.insert(snippets, use_effect)
 
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 table.insert(autosnippets, console_log)
-table.insert(autosnippets, for_loop)
+-- table.insert(autosnippets, for_loop)
 -- table.insert(autosnippets, if_snippet)
 table.insert(autosnippets, function_snippet_func)
 table.insert(autosnippets, function_component)

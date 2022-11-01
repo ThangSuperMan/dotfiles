@@ -7,9 +7,10 @@ lualine.setup {
   options = {
     icons_enabled = true,
     -- theme = 'everforest',
-     theme = 'auto',
+    --  theme = 'auto',
+    --  theme = 'auto',
     -- theme = 'gruvbox',
-    -- theme = 'dracula-nvim',
+    theme = 'solarized_dark',
     section_separators = {left = '', right = ''},
     component_separators = {left = '', right = ''},
     disabled_filetypes = {}

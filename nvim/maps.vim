@@ -11,6 +11,16 @@ let localleader="\\"
 " Turn on the table mode toggle
 nnoremap <space>mt :TableModeToggle<CR>
 
+" SQl
+" Execute query in visual line
+vnoremap <C-c>e :SqlsExecuteQuery<CR>
+
+" Change connection 
+nnoremap <C-c>c :SqlsSwitchConnection<CR>
+
+" Show schemas
+nnoremap <C-c>s :SqlsShowSchemas<CR>
+
 " Move window
 map sh <C-w>h
 map sk <C-w>k
@@ -32,7 +42,7 @@ nnoremap <leader>C :CheatSH<CR>
 nnoremap <space>? :echo expand("%:p")<CR>
 
 " Toggle Line Number:
-nnoremap <space>n :set number!<CR>
+" nnoremap <space>n :set number!<CR>
 
 " Turn off highlight on search
 nnoremap <space>h :set nohlsearch!<CR>

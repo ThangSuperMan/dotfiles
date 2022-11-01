@@ -1,6 +1,6 @@
 lua << EOF
 
-require'nvim-treesitter.configs'.setup {
+local treesitter = require'nvim-treesitter.configs'.setup {
 	highlight = {
     enable = true,
     disable = {
@@ -11,15 +11,11 @@ require'nvim-treesitter.configs'.setup {
     disable = {},
   },
  ensure_installed = {
-    "html",
-    "ruby",
     "lua",
     "javascript",
     "go",
     "css",
-    "json",
-    "solidity",
-    "prisma",
+    "php",
   },
   autotag = {
     enable = true,

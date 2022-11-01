@@ -14,9 +14,6 @@ set wildignore+=**/node_modules/*
 
 set backspace=2
 
-set conceallevel=2
-set concealcursor=nc
-
 " Allow neovim title file adapted to the title of terminal
 set title
 
