@@ -10,10 +10,10 @@ if has("nvim")
    Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
    Plug 'onsails/lspkind-nvim'
 
-   Plug 'preservim/nerdtree'
-   Plug 'ryanoasis/vim-devicons'
-   Plug 'Xuyuanp/nerdtree-git-plugin'
-   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+   " Plug 'preservim/nerdtree'
+   " Plug 'ryanoasis/vim-devicons'
+   " Plug 'Xuyuanp/nerdtree-git-plugin'
+   " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
    " Cmp
    Plug 'hrsh7th/cmp-nvim-lsp'
@@ -24,7 +24,6 @@ if has("nvim")
    " Plug 'psliwka/vim-smoothie'
 
    " Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-   " Plug 'mhinz/vim-startify'
    " Plug 'mhinz/vim-startify'
 
    Plug 'nvim-lualine/lualine.nvim'
@@ -53,11 +52,11 @@ if has("nvim")
    Plug 'Djancyp/cheat-sheet'
    " Plug 'ap/vim-css-color'
    " Plug 'ray-x/lsp_signature.nvim'
-   " Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-   " Plug 'kristijanhusak/defx-icons'
-   " Plug 'kristijanhusak/defx-git'
+   Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+   Plug 'kristijanhusak/defx-icons'
+   Plug 'kristijanhusak/defx-git'
    " Plug 'lukas-reineke/indent-blankline.nvim'
-   " Plug 'sainnhe/everforest'
+   Plug 'sainnhe/everforest'
    " Plug 'Mofiqul/vscode.nvim'
    " Plug 'glepnir/galaxyline.nvim' , { 'branch': 'main' }
    " Plug 'andrewradev/splitjoin.vim'
@@ -74,6 +73,12 @@ if has("nvim")
  " Plug 'tweekmonster/startuptime.vim'
 
 call plug#end()
+
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.php, *.ejs'
 
@@ -150,8 +155,8 @@ source ~/.config/nvim/after/plugins/helper.lua
 " source ~/.config/nvim/after/plugins/coc.vim
 source ~/.config/nvim/after/plugins/cmp.vim
 source ~/.config/nvim/after/plugins/luasnip.vim
-" source ~/.config/nvim/after/plugins/defx.vim
-source ~/.config/nvim/after/plugins/nerdtree.vim
+source ~/.config/nvim/after/plugins/defx.vim
+" source ~/.config/nvim/after/plugins/nerdtree.vim
 source ~/.config/nvim/after/plugins/lspkind.vim
 source ~/.config/nvim/after/plugins/comment.vim
 

@@ -1,38 +1,66 @@
-# Basic config
-set fish_greeting""
+set fish_greeting ""
 
-if type -q exa
-  alias ll "exa -l -g --icons"
-  alias lla "ll -a"
-end
+set -gx TERM xterm-256color
 
-# fish_add_path /opt/homebrew/bin/
+# theme
+set -g theme_color_scheme terminal-dark
+set -g fish_prompt_pwd_dir_length 1
+set -g theme_display_user yes
+set -g theme_hide_hostname no
+set -g theme_hostname always
 
-# function fish_user_key_bindings
-#   bind \c] peco_select_ghq      # Ctrl-]
-#   bind \cr peco_select_history  # Ctrl-r
-#   bind \cj peco_select_z        # Ctrl-j
-#   bind \cf peco_change_directory     # Ctrl-f
-# end
+# aliases
+alias ls "ls -p -G"
+alias la "ls -A"
+alias ll "ls -l"
+alias lla "ll -A"
+alias g git
+command -qv nvim && alias vim nvim
 
-# Setup for go
-alias gr='go run'
-alias e='exit'
-alias cls='clear'
-alias v='nvim'
-alias ide "tmux split-window -v -p 30 && tmux split-window -h -p 66 && tmux split-window -h -p 50"
-alias g "git"
-alias p "cd Projects"
-alias tks 'tmux kill-server'
-alias tmux-reload 'tmux source ~/.tmux.conf'
+fish_add_path /opt/homebrew/bin
 
-# React native fix error router
-alias config='export NODE_OPTIONS=--openssl-legacy-provider' 
+alias p "cd Projects/"
+alias v "nvim"
+alias tks "tmux kill-server"
+alias e "exit"
+
+set -gx EDITOR nvim
+
+set -gx PATH bin $PATH
+set -gx PATH ~/bin $PATH
+set -gx PATH ~/.local/bin $PATH
+
+# NodeJS
+set -gx PATH node_modules/.bin $PATH
 
 # Go
 set -g GOPATH $HOME/go
 set -gx PATH $GOPATH/bin $PATH
 
-# Ruby 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-set -gx PATH $PATH:$HOME/.rvm/bin
+# Mysql
+# set -x PATH ${PATH}:/usr/local/mysql-8.0.31-macos12-arm64/bin
+set -x PATH usr/local/mysql-8.0.31-macos12-arm64/bin $PATH
+
+# NVM
+function __check_rvm --on-variable PWD --description 'Do nvm stuff'
+  status --is-command-substitution; and return
+
+  if test -f .nvmrc; and test -r .nvmrc;
+    nvm use
+  else
+  end
+end
+
+switch (uname)
+  case Darwin
+    source (dirname (status --current-filename))/config-osx.fish
+  case Linux
+    source (dirname (status --current-filename))/config-linux.fish
+  case '*'
+    source (dirname (status --current-filename))/config-windows.fish
+end
+
+set LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
+if test -f $LOCAL_CONFIG
+  source $LOCAL_CONFIG
+end
