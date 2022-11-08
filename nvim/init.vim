@@ -55,6 +55,7 @@ if has("nvim")
    Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
    Plug 'kristijanhusak/defx-icons'
    Plug 'kristijanhusak/defx-git'
+   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
    " Plug 'lukas-reineke/indent-blankline.nvim'
    Plug 'sainnhe/everforest'
    " Plug 'Mofiqul/vscode.nvim'
@@ -70,15 +71,9 @@ if has("nvim")
 
  " Auto pairs with treesitter
  Plug 'windwp/nvim-autopairs'
- " Plug 'tweekmonster/startuptime.vim'
+ Plug 'tweekmonster/startuptime.vim'
 
 call plug#end()
-
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
 
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.php, *.ejs'
 
@@ -147,10 +142,11 @@ source ~/.config/nvim/after/plugins/treesitter.vim
 source ~/.config/nvim/after/plugins/lualine.vim
 " source ~/.config/nvim/after/plugins/bufferline.vim
 source ~/.config/nvim/after/plugins/tabline.vim
-source ~/.config/nvim/after/plugins/hop.vim
+" source ~/.config/nvim/after/plugins/hop.vim
 source ~/.config/nvim/after/plugins/lspconfig.vim
 source ~/.config/nvim/after/plugins/lspsaga.vim
-source ~/.config/nvim/after/plugins/helper.lua
+source ~/.config/nvim/after/plugins/denite.vim
+" source ~/.config/nvim/after/plugins/helper.lua
 " source ~/.config/nvim/after/plugins/language-servers.vim
 " source ~/.config/nvim/after/plugins/coc.vim
 source ~/.config/nvim/after/plugins/cmp.vim
@@ -198,13 +194,7 @@ if exists("&termguicolors") && exists("&winblend")
 set exrc
 "}}}
 
-" highlight the cmp icon when using the NeoSolarized
-autocmd VimEnter * highlight CmpItemKind guifg=#93a1a1 
-
-" Nerdtree
-autocmd VimEnter * highlight NERDTreeGitStatusModified guifg=#FFD300
-autocmd VimEnter * highlight NERDTreeGitStatusDirty guifg=#FFD300
-
+autocmd VimEnter * :hi CmpItemKind guibg=#073642
 
 " set termguicolors
 " set background=dark " or light if you want light mode

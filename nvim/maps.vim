@@ -11,6 +11,9 @@ let localleader="\\"
 " Turn on the table mode toggle
 nnoremap <space>mt :TableModeToggle<CR>
 
+" Close all the tabs excep the active one
+noremap <S-q> :tabonly<CR>
+
 " SQl
 " Execute query in visual line
 vnoremap <C-c>e :SqlsExecuteQuery<CR>

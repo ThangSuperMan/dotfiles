@@ -1,8 +1,8 @@
 let g:coc_global_extensions = [ 
       \'coc-prettier', 
       \'coc-solidity',
-      \'coc-rust-analyzer',
       \'coc-tsserver',
+      \'coc-eslint',
       \'coc-go']
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
@@ -22,10 +22,14 @@ set updatetime=300
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
+au ColorScheme * hi! link CocMenuSel PmenuSel
+au ColorScheme * hi! link CocPumMenu Pmenu
+au ColorScheme * hi! link CocPumVirtualText Comment
+
 " Setup diagnostics colors
-autocmd VimEnter * highlight CocErrorSign ctermfg=1 guifg=#fd5d5d
-autocmd VimEnter * highlight CocHintSign ctermfg=7 guifg=#0db9d7
-autocmd VimEnter * highlight CocWarningSign ctermfg=7 guifg=#e0af68
+" autocmd VimEnter * highlight CocErrorSign ctermfg=1 guifg=#fd5d5d
+" autocmd VimEnter * highlight CocHintSign ctermfg=7 guifg=#0db9d7
+" autocmd VimEnter * highlight CocWarningSign ctermfg=7 guifg=#e0af68
 
 " Use <c-space> to trigger completion.
 if has('nvim')

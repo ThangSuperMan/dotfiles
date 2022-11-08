@@ -13,6 +13,7 @@ local treesitter = require'nvim-treesitter.configs'.setup {
  ensure_installed = {
     "lua",
     "javascript",
+    "typescript",
     "go",
     "css",
     "php",
