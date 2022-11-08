@@ -1,3 +1,7 @@
+" Requirement
+" Make sure that install the rg (library)
+" Using command brew install rg
+"
 " Denite
 autocmd FileType denite call s:denite_my_settings()
 function! s:denite_my_settings() abort
@@ -15,13 +19,15 @@ function! s:denite_my_settings() abort
   \ denite#do_map('toggle_select').'j'
 endfunction
 
-" call denite#custom#var('file/rec', 'command')
+" Load the vim-devicons with denite
+call denite#custom#source('file/rec,file_mru,file/old,buffer,directory/rec,directory_mru', 'converters', ['devicons_denite_converter'])
 
+
+" call denite#custom#var('file/rec', 'command')
 
 " Ignore all folders in .gitignore file and adding the customization for the
 " Searching popup window
 if executable("rg")
-  echo 'hi there'
     call denite#custom#var('file/rec', 'command',
    \ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
     call denite#custom#var('grep', {
@@ -34,14 +40,11 @@ if executable("rg")
    \ })
 endif
 
-" call denite#custom#var('file/rec', 'command', 
-"       \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-
 call denite#custom#alias('source', 'file/rec/git', 'file/rec')
 call denite#custom#var('file/rec/git', 'command', ['git', 'ls-files', '-co', '--exclude-standard'])
 
-" Ag command on grep source
-call denite#custom#var('grep', 'command', ['ag'])
+" Rg command on grep source
+call denite#custom#var('grep', 'command', ['rg'])
 call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', [])
@@ -104,4 +107,3 @@ nnoremap <silent> ;r :<C-u>Dgrep .<CR>
 nnoremap <silent> ;f :<C-u>Denite file/rec<CR>
 nnoremap <silent> ;; :<C-u>Denite command command_history<CR>
 nnoremap <silent> ;p :<C-u>Denite -resume<CR>
-

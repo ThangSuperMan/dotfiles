@@ -11,7 +11,7 @@ if has("nvim")
    Plug 'onsails/lspkind-nvim'
 
    " Plug 'preservim/nerdtree'
-   " Plug 'ryanoasis/vim-devicons'
+   Plug 'ryanoasis/vim-devicons'
    " Plug 'Xuyuanp/nerdtree-git-plugin'
    " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
@@ -45,9 +45,9 @@ if has("nvim")
    " Plug 'dhruvasagar/vim-table-mode'
 
    "Sql
-   Plug 'lighttiger2505/sqls.vim'
-   Plug 'prabirshrestha/vim-lsp'
-   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+   " Plug 'lighttiger2505/sqls.vim'
+   " Plug 'prabirshrestha/vim-lsp'
+   " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
    Plug 'Djancyp/cheat-sheet'
    " Plug 'ap/vim-css-color'
@@ -61,12 +61,14 @@ if has("nvim")
    " Plug 'Mofiqul/vscode.nvim'
    " Plug 'glepnir/galaxyline.nvim' , { 'branch': 'main' }
    " Plug 'andrewradev/splitjoin.vim'
-   Plug 'kyazdani42/nvim-web-devicons'
+   " Plug 'kyazdani42/nvim-web-devicons'
    Plug 'numToStr/Comment.nvim'
    Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
    Plug 'nvim-treesitter/playground'
    Plug 'windwp/nvim-ts-autotag'
-   Plug 'xiyaowong/nvim-transparent'
+   " Plug 'xiyaowong/nvim-transparent'
+   
+    let g:webdevicons_enable_denite = 1
  end
 
  " Auto pairs with treesitter
@@ -74,6 +76,8 @@ if has("nvim")
  Plug 'tweekmonster/startuptime.vim'
 
 call plug#end()
+
+
 
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.php, *.ejs'
 
@@ -195,6 +199,12 @@ set exrc
 "}}}
 
 autocmd VimEnter * :hi CmpItemKind guibg=#073642
+
+
+" Reload icons after init source
+" if exists('g:loaded_webdevicons')
+"   call webdevicons#refresh()
+" endif
 
 " set termguicolors
 " set background=dark " or light if you want light mode
