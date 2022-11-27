@@ -1,28 +1,16 @@
 " Change the map leader to the ,
 let mapleader=" " "Default mapleader is \
 
-let localleader="\\"
-
-" Ruby 
-" nnoremap gv :Tview<cr>
-" nnoremap gm :Tmodel<cr>
-
 " Org mode
 " Turn on the table mode toggle
 nnoremap <space>mt :TableModeToggle<CR>
 
 " Close all the tabs excep the active one
 noremap <S-q> :tabonly<CR>
+" nnoremap <S-o> :only<CR>
 
 " SQl
-" Execute query in visual line
-vnoremap <C-c>e :SqlsExecuteQuery<CR>
-
-" Change connection 
-nnoremap <C-c>c :SqlsSwitchConnection<CR>
-
-" Show schemas
-nnoremap <C-c>s :SqlsShowSchemas<CR>
+nnoremap <C-c>s :DBUI<CR>
 
 " Move window
 map sh <C-w>h
@@ -51,7 +39,7 @@ nnoremap <space>? :echo expand("%:p")<CR>
 nnoremap <space>h :set nohlsearch!<CR>
 
 " Disable the treesitter hightlight
-nnoremap <space>t :TSToggle highlight<CR>
+" nnoremap <space>t :TSToggle highlight<CR>
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
@@ -66,7 +54,7 @@ vnoremap <silent> # :<C-U>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 " Save some strokes :)
-nnoremap ; :
+" nnoremap ; :
 
 " toggle spellcheck
 nmap <silent> <leader>s :set spell!<CR>

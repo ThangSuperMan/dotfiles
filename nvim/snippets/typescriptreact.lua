@@ -21,13 +21,6 @@ local myFirstSnippet = s("myFirstSnippet", {
   i(1, "placeholder_text")
 })
 
--- local fun = s("fun", {
---   t("function "),
---   i(1, "name_func"),
---   t("() {"),
---   t({ "", "}" }),
--- })
-
 -- Note: {{}}: Means escape curly brackets symbols
 
 local normal_function = s(
@@ -141,6 +134,30 @@ local console_log = s(
     }
   )
 )
+
+-- local function_component = s(
+--   "fc",
+--   fmt([[
+--     const [{}, {}] = React.useState<{}>({});
+--     import React from 'react'
+--
+--     const {}() => {{
+--       return (
+--       <div>{}</div>
+--       )
+--     }}
+--
+--     export default
+--   ]],
+--     {
+--       i(1, ""),
+--       i(2, ""),
+--       c(3, { i(1, "TypeOf"), i(1, "") }),
+--       i(4, ""),
+--     }
+--   )
+-- )
+
 
 local function_component = s(
   { trig = "fc", regTrig = true, hidden = true },
@@ -256,17 +273,18 @@ function {}({}) {{
 local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) --}}}
 
 -- table.insert(snippets, normal_function)
-table.insert(snippets, const_function)
-table.insert(snippets, use_state)
-table.insert(snippets, use_effect)
+-- table.insert(snippets, const_function)
+-- table.insert(snippets, use_state)
+-- table.insert(snippets, use_effect)
+-- table.insert(snippets, function_component)
 
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 table.insert(autosnippets, console_log)
 -- table.insert(autosnippets, for_loop)
-table.insert(autosnippets, if_snippet)
-table.insert(autosnippets, function_snippet_func)
-table.insert(autosnippets, function_component)
-table.insert(autosnippets, short_hand_if_statement)
+-- table.insert(autosnippets, if_snippet)
+-- table.insert(autosnippets, function_snippet_func)
+-- table.insert(autosnippets, function_component)
+-- table.insert(autosnippets, short_hand_if_statement)
 
 -- End Refactoring --
 

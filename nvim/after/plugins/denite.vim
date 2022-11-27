@@ -18,12 +18,9 @@ function! s:denite_my_settings() abort
   nnoremap <silent><buffer><expr> <Space>
   \ denite#do_map('toggle_select').'j'
 endfunction
-
-" Load the vim-devicons with denite
+"
+" " Load the vim-devicons with denite
 call denite#custom#source('file/rec,file_mru,file/old,buffer,directory/rec,directory_mru', 'converters', ['devicons_denite_converter'])
-
-
-" call denite#custom#var('file/rec', 'command')
 
 " Ignore all folders in .gitignore file and adding the customization for the
 " Searching popup window
@@ -51,41 +48,6 @@ call denite#custom#var('grep', 'pattern_opt', [])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
 
-" use floating
-let s:denite_win_width_percent = 0.8
-let s:denite_win_height_percent = 0.7
-
-" 1 means true and 0 Means false
-let s:denite_options = {'default' : {
-\ 'split': 'floating',
-\ 'start_filter': 1,
-\ 'auto_resize': 0,
-\ 'source_names': 'short',
-\ 'prompt': '>',
-\ 'highlight_matched_char': 'None',
-\ 'highlight_matched_range': 'pandocStrikeoutTable',
-\ 'highlight_window_background': 'StatusLine',
-\ 'highlight_filter_background': 'ColorColumn',
-\ 'match_highlight': v:true,
-\ 'winheight': float2nr(&lines * s:denite_win_height_percent),
-\ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
-\ 'wincol': &columns / 8,
-\ 'winrow': &lines / 7,
-\ 'vertical_preview': 1
-\ }}
-
-" Loop through denite options and enable them
-function! s:profile(opts) abort
-  for l:fname in keys(a:opts)
-    for l:dopt in keys(a:opts[l:fname])
-      call denite#custom#option(l:fname, l:dopt, a:opts[l:fname][l:dopt])
-    endfor
-  endfor
-endfunction
-
-" Call the method customize
-call s:profile(s:denite_options)
-
 call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'nnoremap')
 call denite#custom#map('insert', '<C-p>', '<denite:move_to_previou_line>', 'nnoremap')
 
@@ -103,7 +65,54 @@ function s:Dgrep(...)
   endif
 endfunction
 
+ " use floating
+let s:denite_win_width_percent = 0.8
+let s:denite_win_height_percent = 0.7
+
+call denite#custom#option('_', {
+		\ 'cached_filter': v:true,
+		\ 'cursor_shape': v:true,
+		\ 'cursor_wrap': v:true,
+    \ 'highlight_matched_range': 'pandocStrikeoutTable',
+		\ 'highlight_filter_background': 'DeniteFilter',
+		\ 'highlight_matched_char': 'None',
+    \ 'match_highlight': v:true,
+		\ 'matchers': 'matcher/fruzzy',
+		\ 'prompt': 'ﬦ ',
+		\ 'split': 'floating',
+		\ 'start_filter': v:true,
+		\ 'statusline': v:false,
+\ })
+
+ " use floating
+let s:denite_win_width_percent = 0.8
+let s:denite_win_height_percent = 0.7
+
+function! s:denite_detect_size() abort
+    let s:denite_winheight = float2nr(&lines * s:denite_win_height_percent)
+    let s:denite_winrow = &lines > s:denite_winheight ? (&lines - s:denite_winheight) / 2 : 0
+    let s:denite_winwidth = float2nr(&columns * s:denite_win_width_percent)
+    let s:denite_wincol = &columns > s:denite_winwidth ? (&columns - s:denite_winwidth) / 2 : 0
+    call denite#custom#option('_', {
+          \ 'wincol': s:denite_wincol,
+          \ 'winheight': s:denite_winheight,
+          \ 'winrow': s:denite_winrow,
+          \ 'winwidth': s:denite_winwidth,
+          \ })
+  endfunction
+   augroup denite-detect-size
+    autocmd!
+    autocmd VimResized * call <SID>denite_detect_size()
+  augroup END
+  call s:denite_detect_size()
+
+call denite#custom#option('search', { 'start_filter': 0, 'no_empty': 1 })
+call denite#custom#option('list', { 'start_filter': 0 })
+call denite#custom#option('jump', { 'start_filter': 0 })
+call denite#custom#option('git', { 'start_filter': 0 })
+call denite#custom#option('mpc', { 'winheight': 20 })
+
 nnoremap <silent> ;r :<C-u>Dgrep .<CR>
 nnoremap <silent> ;f :<C-u>Denite file/rec<CR>
 nnoremap <silent> ;; :<C-u>Denite command command_history<CR>
-nnoremap <silent> ;p :<C-u>Denite -resume<CR>
+nnoremap <silent> ;p :<C-u>Denite -resume<CR> 

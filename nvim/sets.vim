@@ -24,12 +24,13 @@ set inccommand=split
 " set listchars=tab:>-,space:⋅
 
 " Show the tabline when at lease two tab open
-set showtabline=2
+" set showtabline=2
+set showtabline=1
 
 set ignorecase
 set smartcase
 
-" set noshowmode " Turn off the insert mode
+set noshowmode " Turn off the insert mode
 set shortmess+=c
 
 set cmdheight=1
@@ -42,7 +43,7 @@ set formatoptions-=cro
 set mouse=a
 
 " Makes tabbing smarter will realize you have 2 vs 4
-set smarttab
+" set smarttab
 
 set autowrite
 
@@ -57,7 +58,7 @@ set t_Co=256
 " always show statusline
 set laststatus=2
 
-set timeoutlen=500
+" set timeoutlen=800
 
 set tabstop=2 softtabstop=2
 set shiftwidth=2
@@ -68,20 +69,13 @@ set cursorline
 set nowrap "No Wrap lines
 
 set number
-" set relativenumber
-" set ruler
-" set numberwidth=5
 
 " turn backup off, since most stuff is in SVN, git et.c anyway...
 set nowb
 set noswapfile
 set nobackup
 
-" Improve scrolling
-set lazyredraw
-
 set scrolloff=10
-set scroll=10
 
 " always copy to clipboard
 set clipboard=unnamed

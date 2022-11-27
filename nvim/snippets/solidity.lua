@@ -19,18 +19,17 @@ local file_pattern = "*.sol"
 -- Note: {{}}: Means escape curly brackets symbols
 
 local licence = s("licence", {
-  t( "// SPDX-Liences-Identifier: MIT;"),
+  t("// SPDX-Liences-Identifier: MIT;"),
 }
 )
 
 local solidity_version_compile = s(
   { trig = "version", regTrig = false, hidden = true },
-  t("Hi! This is my first snippet in lua"),
   fmt([[
     pragma solidity {};
   ]],
     {
-      c(1, { i(1, ">=0.4.22 <0.7.0"), t ""}),
+      c(1, { i(1, ">=0.4.22 <0.7.0"), t "" }),
     }
   )
 )
@@ -52,59 +51,60 @@ local general_function = s(
   ]],
     {
       i(1, "functionName"),
-      c(2, { i(1, "arg"), t ""}),
+      c(2, { i(1, "arg"), t "" }),
       i(3, "public"),
-      c(4, { t " returns (returnType)", t ""}),
+      c(4, { t " returns (returnType)", t "" }),
       i(5, "// TODO"),
     }
   )
 )
 
-local for_loop = s( -- for([%w_]+) JS For Loop snippet{{{
-	{ trig = "for([%w_]+)", regTrig = true, hidden = true },
-	fmt(
-		[[
+local for_loop = s(-- for([%w_]+) JS For Loop snippet{{{
+  { trig = "for([%w_]+)", regTrig = true, hidden = true },
+  fmt(
+    [[
 for (uint256 {} = 0; {} < {}; {}++) {{
   {}
 }}
 {}
     ]],
-		{
-			d(1, function(_, snip)
-				return sn(1, i(1, snip.captures[1]))
-			end),
-			rep(1),
-			c(2, { i(1, "num"), sn(1, { i(1, "arr"), t(".length") }) }),
-			rep(1),
-			i(3, "// TODO:"),
-			i(4),
-		}
-	)
+    {
+      d(1, function(_, snip)
+        return sn(1, i(1, snip.captures[1]))
+      end),
+      rep(1),
+      c(2, { i(1, "num"), sn(1, { i(1, "arr"), t(".length") }) }),
+      rep(1),
+      i(3, "// TODO:"),
+      i(4),
+    }
+  )
 ) --}}}
 
-local mapping = s( -- for([%w_]+) JS For Loop snippet{{{
-	{ trig = "map", regTrig = true, hidden = true },
-	fmt(
-		[[
+local mapping = s(-- for([%w_]+) JS For Loop snippet{{{
+  { trig = "map", regTrig = true, hidden = true },
+  fmt(
+    [[
 mapping({} => {}) {} {};
     ]],
-		{
+    {
       i(1, "key"),
       i(2, "value"),
       i(3, "public"),
-			i(4, "variableName"),
-		}
-	)
+      i(4, "variableName"),
+    }
+  )
 ) --}}}
 
 
 table.insert(snippets, licence)
+table.insert(snippets, solidity_version_compile)
 
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 table.insert(autosnippets, for_loop)
-table.insert(autosnippets, general_function)
+-- table.insert(autosnippets, general_function)
 table.insert(autosnippets, mapping)
-table.insert(autosnippets, solidity_version_compile)
+-- table.insert(autosnippets, solidity_version_compile)
 
 -- End Refactoring --
 

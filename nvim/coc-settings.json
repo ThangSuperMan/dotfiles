@@ -43,20 +43,7 @@
     "operator": ""
   },
 
-  // Setup coc-java
-  // "java.referencesCodeLens.enabled": true,
-
-  // Setup html
-  // "html.filetypes": ["html"],
-  // Codelens
-  // "codeLens.enable": true,
-  "coc.preferences.formatOnSaveFiletypes": ["css", "scss", "json"],
-
+  "coc.preferences.formatOnSaveFiletypes": ["json", "css", "markdown"],
   "eslint.autoFixOnSave": true,
   "eslint.autoFix": true
-
-  // "diagnostic.errorSign": "",
-  // "diagnostic.warningSign": "",
-  // "diagnostic.hintSign": "",
-  // "diagnostic.infoSign": ""
 }

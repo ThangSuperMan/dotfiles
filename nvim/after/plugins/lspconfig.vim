@@ -48,7 +48,7 @@ lua << EOF
       if client.server_capabilities.documentFormattingProvider then
         vim.api.nvim_command [[augroup Format]]
         vim.api.nvim_command [[autocmd! * <buffer>]]
-        vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
+        vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
         vim.api.nvim_command [[augroup END]]
       end
 
@@ -101,47 +101,18 @@ nvim_lsp.sumneko_lua.setup {
 }
 
 -- npm install -g @prisma/language-server
-require'lspconfig'.prismals.setup{
-  on_attach = on_attach,
-  capabilities = capabilities 
-}
+--require'lspconfig'.prismals.setup{
+--  on_attach = on_attach,
+--  capabilities = capabilities 
+--}
 
 -- Setup html
-require'lspconfig'.html.setup {
+nvim_lsp.html.setup {
       on_attach= on_attach,
       filetypes = { "html", "jsp", "ejs" },
       capabilities = capabilities,
 }
 -- Setup html
-
--- SQL
-
--- Requires to install some library
--- go get github.com/lighttiger2505/sqls
-
-local dbName = 'notes'
-
-require'lspconfig'.sqls.setup{
-  on_attach = another_on_attach,
-  capability = capability,
-  settings = {
-    sqls = {
-      connections = {
-        {
-          driver = 'mysql',
-          -- Structure: dbUser:dbPasword@tcp(localhost:dbPort)/dbName
-          dataSourceName = 'root:chaungoanbacho@tcp(localhost:3306)/' .. dbName,
-        },
-        {
-          driver = 'postgresql',
-          dataSourceName = 'host=127.0.0.1 port=15432 user=postgres password=mysecretpassword1234 dbname=dvdrental sslmode=disable',
-        },
-      },
-    },
-  },
-}
-
--- SQL
 
 -- Error handling for solidity to slow
 require 'lspconfig'.solang.setup {}
@@ -159,22 +130,21 @@ nvim_lsp.solidity_ls.setup {
   },
 }
 
--- Ruby
-require'lspconfig'.solargraph.setup{
-    on_attach = on_attach,
-}
-
 -- Php
-require'lspconfig'.intelephense.setup{
+nvim_lsp.intelephense.setup{
     capabilities = capabilities,
     on_attach = on_attach,
 }
 
--- Angular
-require'lspconfig'.angularls.setup{
-    capabilities = capabilities,
-    on_attach = on_attach,
+nvim_lsp.tailwindcss.setup{
+  on_attach = on_attach
 }
+
+ nvim_lsp.pyright.setup {
+  on_attach = on_attach,
+  capability = capabilities
+}
+
 
  nvim_lsp.tsserver.setup {
   on_attach = on_attach,
@@ -182,7 +152,9 @@ require'lspconfig'.angularls.setup{
 }
 
 -- Diagnostic symbols in the sign column (gutter)
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+-- 
+-- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })

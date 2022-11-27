@@ -20,6 +20,15 @@ if has("nvim")
    Plug 'hrsh7th/cmp-buffer'
    Plug 'hrsh7th/nvim-cmp'
 
+   " Sql
+   Plug 'tpope/vim-dadbod'
+   Plug 'kristijanhusak/vim-dadbod-ui'
+   Plug 'kristijanhusak/vim-dadbod-completion'
+
+   Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
+   Plug 'adi/vim-indent-rainbow'
+
    " My Mood
    " Plug 'psliwka/vim-smoothie'
 
@@ -27,6 +36,7 @@ if has("nvim")
    " Plug 'mhinz/vim-startify'
 
    Plug 'nvim-lualine/lualine.nvim'
+   " Plug 'itchyny/lightline.vim'
    Plug 'phaazon/hop.nvim'
 
    Plug 'alvan/vim-closetag'
@@ -36,6 +46,7 @@ if has("nvim")
    " Snippet
    Plug 'L3MON4D3/LuaSnip'
    Plug 'saadparwaiz1/cmp_luasnip'
+   " Plug 'shmup/vim-sql-syntax'
 
    " Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 
@@ -58,17 +69,12 @@ if has("nvim")
    Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
    " Plug 'lukas-reineke/indent-blankline.nvim'
    Plug 'sainnhe/everforest'
-   " Plug 'Mofiqul/vscode.nvim'
-   " Plug 'glepnir/galaxyline.nvim' , { 'branch': 'main' }
-   " Plug 'andrewradev/splitjoin.vim'
-   " Plug 'kyazdani42/nvim-web-devicons'
+   Plug 'andrewradev/splitjoin.vim'
    Plug 'numToStr/Comment.nvim'
-   Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-   Plug 'nvim-treesitter/playground'
-   Plug 'windwp/nvim-ts-autotag'
+   " Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+   " Plug 'nvim-treesitter/playground'
+   " Plug 'windwp/nvim-ts-autotag'
    " Plug 'xiyaowong/nvim-transparent'
-   
-    let g:webdevicons_enable_denite = 1
  end
 
  " Auto pairs with treesitter
@@ -78,74 +84,15 @@ if has("nvim")
 call plug#end()
 
 
-
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml, *.php, *.ejs'
-
-" if executable('sqls')
-"     augroup LspSqls
-"         autocmd!
-"         autocmd User lsp_setup call lsp#register_server({
-"         \   'name': 'sqls',
-"         \   'cmd': {server_info->['sqls']},
-"         \   'whitelist': ['sql'],
-"         \   'workspace_config': {
-"         \     'sqls': {
-"         \       'connections': [
-"         \         {
-"         \           'driver': 'mysql',
-"         \            'dataSourceName': 'root:chaungoanbacho@tcp(localhost:3306)/notes',
-"         \         },
-"         \         {
-"         \           'driver': 'postgresql',
-"         \           'dataSourceName': 'host=127.0.0.1 port=15432 user=postgres password=mysecretpassword1234 dbname=dvdrental sslmode=disable',
-"         \         },
-"         \       ],
-"         \     },
-"         \   },
-"         \ })
-"     augroup END
-" endif
-
-
-" require("org-bullets").setup {
-"     concealcursor = true, -- If false then when the cursor is on a line underlying characters are visible
-"     symbols = {
-"       -- headlines can be a list
-"       headlines = { "◉", "○", "✿", "✸" },
-"     }
-"   }
-
-lua << EOF
-
-require("nvim-autopairs").setup {}
-
-require("cheat-sheet").setup({
-  auto_fill = {
-    filetype = true,
-    current_word = true,
-  },
-
-  main_win = {
-    style = "minimal",
-    border = "double",
-  },
-
-  input_win = {
-    style = "minimal",
-    border = "double",
-  },
-})
-
-EOF
-
 source ~/.config/nvim/sets.vim
 source ~/.config/nvim/maps.vim
-source ~/.config/nvim/after/plugins/treesitter.vim
-" source ~/.config/nvim/after/plugins/conceal.scm
-" source ~/.config/nvim/after/plugins/org-mode.vim
+" source ~/.config/nvim/after/plugins/treesitter.vim
 source ~/.config/nvim/after/plugins/lualine.vim
+source ~/.config/nvim/after/plugins/auto-pairs.vim
+source ~/.config/nvim/after/plugins/dadboy.vim
 " source ~/.config/nvim/after/plugins/bufferline.vim
 source ~/.config/nvim/after/plugins/tabline.vim
+" source ~/.config/nvim/after/plugins/bufferline.vim
 " source ~/.config/nvim/after/plugins/hop.vim
 source ~/.config/nvim/after/plugins/lspconfig.vim
 source ~/.config/nvim/after/plugins/lspsaga.vim
@@ -156,7 +103,6 @@ source ~/.config/nvim/after/plugins/denite.vim
 source ~/.config/nvim/after/plugins/cmp.vim
 source ~/.config/nvim/after/plugins/luasnip.vim
 source ~/.config/nvim/after/plugins/defx.vim
-" source ~/.config/nvim/after/plugins/nerdtree.vim
 source ~/.config/nvim/after/plugins/lspkind.vim
 source ~/.config/nvim/after/plugins/comment.vim
 
@@ -199,16 +145,3 @@ set exrc
 "}}}
 
 autocmd VimEnter * :hi CmpItemKind guibg=#073642
-
-
-" Reload icons after init source
-" if exists('g:loaded_webdevicons')
-"   call webdevicons#refresh()
-" endif
-
-" set termguicolors
-" set background=dark " or light if you want light mode
-" let g:everforest_background = 'hard'
-" let g:everforest_vi_constract = 'soft'
-" let g:everforest_better_performance = 1
-" colorscheme everforest
