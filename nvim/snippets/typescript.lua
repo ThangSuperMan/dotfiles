@@ -256,17 +256,17 @@ function {}({}) {{
 local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) --}}}
 
 -- table.insert(snippets, normal_function)
-table.insert(snippets, const_function)
-table.insert(snippets, use_state)
-table.insert(snippets, use_effect)
+-- table.insert(snippets, const_function)
+-- table.insert(snippets, use_state)
+-- table.insert(snippets, use_effect)
 
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
-table.insert(autosnippets, console_log)
+-- table.insert(autosnippets, console_log)
 -- table.insert(autosnippets, for_loop)
 -- table.insert(autosnippets, if_snippet)
 -- table.insert(autosnippets, function_snippet_func)
-table.insert(autosnippets, function_component)
-table.insert(autosnippets, short_hand_if_statement)
+-- table.insert(autosnippets, function_component)
+-- table.insert(autosnippets, short_hand_if_statement)
 
 -- End Refactoring --
 

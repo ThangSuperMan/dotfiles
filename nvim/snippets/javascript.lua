@@ -16,7 +16,7 @@ local snippets, autosnippets = {}, {} --}}}
 local group = vim.api.nvim_create_augroup("Javascript Snippets", { clear = true })
 local file_pattern = "*.js"
 
-local myFirstSnippet = s("myFirstSnippet", { 
+local myFirstSnippet = s("myFirstSnippet", {
   t("Hi! This is my first snippet in lua"),
   i(1, "placeholder_text")
 })
@@ -31,12 +31,12 @@ local myFirstSnippet = s("myFirstSnippet", {
 -- Note: {{}}: Means escape curly brackets symbols
 
 local normal_function = s(
- "func",
+  "func",
   fmt([[
     function {}({}) {{
       {}
     }}
-  ]], 
+  ]],
     {
       i(1, "myFunc"),
       -- Choice node
@@ -48,13 +48,13 @@ local normal_function = s(
 )
 
 local const_function = s(
-{ trig = "constf", regTrig = true, hidden = true },
+  { trig = "constf", regTrig = true, hidden = true },
   fmt([[
     const {} = ({}) => {{
       {}
     }}
     {}
-  ]], 
+  ]],
     {
       i(1, "myFunc"),
       i(2, ""),
@@ -78,7 +78,7 @@ local const_function = s(
 --     }}
 --
 --     export default {}
---   ]], 
+--   ]],
 --     {
 --       i(1, "myComponent"),
 --       i(2, ""),
@@ -94,7 +94,7 @@ local use_state = s(
   { trig = "uses", regTrig = true, hidden = true },
   fmt([[
     const [{}, {}] = useState({})
-  ]], 
+  ]],
     {
       i(1, ""),
       i(2, ""),
@@ -109,7 +109,7 @@ local use_effect = s(
     React.useEffect(() => {{
       {}
     }}, [])
-  ]], 
+  ]],
     {
       i(1, "// TODO:"),
     }
@@ -130,19 +130,19 @@ local use_effect = s(
 --   }
 -- )
 
- local console_log = s(
+local console_log = s(
   { trig = "jj", regTrig = true },
   fmt([[
     console.log({})
-  ]], 
+  ]],
     {
       i(1, ""),
     }
   )
 )
-   
+
 local function_component = s(
-	{ trig = "fc", regTrig = true, hidden = true },
+  { trig = "fc", regTrig = true, hidden = true },
   fmt(
     [[
     import React from 'react' 
@@ -157,7 +157,7 @@ local function_component = s(
     ]],
     {
       i(1, "functionComponentName"),
-			-- c(2, { i(1, "num"), sn(1, { i(1, "arr"), t(".length") }) }),
+      -- c(2, { i(1, "num"), sn(1, { i(1, "arr"), t(".length") }) }),
       c(2, { i(1, "arg"), i(1, "") }),
       i(3, "// TODO:"),
       -- repeate the insert node number one
@@ -171,8 +171,8 @@ local function_component = s(
 -- table.insert(snippets, normal_function)
 
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
-table.insert(autosnippets, console_log)
-table.insert(autosnippets, const_function)
+-- table.insert(autosnippets, console_log)
+-- table.insert(autosnippets, const_function)
 -- table.insert(autosnippets, if_snippet)
 -- table.insert(autosnippets, function_snippet_func)
 table.insert(autosnippets, function_component)

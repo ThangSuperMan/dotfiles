@@ -16,12 +16,7 @@ set backspace=2
 
 " Allow neovim title file adapted to the title of terminal
 set title
-
 set inccommand=split
-
-" Decoration indent
-" set list
-" set listchars=tab:>-,space:⋅
 
 " Show the tabline when at lease two tab open
 " set showtabline=2
@@ -34,18 +29,12 @@ set noshowmode " Turn off the insert mode
 set shortmess+=c
 
 set cmdheight=1
-
 set showmatch
 
 set formatoptions-=cro
 
 " enable your mouse
 set mouse=a
-
-" Makes tabbing smarter will realize you have 2 vs 4
-" set smarttab
-
-set autowrite
 
 " Faster completion
 set updatetime=300
@@ -65,10 +54,12 @@ set shiftwidth=2
 set expandtab
 
 set encoding=UTF-8
-set cursorline
+" set cursorline
 set nowrap "No Wrap lines
 
 set number
+set relativenumber
+set signcolumn=yes:1
 
 " turn backup off, since most stuff is in SVN, git et.c anyway...
 set nowb

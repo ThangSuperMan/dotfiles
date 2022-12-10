@@ -101,10 +101,10 @@ nvim_lsp.sumneko_lua.setup {
 }
 
 -- npm install -g @prisma/language-server
---require'lspconfig'.prismals.setup{
---  on_attach = on_attach,
---  capabilities = capabilities 
---}
+require'lspconfig'.prismals.setup{
+  on_attach = on_attach,
+  capabilities = capabilities 
+}
 
 -- Setup html
 nvim_lsp.html.setup {

@@ -5,13 +5,14 @@
     "java",
     "css",
     "php",
+
 lua << EOF
 
 local treesitter = require'nvim-treesitter.configs'.setup {
 	highlight = {
     enable = true,
     disable = {
-      "solidity"
+      "solidity",
     },
   },
 	indent = {
@@ -19,6 +20,8 @@ local treesitter = require'nvim-treesitter.configs'.setup {
     disable = {},
   },
  ensure_installed = {
+   "prisma",
+   "javascript",
   },
   autotag = {
     enable = true,

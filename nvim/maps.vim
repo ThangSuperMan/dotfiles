@@ -7,10 +7,11 @@ nnoremap <space>mt :TableModeToggle<CR>
 
 " Close all the tabs excep the active one
 noremap <S-q> :tabonly<CR>
-" nnoremap <S-o> :only<CR>
 
 " SQl
 nnoremap <C-c>s :DBUI<CR>
+
+nnoremap <silent>  <c-q> <Cmd>BufferClose<CR>
 
 " Move window
 map sh <C-w>h
@@ -27,7 +28,10 @@ nnoremap zl :HopLineStart<cr>
 " Find the recents visited file by using Startify
 nnoremap <space>fr :Startify<cr>
 
-nnoremap <leader>C :CheatSH<CR>
+inoremap jk <ESC>
+inoremap ww <ESC>:w<cr>
+nnoremap <c-s> :w!<cr>
+nnoremap ; :
 
 " Show Full Path To Here:
 nnoremap <space>? :echo expand("%:p")<CR>
@@ -52,9 +56,6 @@ vnoremap <silent> # :<C-U>
   \gvy?<C-R><C-R>=substitute(
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
-
-" Save some strokes :)
-" nnoremap ; :
 
 " toggle spellcheck
 nmap <silent> <leader>s :set spell!<CR>
@@ -106,7 +107,7 @@ vnoremap K :m '<-2<CR>gv=gv
 nnoremap <C-d> 10<C-d>
 nnoremap <C-u> 10<C-u>
 
-nmap = :res +5<CR> " increase pane by 2
+nmap = :res +5<CR> " increase pane by 
 nmap - :res -5<CR> " decrease pane by 2
 nmap ] :vertical res +5<CR> " vertical increase pane by 2
 nmap [ :vertical res -5<CR> " vertical decrease pane by 2
@@ -116,12 +117,18 @@ nmap [ :vertical res -5<CR> " vertical decrease pane by 2
 
 nmap ,a gg<S-v>G
 
+" Barbar (Bufferline)
+nmap te :tabedit
+nmap <S-Tab> :BufferPrevious<Return>
+nmap <Tab> :BufferNext<Return>
+nmap .c :BufferClose<Return>
+
 "-----------------------------
 " Tabs
 
 " Open current directory
-nmap te :tabedit
-nmap <S-Tab> :tabprev<Return>
-nmap <Tab> :tabnext<Return>
+" nmap te :tabedit
+" nmap <S-Tab> :tabprev<Return>
+" nmap <Tab> :tabnext<Return>
 
-"------------------------------
+"----------------------------
