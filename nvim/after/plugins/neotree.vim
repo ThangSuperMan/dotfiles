@@ -193,6 +193,6 @@ lua << EOF
         }
     })
 
-    vim.cmd([[nnoremap <c-r> :Neotree reveal<cr>]])
+    vim.cmd([[nnoremap <c-f> :Neotree reveal<cr>]])
     vim.cmd([[nnoremap <c-b> :Neotree toggle<cr>]])
 EOF

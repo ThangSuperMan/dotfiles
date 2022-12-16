@@ -36,18 +36,24 @@ set formatoptions-=cro
 " enable your mouse
 set mouse=a
 
+set relativenumber
+set number
+
 " Faster completion
 set updatetime=300
+set timeoutlen=500
 
 set t_Co=256
 
-" Set cursor to Always be block. 
-" set guicursor=
+set lazyredraw
+
+set ttyfast
+
+" Limit syntax highlight
+set synmaxcol=4096                      
 
 " always show statusline
 set laststatus=2
-
-" set timeoutlen=800
 
 set tabstop=2 softtabstop=2
 set shiftwidth=2
@@ -57,8 +63,6 @@ set encoding=UTF-8
 " set cursorline
 set nowrap "No Wrap lines
 
-set number
-set relativenumber
 set signcolumn=yes:1
 
 " turn backup off, since most stuff is in SVN, git et.c anyway...

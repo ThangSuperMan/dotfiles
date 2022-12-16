@@ -11,8 +11,6 @@ noremap <S-q> :tabonly<CR>
 " SQl
 nnoremap <C-c>s :DBUI<CR>
 
-nnoremap <silent>  <c-q> <Cmd>BufferClose<CR>
-
 " Move window
 map sh <C-w>h
 map sk <C-w>k
@@ -23,27 +21,21 @@ map sl <C-w>l
 nnoremap gj :SplitjoinJoin<cr>
 nnoremap gs  SplitjoinSplit<cr>
 
-nnoremap zl :HopLineStart<cr>
+" nnoremap zl :HopLineStart<cr>
 
 " Find the recents visited file by using Startify
 nnoremap <space>fr :Startify<cr>
 
-inoremap jk <ESC>
-inoremap ww <ESC>:w<cr>
-nnoremap <c-s> :w!<cr>
+" inoremap jk <ESC>
+" inoremap ww <ESC>:w<cr>
+" nnoremap <c-s> :w!<cr>
 nnoremap ; :
-
-" Show Full Path To Here:
-nnoremap <space>? :echo expand("%:p")<CR>
 
 " Toggle Line Number:
 " nnoremap <space>n :set number!<CR>
 
 " Turn off highlight on search
 nnoremap <space>h :set nohlsearch!<CR>
-
-" Disable the treesitter hightlight
-" nnoremap <space>t :TSToggle highlight<CR>
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>

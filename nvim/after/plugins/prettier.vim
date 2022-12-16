@@ -1,32 +1,66 @@
 lua << EOF
 
-local null_ls = require("null-ls")
+-- Require: npm install -g prettier
+local formatter = require('formatter')
 
-null_ls.setup({
-  on_attach = function(client, bufnr)
-    if client.server_capabilities.documentFormattingProvider then
-      vim.cmd("nnoremap <silent><buffer> <Leader>f :lua vim.lsp.buf.formatting()<CR>")
-
-      -- format on save
-      vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()")
+    local function rome()
+        return {
+            exe = "rome format",
+            args = {
+                "--stdin-file-path", vim.api.nvim_buf_get_name(0), '--write'
+            },
+            stdin = true
+        }
     end
 
-    if client.server_capabilities.documentRangeFormattingProvider then
-      vim.cmd("xnoremap <silent><buffer> <Leader>f :lua vim.lsp.buf.range_formatting({})<CR>")
+    local function prettier()
+        return {
+            exe = "prettier",
+            args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
+            stdin = true
+        }
     end
-  end,
-})
 
-local prettier = require("prettier")
+    vim.api.nvim_exec([[
+        augroup FormatAutogroup
+          autocmd!
+          autocmd BufWritePost *.js,*.mjs,*.ts,*.lua,*.jsx,*.tsx,*.md,*.mdx,*.yml,*.json,*.css,*.scss,*.html,*.vue,*.svelte,*.sol FormatWrite
+        augroup END
+    ]], true)
 
-prettier.setup({
-  bin = 'prettier', -- or `'prettierd'` (v0.22+)
-  filetypes = {
-    "css",
-    "json",
-    "scss",
-    "solidity",
-  },
-})
+    formatter.setup({
+        logging = false,
+        filetype = {
+            javascriptreact = {prettier},
+            typescriptreact = {prettier},
+            typescript = {prettier},
+            javascript = {prettier},
+            html = {prettier},
+            svelte = {prettier},
+            css = {prettier},
+            vue = {prettier},
+            json = {prettier},
+            scss = {prettier},
+            yaml = {prettier},
+            markdown = {prettier},
+            -- rust = {
+            --     -- Rustfmt
+            --     function()
+            --         return {
+            --             exe = "rustfmt",
+            --             args = {"--emit=stdout"},
+            --             stdin = true
+            --         }
+            --     end
+            -- },
+            lua = {
+                -- luafmt
+                function()
+                    return {exe = "lua-format", stdin = true}
+                end
+            }
+
+        }
+    })
 
 EOF

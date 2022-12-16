@@ -10,6 +10,7 @@ require("transparent").setup({
     "BufferlineBufferSelected",
     "BufferLineFill",
     "BufferLineBackground",
+    "Neotre",
     "BufferLineSeparator",
     "BufferLineIndicatorSelected",
   },

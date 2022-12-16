@@ -33,22 +33,26 @@ if has("nvim")
    Plug 'alvan/vim-closetag'
    Plug 'nikvdp/ejs-syntax'
    Plug 'digitaltoad/vim-pug'
+   Plug 'xiyaowong/nvim-transparent'
 
    " Snippet
    Plug 'L3MON4D3/LuaSnip'
    Plug 'saadparwaiz1/cmp_luasnip'
    Plug 'shmup/vim-sql-syntax'
 
-   " Plug 'ap/vim-css-color'
+   " Prettier
+   Plug 'mhartington/formatter.nvim'
+
    Plug 'norcalli/nvim-colorizer.lua'
    Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
    Plug 'kristijanhusak/defx-icons'
    Plug 'kristijanhusak/defx-git'
    Plug 'nvim-tree/nvim-web-devicons',
-   " Plug 'nvim-neo-tree/neo-tree.nvim',
-   " Plug 'nvim-lua/plenary.nvim'
-   " Plug 'MunifTanjim/nui.nvim'
+   Plug 'nvim-neo-tree/neo-tree.nvim',
+   Plug 'nvim-lua/plenary.nvim'
+   Plug 'MunifTanjim/nui.nvim'
    Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+   Plug 'nvim-telescope/telescope.nvim'
    Plug 'sainnhe/everforest'
    Plug 'andrewradev/splitjoin.vim'
    Plug 'numToStr/Comment.nvim'
@@ -67,17 +71,21 @@ source ~/.config/nvim/sets.vim
 source ~/.config/nvim/maps.vim
 source ~/.config/nvim/after/plugins/treesitter.vim
 source ~/.config/nvim/after/plugins/colorizer.vim
-source ~/.config/nvim/after/plugins/defx.vim
+" source ~/.config/nvim/after/plugins/defx.vim
+source ~/.config/nvim/after/plugins/neotree.vim
 source ~/.config/nvim/after/plugins/lualine.vim
+source ~/.config/nvim/after/plugins/prettier.vim
 source ~/.config/nvim/after/plugins/auto-pairs.vim
 source ~/.config/nvim/after/plugins/dadboy.vim
 source ~/.config/nvim/after/plugins/lspconfig.vim
 source ~/.config/nvim/after/plugins/lspsaga.vim
-source ~/.config/nvim/after/plugins/denite.vim
+source ~/.config/nvim/after/plugins/telescope.vim
+" source ~/.config/nvim/after/plugins/denite.vim
 source ~/.config/nvim/after/plugins/cmp.vim
 source ~/.config/nvim/after/plugins/luasnip.vim
 source ~/.config/nvim/after/plugins/lspkind.vim
 source ~/.config/nvim/after/plugins/comment.vim
+source ~/.config/nvim/after/plugins/transparent.vim
 
 "        /-----------------/
 ">>-----/    FUNCTIONS    /------------>

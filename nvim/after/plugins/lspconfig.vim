@@ -45,12 +45,12 @@ lua << EOF
       buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
 
       -- Config with nvim nightly
-      if client.server_capabilities.documentFormattingProvider then
-        vim.api.nvim_command [[augroup Format]]
-        vim.api.nvim_command [[autocmd! * <buffer>]]
-        vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
-        vim.api.nvim_command [[augroup END]]
-      end
+      -- if client.server_capabilities.documentFormattingProvider then
+      --   vim.api.nvim_command [[augroup Format]]
+      --   vim.api.nvim_command [[autocmd! * <buffer>]]
+      --   vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
+      --   vim.api.nvim_command [[augroup END]]
+      -- end
 
       -- Format on save
       -- if client.resolved_capabilities.document_formatting then
@@ -153,8 +153,8 @@ nvim_lsp.tailwindcss.setup{
 
 -- Diagnostic symbols in the sign column (gutter)
 -- 
--- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-local signs = { Error = "", Warn = "", Hint = "", Info = "" }
+-- local signs = { Error = "", Warn = "", Hint = "", Info = "" }
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })

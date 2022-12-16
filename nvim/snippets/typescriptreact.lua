@@ -279,7 +279,7 @@ local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) -
 -- table.insert(snippets, function_component)
 
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
--- table.insert(autosnippets, console_log)
+table.insert(autosnippets, console_log)
 -- table.insert(autosnippets, for_loop)
 -- table.insert(autosnippets, if_snippet)
 -- table.insert(autosnippets, function_snippet_func)
