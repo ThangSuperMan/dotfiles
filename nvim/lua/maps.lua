@@ -32,6 +32,7 @@ keymap.set('i', '<c-l>', '<C-o>A')
 
 -- New tab
 keymap.set('n', 'te', ':tabedit')
+
 -- Split window
 keymap.set('n', 'ss', ':split<Return><C-w>w')
 keymap.set('n', 'sv', ':vsplit<Return><C-w>w')
@@ -54,11 +55,14 @@ keymap.set('v', '<S-Tab>', '<gv')
 keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 
-
 -- Resize window
 keymap.set('n', '<C-w><left>', '<C-w><')
 keymap.set('n', '<C-w><right>', '<C-w>>')
 keymap.set('n', '<C-w><up>', '<C-w>+')
 keymap.set('n', '<C-w><down>', '<C-w>-')
+
+keymap.set('n', '<S-Tab>', ':BufferPrevious<Return>')
+keymap.set('n', '<Tab>', ':BufferNext<Return>')
+keymap.set('n', '.c', ':BufferClose<Return>')
 
 vim.opt.clipboard:append { 'unnamedplus' }
