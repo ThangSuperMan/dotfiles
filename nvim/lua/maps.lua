@@ -43,6 +43,10 @@ keymap.set('', 'sk', '<C-w>k')
 keymap.set('', 'sj', '<C-w>j')
 keymap.set('', 'sl', '<C-w>l')
 
+-- Scroll setup
+-- keymap.set('n', '<C-d>', '10<C-d>')
+-- keymap.set('n', '<C-u>', '10<C-u>')
+
 -- Use tab with text block
 -- vmap <Tab> >gv
 -- vmap <S-Tab> <gv

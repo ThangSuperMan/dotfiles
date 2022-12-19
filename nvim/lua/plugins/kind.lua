@@ -36,7 +36,7 @@ require('lspkind').init({
       Value = "   (Value)",
       Enum = " 練 (Enum)",
       Keyword = "   (Keyword)",
-      -- Snippet = "   (Snippet)",
+      Snippet = "   (Snippet)",
       Color = "   (Color)",
       File = "   (File)",
       Reference = "   (Reference)",

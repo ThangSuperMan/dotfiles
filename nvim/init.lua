@@ -1,3 +1,3 @@
-require('maps')
 require('base')
+require('maps')
 require('plugins')

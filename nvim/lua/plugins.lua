@@ -3,9 +3,10 @@ return require('packer').startup(function()
 	use 'wbthomason/packer.nvim'
 
   -- My mood
-	use { 'psliwka/vim-smoothie' }
+	-- use { 'psliwka/vim-smoothie' }
   use { 'xiyaowong/nvim-transparent', config = require 'plugins.transparent' }
   use { 'sainnhe/everforest', config = require 'plugins.theme' }
+  use { 'karb94/neoscroll.nvim', config = require 'plugins.neoscroll' }
 
   -- Treesitter
   use {
@@ -89,14 +90,14 @@ return require('packer').startup(function()
         config = require('plugins.neotree')
     }
 
-  use { "lukas-reineke/indent-blankline.nvim" , config = function ()
-        require("indent_blankline").setup({
-            show_current_context = true,
-            show_current_context_start = true,
-            filetype_exclude = {"help", "txt", "norg", "md"},
-            buftype_exclude = {"terminal", "nofile"}
-        })
-        vim.g.indent_blankline_char = "∘"
-    end}
+  -- use { "lukas-reineke/indent-blankline.nvim" , config = function ()
+  --       require("indent_blankline").setup({
+  --           show_current_context = true,
+  --           show_current_context_start = true,
+  --           filetype_exclude = {"help", "txt", "norg", "md"},
+  --           buftype_exclude = {"terminal", "nofile"}
+  --       })
+  --       vim.g.indent_blankline_char = "∘"
+  --   end}
 
 end)

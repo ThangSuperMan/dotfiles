@@ -10,6 +10,13 @@ vim.cmd('set updatetime=300')
 vim.cmd('set timeoutlen=500')
 vim.cmd('set mouse=a')
 vim.cmd('set noshowmode')
+vim.cmd('set hidden')                              -- Required to keep multiple buffers open multiple buffers
+vim.cmd('set lazyredraw')                          -- Improve scrolling performance when navigating through large results
+vim.cmd('set ttyfast')                             -- U got a fast terminal
+vim.cmd('set synmaxcol=4096')
+vim.cmd('set formatoptions-=cro')                  -- Stop newline continution of comments
+vim.cmd('set scroll=10')                  -- Stop newline continution of comments
+-- vim.cmd('set shortmess+=c')
 
 vim.scriptencoding = 'utf-8'
 vim.opt.encoding = 'utf-8'
@@ -24,7 +31,7 @@ vim.opt.hlsearch = true
 vim.opt.relativenumber = true
 vim.opt.backup = false
 vim.opt.showcmd = true
-vim.opt.cmdheight = 1
+vim.opt.cmdheight = 2
 vim.opt.laststatus = 2
 vim.opt.expandtab = true
 vim.opt.scrolloff = 10
