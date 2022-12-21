@@ -26,7 +26,7 @@ require('lspkind').init({
       Method = "   (Method)",
       Function = "   (Function)",
       Constructor = "   (Constructor)",
-      Field = " ﴲ  (Field)",
+      Field = "ﰠ  (Field)",
       Variable = "[] (Variable)",
       Class = "   (Class)",
       Interface = " ﰮ  (Interface)",

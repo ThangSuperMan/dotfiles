@@ -5,6 +5,7 @@ vim.cmd [[ autocmd!]]
 vim.cmd [[ autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({higroup = "Substitute", timeout = 100})]]
 vim.cmd [[ augroup END]]
 
+vim.o.termguicolors = true
 -- Faster completion
 vim.cmd('set updatetime=300')
 vim.cmd('set timeoutlen=500')

@@ -30,6 +30,19 @@ keymap.set('n', ';', ':', opts)
 -- Jump to the last of the still inside the insert mode
 keymap.set('i', '<c-l>', '<C-o>A')
 
+-- Lsp saga
+-- nnoremap <silent> <C-e> <Cmd>Lspsaga diagnostic_jump_next<CR>
+-- nnoremap <silent> gh <Cmd>Lspsaga lsp_finder<CR>
+-- nnoremap <silent> gp <Cmd>Lspsaga preview_definition<CR>
+-- " nnoremap <silent>K <Cmd>Lspsaga hover_doc<CR>
+-- "nnoremap <silent> K <Cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
+-- " inoremap <silent> <C-k> <Cmd>Lspsaga signature_help<CR>
+-- " nnoremap <silent> gr <Cmd>Lspsaga rename<CR>
+keymap.set('n', '<C-e>', '<Cmd>Lspsaga diagnostic_jump_next<CR>')
+-- keymap.set('n', 'rn', '<Cmd>Lspsaga rename<CR>')
+keymap.set('n', 'K', '<Cmd>lua require("lspsaga.hover").render_hover_doc()<CR>')
+-- "nnoremap <silent> K <Cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
+
 -- New tab
 keymap.set('n', 'te', ':tabedit')
 
@@ -54,8 +67,6 @@ keymap.set('v', '<Tab>', '>gv')
 keymap.set('v', '<S-Tab>', '<gv')
 
 -- Move the selected line
--- vnoremap J :m '>+1<CR>gv=gv
--- vnoremap K :m '<-2<CR>gv=gv
 keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 

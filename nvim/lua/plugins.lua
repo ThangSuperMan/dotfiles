@@ -3,10 +3,10 @@ return require('packer').startup(function()
 	use 'wbthomason/packer.nvim'
 
   -- My mood
-	-- use { 'psliwka/vim-smoothie' }
+  use { 'psliwka/vim-smoothie' }
   use { 'xiyaowong/nvim-transparent', config = require 'plugins.transparent' }
   use { 'sainnhe/everforest', config = require 'plugins.theme' }
-  use { 'karb94/neoscroll.nvim', config = require 'plugins.neoscroll' }
+  -- use { 'karb94/neoscroll.nvim', config = require 'plugins.neoscroll' }
 
   -- Treesitter
   use {
@@ -14,6 +14,20 @@ return require('packer').startup(function()
       run = ':TSUpdate',
       config = require 'plugins.treesitter'
   }
+
+  use {
+      'voldikss/vim-floaterm',
+      config = function()
+          vim.g.floaterm_wintype = 'float'
+          vim.g.floaterm_position = 'bottomright'
+          vim.g.floaterm_width = 0.6
+          vim.g.floaterm_height = 0.5
+          vim.g.floaterm_keymap_toggle = '<C-\\>'
+      end
+  }
+
+  -- Colorizer
+  use { 'norcalli/nvim-colorizer.lua', config = require 'plugins.colorizer' }
 
   -- Surround
   use { 'tpope/vim-surround' }
@@ -33,7 +47,7 @@ return require('packer').startup(function()
 
   -- Lsp
   use { 'neovim/nvim-lspconfig', config = require 'plugins.lsp' }
-  use { 'glepnir/lspsaga.nvim', branch = 'main' }
+  use { 'glepnir/lspsaga.nvim', branch = 'main', config = require 'plugins.saga' }
   use { 'onsails/lspkind-nvim', config = require 'plugins.kind' }
 
   -- Snippet

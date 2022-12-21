@@ -57,29 +57,14 @@ local const_function = s(
   )
 )
 
--- React with Javascript
-
--- local function_component = s(
---  "fc",
---   fmt([[
---     import React from 'react'
---
---     const {} = ({}) => {{
---       return (
---         {}
---       )
---     }}
---
---     export default {}
---   ]],
---     {
---       i(1, "myComponent"),
---       i(2, ""),
---       i(3, "// TODO:"),
---       i(4, ""),
---     }
---   )
--- )
+local class_name = s(
+  "cl",
+  fmt([[ 
+    className="{}"
+  ]],
+    i(1, "")
+  )
+)
 
 -- Use state
 
@@ -273,13 +258,15 @@ function {}({}) {{
 local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) --}}}
 
 -- table.insert(snippets, normal_function)
--- table.insert(snippets, const_function)
+table.insert(snippets, const_function)
 table.insert(snippets, use_state)
 table.insert(snippets, use_effect)
+table.insert(snippets, class_name)
 table.insert(snippets, function_component)
 
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 table.insert(autosnippets, console_log)
+table.insert(autosnippets, function_component)
 -- table.insert(autosnippets, for_loop)
 -- table.insert(autosnippets, if_snippet)
 -- table.insert(autosnippets, function_snippet_func)
