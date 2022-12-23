@@ -15,9 +15,9 @@ vim.cmd('set hidden')                              -- Required to keep multiple 
 vim.cmd('set lazyredraw')                          -- Improve scrolling performance when navigating through large results
 vim.cmd('set ttyfast')                             -- U got a fast terminal
 vim.cmd('set synmaxcol=4096')
-vim.cmd('set formatoptions-=cro')                  -- Stop newline continution of comments
-vim.cmd('set scroll=10')                  -- Stop newline continution of comments
--- vim.cmd('set shortmess+=c')
+-- vim.cmd('set formatoptions-=cro')                  -- Stop newline continution of comments
+-- vim.cmd('set scroll=10')     
+vim.cmd('set shortmess+=c')
 
 vim.scriptencoding = 'utf-8'
 vim.opt.encoding = 'utf-8'
@@ -47,7 +47,7 @@ vim.opt.tabstop = 2
 vim.opt.wrap = false -- No Wrap lines
 vim.opt.backspace = { 'start', 'eol', 'indent' }
 vim.opt.path:append { '**' } -- Finding files - Search down into subfolders
-vim.opt.wildignore:append { '*/node_modules/*' }
+-- vim.opt.wildignore:append { '*/node_modules/*' }
 
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])

@@ -37,9 +37,28 @@ return require('packer').startup(function()
   -- Completion
   use { 'hrsh7th/cmp-nvim-lsp' }
   use { 'hrsh7th/cmp-buffer' }
+  use { 'hrsh7th/cmp-nvim-lsp-signature-help' }
   use { 'hrsh7th/nvim-cmp', config = require 'plugins.cmp' }
 
   use { 'nvim-telescope/telescope.nvim', config = require 'plugins.telescope' }
+
+  use {'nvim-orgmode/orgmode', config = function()
+  end}
+  use {'akinsho/org-bullets.nvim', config = function()
+    require('org-bullets').setup({
+      concealcursor = true, -- If false then when the cursor is on a line underlying characters are visible
+      symbols = {
+        -- headlines can be a list
+        headlines = { "◉", "✿", "○", "✸" },
+        -- or a function that receives the defaults and returns a list
+        checkboxes = {
+          half = { "", "OrgTSCheckboxHalfChecked" },
+          done = { "✓", "OrgDone" },
+          todo = { "˟", "OrgTODO" },
+        },
+      }
+    })
+  end}
 
   -- Comment
   use { 'JoosepAlviste/nvim-ts-context-commentstring' }
@@ -111,7 +130,8 @@ return require('packer').startup(function()
   --           filetype_exclude = {"help", "txt", "norg", "md"},
   --           buftype_exclude = {"terminal", "nofile"}
   --       })
-  --       vim.g.indent_blankline_char = "∘"
+  --       -- vim.g.indent_blankline_char = "∘•"
+  --       vimvim.g.indent_blankline_char = "∘•"
   --   end}
 
 end)
