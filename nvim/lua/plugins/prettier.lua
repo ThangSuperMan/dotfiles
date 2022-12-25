@@ -42,27 +42,29 @@ local formatter = require('formatter')
             scss = {prettier},
             yaml = {prettier},
             markdown = {prettier},
-            rust = {
-                -- Rustfmt
-                function()
-                    return {
-                        exe = "rustfmt",
-                        args = {"--emit=stdout"},
-                        stdin = true
-                    }
-                end
-            },
+            sh = {prettier},
+          
+            -- rust = {
+            --     -- Rustfmt
+            --     function()
+            --         return {
+            --             exe = "rustfmt",
+            --             args = {"--emit=stdout"},
+            --             stdin = true
+            --         }
+            --     end
+            -- },
             go = {
-              function() 
-                return {exe = "gofmt", stdin = true}  
+              function()
+                return {exe = "gofmt", stdin = true}
               end
             },
-            -- lua = {
-            --     -- luafmt
-            --     function()
-            --         return {exe = "lua-format", stdin = true}
-            --     end,
-            -- },
+            lua = {
+                -- luafmt
+                function()
+                    return {exe = "lua-format", stdin = true}
+                end,
+            },
         }
     })
 end

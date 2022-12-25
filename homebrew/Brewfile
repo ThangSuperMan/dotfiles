@@ -1,0 +1,17 @@
+# Using the command: brew bundle 
+# for download the libraries
+brew "bat"
+brew "nvim"
+brew "tmux"
+brew "fish"
+brew "fisher"
+brew "starship"
+brew "peco"
+
+# Languages
+brew "go"
+brew "ruby"
+
+# Databae
+brew "sqlite"
+brew "sqls"

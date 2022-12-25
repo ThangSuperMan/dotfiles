@@ -77,18 +77,6 @@ return function()
 		filetypes = {"css", "scss"}
   }
 
-  -- nvim_lsp.gopls.setup {
-  --   on_attach = on_attach,
-  --   cmd = { "gopls", "serve" },
-  --   settings = {
-  --     analyses = {
-  --       unusedparams = true
-  --     },
-  --     staticcheck = true
-  --   }
-  -- }
-
-
 nvim_lsp.sumneko_lua.setup {
   on_attach = on_attach,
   settings = {
@@ -107,18 +95,18 @@ nvim_lsp.sumneko_lua.setup {
   },
 }
 
-nvim_lsp.gopls.setup {
-  capabilities = capabilities,
-  on_attach = on_attach,
-  settings = {
-      gopls = {
-          gofumpt = true,
-      },
-  },
-  flags = {
-      debounce_text_changes = 150,
-  },
-}
+-- nvim_lsp.gopls.setup {
+--   capabilities = capabilities,
+--   on_attach = on_attach,
+--   settings = {
+--       gopls = {
+--           gofumpt = true,
+--       },
+--   },
+--   flags = {
+--       debounce_text_changes = 150,
+--   },
+-- }
 
 -- npm install -g @prisma/language-server
 require'lspconfig'.prismals.setup{
@@ -169,6 +157,25 @@ nvim_lsp.tailwindcss.setup{
  --  on_attach = on_attach,
  --  capability = capabilities
 -- }
+
+-- Bash
+-- brew install shellcheck -> for linting(diagnostics)
+nvim_lsp.bashls.setup{
+  on_attach = on_attach,
+}
+
+-- Golang
+nvim_lsp.gopls.setup {
+  on_attach = on_attach,
+  cmd = { "gopls", "serve" },
+  settings = {
+    analyses = {
+      unusedparams = true
+    },
+    staticcheck = true
+  }
+}
+
 
 nvim_lsp.tsserver.setup {
   on_attach = on_attach,

@@ -16,7 +16,7 @@ vim.cmd('set lazyredraw')                          -- Improve scrolling performa
 vim.cmd('set ttyfast')                             -- U got a fast terminal
 vim.cmd('set synmaxcol=4096')
 -- vim.cmd('set formatoptions-=cro')                  -- Stop newline continution of comments
--- vim.cmd('set scroll=10')     
+-- vim.cmd('set scroll=15')     
 vim.cmd('set shortmess+=c')
 
 vim.scriptencoding = 'utf-8'

@@ -16,11 +16,6 @@ local snippets, autosnippets = {}, {} --}}}
 local group = vim.api.nvim_create_augroup("Typescript React Snippets", { clear = true })
 local file_pattern = "*.tsx"
 
-local myFirstSnippet = s("myFirstSnippet", {
-  t("Hi! This is my first snippet in lua"),
-  i(1, "placeholder_text")
-})
-
 -- Note: {{}}: Means escape curly brackets symbols
 
 local normal_function = s(
@@ -58,7 +53,7 @@ local const_function = s(
 )
 
 local class_name = s(
-  "cl",
+  "cln",
   fmt([[ 
     className="{}"
   ]],
@@ -109,8 +104,19 @@ local use_effect = s(
 --   }
 -- )
 
+-- local console_log = s(
+--   { trig = "jj", regTrig = true },
+--   fmt([[
+--     console.log({});
+--   ]],
+--     {
+--       i(1, ""),
+--     }
+--   )
+-- )
+
 local console_log = s(
-  { trig = "jj", regTrig = true },
+  "cl",
   fmt([[
     console.log({});
   ]],
@@ -119,6 +125,21 @@ local console_log = s(
     }
   )
 )
+
+local console_log_object = s(
+  "clo",
+  fmt([[ 
+    console.log("{} :>> ", {});
+  ]],
+    {
+      i(1, ""),
+      i(2, ""),
+    }
+  )
+)
+
+      -- c(2, { t(""), i(1, "myArg") }),
+
 
 -- local function_component = s(
 --   "fc",
@@ -263,10 +284,12 @@ table.insert(snippets, use_state)
 table.insert(snippets, use_effect)
 table.insert(snippets, class_name)
 table.insert(snippets, function_component)
+table.insert(snippets, console_log)
+table.insert(snippets, console_log_object)
 
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
-table.insert(autosnippets, console_log)
-table.insert(autosnippets, function_component)
+-- table.insert(autosnippets, console_log)
+-- table.insert(autosnippets, function_component)
 -- table.insert(autosnippets, for_loop)
 -- table.insert(autosnippets, if_snippet)
 -- table.insert(autosnippets, function_snippet_func)

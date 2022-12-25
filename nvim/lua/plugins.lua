@@ -1,12 +1,56 @@
+local fn = vim.fn
+
+-- Automatically install packer
+local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+---@diagnostic disable-next-line: missing-parameter
+if fn.empty(fn.glob(install_path)) > 0 then
+  PACKER_BOOTSTRAP = fn.system {
+    "git",
+    "clone",
+    "--depth",
+    "1",
+    "https://github.com/wbthomason/packer.nvim",
+    install_path,
+  }
+  print "Installing packer close and reopen Neovim..."
+  vim.cmd [[packadd packer.nvim]]
+end
+
+-- Autocommand that reloads neovim whenever you save the plugins.lua file
+vim.cmd [[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  augroup end
+]]
+
+-- Use a protected call so we don't error out on first use
+local status_ok, packer = pcall(require, "packer")
+if not status_ok then
+  return
+end
+
+-- Have packer use a popup window
+packer.init {
+  -- snapshot = "july-24",
+  snapshot_path = fn.stdpath "config" .. "/snapshots",
+  max_jobs = 50,
+  display = {
+    open_fn = function()
+      return require("packer.util").float { border = "rounded" }
+    end,
+    prompt_border = "rounded", -- Border style of prompt popups.
+  },
+}
+
 return require('packer').startup(function()
 	-- packer can manage itself
-	use 'wbthomason/packer.nvim'
+  use 'wbthomason/packer.nvim'
 
   -- My mood
-  use { 'psliwka/vim-smoothie' }
+  -- use { 'psliwka/vim-smoothie' }
   use { 'xiyaowong/nvim-transparent', config = require 'plugins.transparent' }
   use { 'sainnhe/everforest', config = require 'plugins.theme' }
-  -- use { 'karb94/neoscroll.nvim', config = require 'plugins.neoscroll' }
 
   -- Treesitter
   use {
@@ -32,6 +76,7 @@ return require('packer').startup(function()
   -- Surround
   use { 'tpope/vim-surround' }
   use { 'windwp/nvim-ts-autotag' }
+  use { 'alvan/vim-closetag', config = require 'plugins.closetag' }
   use { 'jiangmiao/auto-pairs' }
 
   -- Completion
@@ -42,6 +87,7 @@ return require('packer').startup(function()
 
   use { 'nvim-telescope/telescope.nvim', config = require 'plugins.telescope' }
 
+  -- Write notes
   use {'nvim-orgmode/orgmode', config = function()
   end}
   use {'akinsho/org-bullets.nvim', config = function()
@@ -84,7 +130,9 @@ return require('packer').startup(function()
       config = require('plugins.lualine')
   }
 
+  -- Prettier
   use { 'mhartington/formatter.nvim', config = require 'plugins.prettier' }
+  use 'simrat39/rust-tools.nvim'
 
   -- Git
   use { 'tpope/vim-fugitive' }
@@ -118,20 +166,26 @@ return require('packer').startup(function()
                         other_win_hl_color = '#f3a14e'
                     })
                 end
-            }
+            },
         },
         config = require('plugins.neotree')
     }
 
-  -- use { "lukas-reineke/indent-blankline.nvim" , config = function ()
-  --       require("indent_blankline").setup({
-  --           show_current_context = true,
-  --           show_current_context_start = true,
-  --           filetype_exclude = {"help", "txt", "norg", "md"},
-  --           buftype_exclude = {"terminal", "nofile"}
-  --       })
-  --       -- vim.g.indent_blankline_char = "∘•"
-  --       vimvim.g.indent_blankline_char = "∘•"
-  --   end}
+  
+  -- use { 'Yggdroot/indentLine',
+  --   config = function()
+  --     vim.g.indentLine_char = '|'
+  --   end
+  -- }
+
+  use { "lukas-reineke/indent-blankline.nvim" , config = function ()
+        require("indent_blankline").setup({
+            show_current_context = false,
+            show_current_context_start = true,
+            filetype_exclude = {"help", "txt", "norg", "md"},
+            buftype_exclude = {"terminal", "nofile"}
+        })
+        -- vim.g.indent_blankline_char = "∘•"
+    end}
 
 end)

@@ -19,6 +19,10 @@ keymap.set('n', 'L', 'g_', opts)
 keymap.set('v', 'H', '^', opts)
 keymap.set('v', 'L', 'g_', opts)
 
+-- Google search
+vim.cmd([[nmap gy :silent execute "!google-chrome http://google.com/search?q=" . shellescape("<cWORD>") . " &"<CR>]])
+vim.cmd([[vmap gy <Esc>:silent execute "!google-chrome http://google.com/search?q=" . shellescape("<C-r>*") . " &"<CR>]])
+
 -- Select all
 keymap.set('n', '<C-a>', 'gg<S-v>G')
 
@@ -57,8 +61,8 @@ keymap.set('', 'sj', '<C-w>j')
 keymap.set('', 'sl', '<C-w>l')
 
 -- Scroll setup
--- keymap.set('n', '<C-d>', '10<C-d>')
--- keymap.set('n', '<C-u>', '10<C-u>')
+keymap.set('n', '<C-d>', '10<C-d>')
+keymap.set('n', '<C-u>', '10<C-u>')
 
 -- Use tab with text block
 -- vmap <Tab> >gv
