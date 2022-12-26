@@ -17,13 +17,16 @@ require('lualine').setup {
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch'},
-    lualine_c = {{
-      'filename',
-      file_status = true, -- displays file status (readonly status, modified status)
-      path = 0 -- 0 = just filename, 1 = relative path, 2 = absolute path
-    }},
-    lualine_x = {
+    lualine_c = {
       { symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}, sources = {"nvim_diagnostic"}, 'diagnostics' },
+      {
+        'filename',
+        file_status = true, -- displays file status (readonly status, modified status)
+        path = 0 -- 0 = just filename, 1 = relative path, 2 = absolute path
+      }
+    },
+    lualine_x = {
+      -- { symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}, sources = {"nvim_diagnostic"}, 'diagnostics' },
       'encoding',
       'filetype'
     },

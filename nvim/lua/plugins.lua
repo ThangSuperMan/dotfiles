@@ -59,17 +59,6 @@ return require('packer').startup(function()
       config = require 'plugins.treesitter'
   }
 
-  use {
-      'voldikss/vim-floaterm',
-      config = function()
-          vim.g.floaterm_wintype = 'float'
-          vim.g.floaterm_position = 'bottomright'
-          vim.g.floaterm_width = 0.6
-          vim.g.floaterm_height = 0.5
-          vim.g.floaterm_keymap_toggle = '<C-\\>'
-      end
-  }
-
   -- Colorizer
   use { 'norcalli/nvim-colorizer.lua', config = require 'plugins.colorizer' }
 
@@ -78,6 +67,8 @@ return require('packer').startup(function()
   use { 'windwp/nvim-ts-autotag' }
   use { 'alvan/vim-closetag', config = require 'plugins.closetag' }
   use { 'jiangmiao/auto-pairs' }
+
+  use { 'terryma/vim-multiple-cursors' }
 
   -- Completion
   use { 'hrsh7th/cmp-nvim-lsp' }
@@ -107,13 +98,27 @@ return require('packer').startup(function()
   end}
 
   -- Comment
-  use { 'JoosepAlviste/nvim-ts-context-commentstring' }
   use { 'tpope/vim-commentary' }
 
   -- Lsp
   use { 'neovim/nvim-lspconfig', config = require 'plugins.lsp' }
   use { 'glepnir/lspsaga.nvim', branch = 'main', config = require 'plugins.saga' }
   use { 'onsails/lspkind-nvim', config = require 'plugins.kind' }
+
+  -- debugging
+  --config = require('plugins.lualine')
+  use { 'mfussenegger/nvim-dap', config = require 'plugins.dap' }
+  use { 'leoluz/nvim-dap-go', config = function()
+    require('dap-go').setup()
+  end
+  }
+  use { 'rcarriga/nvim-dap-ui', config = require 'plugins.dapui'}
+  use { 'theHamsta/nvim-dap-virtual-text', config = function()
+    require('nvim-dap-virtual-text').setup()
+    vim.fn.sign_define('DapBreakpoint', {text='🟥', texthl='', linehl='', numhl=''})
+    vim.fn.sign_define('DapStopped', {text='🟢', texthl='', linehl='', numhl=''})
+  end}
+  use 'nvim-telescope/telescope-dap.nvim'
 
   -- Snippet
   use { 'L3MON4D3/LuaSnip' }

@@ -1,6 +1,8 @@
 local keymap = vim.keymap
 local opts = { noremap = true }
 
+-- Set leader key
+vim.g.mapleader = ' '
 keymap.set('n', 'x', '"_x')
 
 -- Increment/decrement
@@ -19,10 +21,6 @@ keymap.set('n', 'L', 'g_', opts)
 keymap.set('v', 'H', '^', opts)
 keymap.set('v', 'L', 'g_', opts)
 
--- Google search
-vim.cmd([[nmap gy :silent execute "!google-chrome http://google.com/search?q=" . shellescape("<cWORD>") . " &"<CR>]])
-vim.cmd([[vmap gy <Esc>:silent execute "!google-chrome http://google.com/search?q=" . shellescape("<C-r>*") . " &"<CR>]])
-
 -- Select all
 keymap.set('n', '<C-a>', 'gg<S-v>G')
 
@@ -34,18 +32,8 @@ keymap.set('n', ';', ':', opts)
 -- Jump to the last of the still inside the insert mode
 keymap.set('i', '<c-l>', '<C-o>A')
 
--- Lsp saga
--- nnoremap <silent> <C-e> <Cmd>Lspsaga diagnostic_jump_next<CR>
--- nnoremap <silent> gh <Cmd>Lspsaga lsp_finder<CR>
--- nnoremap <silent> gp <Cmd>Lspsaga preview_definition<CR>
--- " nnoremap <silent>K <Cmd>Lspsaga hover_doc<CR>
--- "nnoremap <silent> K <Cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
--- " inoremap <silent> <C-k> <Cmd>Lspsaga signature_help<CR>
--- " nnoremap <silent> gr <Cmd>Lspsaga rename<CR>
 keymap.set('n', '<C-e>', '<Cmd>Lspsaga diagnostic_jump_next<CR>')
--- keymap.set('n', 'rn', '<Cmd>Lspsaga rename<CR>')
 keymap.set('n', 'K', '<Cmd>lua require("lspsaga.hover").render_hover_doc()<CR>')
--- "nnoremap <silent> K <Cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
 
 -- New tab
 keymap.set('n', 'te', ':tabedit')
@@ -64,9 +52,21 @@ keymap.set('', 'sl', '<C-w>l')
 keymap.set('n', '<C-d>', '10<C-d>')
 keymap.set('n', '<C-u>', '10<C-u>')
 
+-- Debugging
+keymap.set('n', '<leader>dc', ':lua require"dap".continue()<CR>')
+keymap.set('n', '<leader>db', ':lua require"dap".reverse_continue()<CR>')
+keymap.set('n', '<leader>ds', ':lua require"dap".step_over()<CR>')
+keymap.set('n', '<leader>di', ':lua require"dap".step_into()<CR>')
+keymap.set('n', '<leader>do', ':lua require"dap".step_out()<CR>')
+keymap.set('n', '<leader>dk', ':lua require"dap".up()<CR>')
+keymap.set('n', '<leader>dj', ':lua require"dap".down()<CR>')
+keymap.set('n', '<leader>b', ':lua require"dap".toggle_breakpoint()<CR>')
+keymap.set('n', '<leader>dt', ':lua require("dap-go").debug_test()<CR>')
+keymap.set('n', '<leader>dui', ':lua require("dapui").open()<CR>')
+keymap.set('n', '<leader>duic', ':lua require("dapui").close()<CR>')
+-- nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+
 -- Use tab with text block
--- vmap <Tab> >gv
--- vmap <S-Tab> <gv
 keymap.set('v', '<Tab>', '>gv')
 keymap.set('v', '<S-Tab>', '<gv')
 

@@ -5,13 +5,21 @@ brew "nvim"
 brew "tmux"
 brew "fish"
 brew "fisher"
-brew "starship"
 brew "peco"
-
-# Languages
+brew "starship"
+brew "htop"
 brew "go"
 brew "ruby"
-
-# Databae
+brew "shellcheck"
 brew "sqlite"
 brew "sqls"
+# Kubernetes
+brew "kubernetes-cli"
+# ...for configuring the Minikube cluster
+brew "kubectl"
+brew "netcat"
+
+# Casks
+cask "spotify"
+cask "alacritty"
+cask "numi"
