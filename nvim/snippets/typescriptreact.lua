@@ -104,19 +104,8 @@ local use_effect = s(
 --   }
 -- )
 
--- local console_log = s(
---   { trig = "jj", regTrig = true },
---   fmt([[
---     console.log({});
---   ]],
---     {
---       i(1, ""),
---     }
---   )
--- )
-
 local console_log = s(
-  "cl",
+  { trig = "jj", regTrig = true },
   fmt([[
     console.log({});
   ]],
@@ -126,8 +115,19 @@ local console_log = s(
   )
 )
 
+-- local console_log = s(
+--   "cl",
+--   fmt([[
+--     console.log({});
+--   ]],
+--     {
+--       i(1, ""),
+--     }
+--   )
+-- )
+
 local console_log_object = s(
-  "clo",
+  "pO",
   fmt([[ 
     console.log("{} :>> ", {});
   ]],
@@ -284,8 +284,9 @@ table.insert(snippets, use_state)
 table.insert(snippets, use_effect)
 table.insert(snippets, class_name)
 table.insert(snippets, function_component)
-table.insert(snippets, console_log)
 table.insert(snippets, console_log_object)
+
+table.insert(autosnippets, console_log)
 
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 -- table.insert(autosnippets, console_log)

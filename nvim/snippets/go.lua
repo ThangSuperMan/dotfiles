@@ -66,10 +66,26 @@ local print_object = s(
   )
 )
 
+local halt_on = s(
+  "haltOn",
+  fmt([[
+    func haltOn(err error) {{
+      if err != nil {{
+        {}
+      }}
+    }}
+  ]],
+    {
+      i(1, 'log.Fatal("Error here: ", err)'),
+    }
+  )
+)
+
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 table.insert(autosnippets, print_line)
 table.insert(snippets, print_object)
 table.insert(snippets, main)
+table.insert(snippets, halt_on)
 -- table.insert(autosnippets, short_hand_if_statement)
 
 -- End Refactoring --

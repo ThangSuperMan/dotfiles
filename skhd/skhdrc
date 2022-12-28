@@ -1,5 +1,13 @@
-# open iTerm
-alt + cmd - return : open -n -a alacritty
+# Alacritty
+alt - a : open -n -a "Alacritty"
+# Alacritty
+# alt - a : open -a /Applications/Alacritty.app/Contents/MacOS/alacritty
+
+# Spotify
+alt - m : open -n -a "Spotify"
+
+# Chrome
+alt - c : open -n -a "Google Chrome"
 
 # focus window
 alt + cmd - h : yabai -m window --focus west
@@ -34,8 +42,8 @@ lctrl + alt + cmd - pageup : yabai -m space --focus prev
 lctrl + alt + cmd - pagedown : yabai -m space --focus next
 
 # create and destroy spaces
-cmd - x : yabai -m space --create
-cmd + shift - x : yabai -m space --destroy
+cmd - y : yabai -m space --create
+cmd + shift - y : yabai -m space --destroy
 
 # send window to desktop and follow focus
 cmd + shift - 1 : yabai -m window --space  1; yabai -m space --focus 1
@@ -83,6 +91,14 @@ lctrl + alt + cmd - space : yabai -m window --toggle float
 # float / unfloat window and center on screen
 lctrl + alt + cmd - t : yabai -m window --toggle float;\
            yabai -m window --grid 4:4:1:1:2:2
+
+
+# Applescript
+# Show date
+ralt - d : osascript ~/.config/skhd/applescripts/pop.scpt
+
+# Close notifications
+lalt - n : osascript ~/.config/skhd/applescripts/notifications.scpt
 
 # Restart Yabai
 alt + cmd - q : brew services restart yabai

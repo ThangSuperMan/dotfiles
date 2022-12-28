@@ -142,6 +142,14 @@ return require('packer').startup(function()
   -- Git
   use { 'tpope/vim-fugitive' }
 
+  use {
+  'lewis6991/gitsigns.nvim',
+  -- tag = 'release' -- To use the latest release (do not use this if you run Neovim nightly or dev builds!)
+  config = function()
+      require('gitsigns').setup()
+  end
+  }
+
 	use {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v2.x",
@@ -176,13 +184,6 @@ return require('packer').startup(function()
         config = require('plugins.neotree')
     }
 
-  
-  -- use { 'Yggdroot/indentLine',
-  --   config = function()
-  --     vim.g.indentLine_char = '|'
-  --   end
-  -- }
-
   use { "lukas-reineke/indent-blankline.nvim" , config = function ()
         require("indent_blankline").setup({
             show_current_context = false,
@@ -192,5 +193,10 @@ return require('packer').startup(function()
         })
         -- vim.g.indent_blankline_char = "∘•"
     end}
+
+    -- reduce the start up time
+  use({ 'lewis6991/impatient.nvim', config = function()
+    require('impatient')
+  end})
 
 end)
