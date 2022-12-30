@@ -20,22 +20,23 @@ local file_pattern = "*.yaml"
 local structure_docker_compose = s(
   "setup",
   fmt([[
-    version: '{}' 
-    services: 
-      {}:
-        image: {}
-        ports: 
-          - "{}:{}"
-        environment: 
-          {}
+    FROM {}
+
+    ENV {}
+
+    RUN {}
+
+    COPY {} {}
+
+    CMD [{}]
   ]],
     {
-      i(1, "composeVersion"),
-      i(2, "containerName"),
-      i(3, "image"),
-      i(4, "hostPort"),
-      i(5, "containerPort"),
-      i(6, "envVariables"),
+      i(1, "baseImage"),
+      i(2, ""),
+      i(3, "executeAnyLinuxCommand"),
+      i(4, "hostDir"),
+      i(5, "containerDir"),
+      i(6, "CmdForStartTheApp"),
     }
   )
 )

@@ -22,7 +22,10 @@ keymap.set('v', 'H', '^', opts)
 keymap.set('v', 'L', 'g_', opts)
 
 -- Clean highlight search
-keymap.set('n', '<Esc><Esc>', ':nohlsearch<CR>', { noremap = true })
+keymap.set('n', '<Esc><Esc>', ':nohlsearch<CR>', opts)
+
+keymap.set('i', 'jk', '<Esc>')
+keymap.set('i', 'kj', '<Esc>')
 
 -- Select all
 keymap.set('n', '<C-a>', 'gg<S-v>G')

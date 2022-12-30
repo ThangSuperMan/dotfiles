@@ -177,7 +177,9 @@ nvim_lsp.gopls.setup {
 }
 
 -- Devops
+-- Docker compose
 nvim_lsp.yamlls.setup {
+  on_attach = on_attach,
   settings = {
     yaml = {
       schemas = {
@@ -189,7 +191,10 @@ nvim_lsp.yamlls.setup {
   }
 }
 
-
+-- Dockerfile
+nvim_lsp.dockerls.setup {
+  on_attach = on_attach,
+}
 
 nvim_lsp.tsserver.setup {
   on_attach = on_attach,

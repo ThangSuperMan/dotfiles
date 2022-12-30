@@ -184,15 +184,27 @@ return require('packer').startup(function()
         config = require('plugins.neotree')
     }
 
-  use { "lukas-reineke/indent-blankline.nvim" , config = function ()
-        require("indent_blankline").setup({
-            show_current_context = false,
-            show_current_context_start = true,
-            filetype_exclude = {"help", "txt", "norg", "md"},
-            buftype_exclude = {"terminal", "nofile"}
-        })
-        -- vim.g.indent_blankline_char = "∘•"
-    end}
+  use {
+      'voldikss/vim-floaterm',
+      config = function()
+          vim.g.floaterm_wintype = 'float'
+          vim.g.floaterm_position = 'center'
+          vim.g.floaterm_width = 0.6
+          vim.g.floaterm_height = 0.5
+          vim.g.floaterm_keymap_toggle = '<C-\\>'
+
+      end
+  }
+
+  -- use { "lukas-reineke/indent-blankline.nvim" , config = function ()
+  --       require("indent_blankline").setup({
+  --           show_current_context = false,
+  --           show_current_context_start = true,
+  --           filetype_exclude = {"help", "txt", "norg", "md"},
+  --           buftype_exclude = {"terminal", "nofile"}
+  --       })
+  --       -- vim.g.indent_blankline_char = "∘•"
+  --   end}
 
     -- reduce the start up time
   use({ 'lewis6991/impatient.nvim', config = function()

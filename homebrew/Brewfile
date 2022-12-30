@@ -13,11 +13,16 @@ brew "ruby"
 brew "shellcheck"
 brew "sqlite"
 brew "sqls"
+brew "awscli"
 # Kubernetes
 brew "kubernetes-cli"
 # ...for configuring the Minikube cluster
 brew "kubectl"
 brew "netcat"
+brew "ranger"
+
+# Keybinding advanced
+brew "skhd"
 
 # Casks
 cask "spotify"
