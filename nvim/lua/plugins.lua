@@ -69,6 +69,7 @@ return require('packer').startup(function()
   use { 'jiangmiao/auto-pairs' }
 
   use { 'terryma/vim-multiple-cursors' }
+  use { 'rmagatti/alternate-toggler', config = require('plugins.alternate')  }
 
   -- Completion
   use { 'hrsh7th/cmp-nvim-lsp' }
@@ -150,39 +151,49 @@ return require('packer').startup(function()
   end
   }
 
-	use {
-        "nvim-neo-tree/neo-tree.nvim",
-        branch = "v2.x",
-        requires = {
-            "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-            "MunifTanjim/nui.nvim", {
-                -- only needed if you want to use the commands with "_with_window_picker" suffix
-                's1n7ax/nvim-window-picker',
-                tag = "1.*",
-                config = function()
-                    require 'window-picker'.setup({
-                        autoselect_one = true,
-                        include_current = false,
-                        filter_rules = {
-                            -- filter using buffer options
-                            bo = {
-                                -- if the file type is one of following, the window will be ignored
-                                filetype = {
-                                    'neo-tree', "neo-tree-popup", "notify",
-                                    "quickfix"
-                                },
+	-- use {
+        -- "nvim-neo-tree/neo-tree.nvim",
+        -- branch = "v2.x",
+        -- requires = {
+            -- "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+            -- "MunifTanjim/nui.nvim", {
+                -- -- only needed if you want to use the commands with "_with_window_picker" suffix
+                -- 's1n7ax/nvim-window-picker',
+                -- tag = "1.*",
+                -- config = function()
+                    -- require 'window-picker'.setup({
+                        -- autoselect_one = true,
+                        -- include_current = false,
+                        -- filter_rules = {
+                            -- -- filter using buffer options
+                            -- bo = {
+                                -- -- if the file type is one of following, the window will be ignored
+                                -- filetype = {
+                                    -- 'neo-tree', "neo-tree-popup", "notify",
+                                    -- "quickfix"
+                                -- },
 
-                                -- if the buffer type is one of following, the window will be ignored
-                                buftype = { 'terminal' }
-                            }
-                        },
-                        other_win_hl_color = '#f3a14e'
-                    })
-                end
-            },
-        },
-        config = require('plugins.neotree')
-    }
+                                -- -- if the buffer type is one of following, the window will be ignored
+                                -- buftype = { 'terminal' }
+                            -- }
+                        -- },
+                        -- other_win_hl_color = '#f3a14e'
+                    -- })
+                -- end
+            -- },
+        -- },
+        -- config = require('plugins.neotree')
+    -- }
+
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons',
+      'nvim-lua/plenary.nvim'
+    },
+    tag = 'nightly',
+    config = require('plugins.tree')
+  }
 
   use {
       'voldikss/vim-floaterm',
@@ -192,19 +203,23 @@ return require('packer').startup(function()
           vim.g.floaterm_width = 0.6
           vim.g.floaterm_height = 0.5
           vim.g.floaterm_keymap_toggle = '<C-\\>'
-
       end
   }
+  
+  use { 'jose-elias-alvarez/null-ls.nvim', config = require('plugins.null') }
 
-  -- use { "lukas-reineke/indent-blankline.nvim" , config = function ()
-  --       require("indent_blankline").setup({
-  --           show_current_context = false,
-  --           show_current_context_start = true,
-  --           filetype_exclude = {"help", "txt", "norg", "md"},
-  --           buftype_exclude = {"terminal", "nofile"}
-  --       })
-  --       -- vim.g.indent_blankline_char = "∘•"
-  --   end}
+  use { 'folke/todo-comments.nvim', config = require('todo-comments').setup({}) }
+
+  use { "lukas-reineke/indent-blankline.nvim" , config = function ()
+        require("indent_blankline").setup({
+            show_current_context = false,
+            show_current_context_start = true,
+            space_char_blankline = " ",
+            filetype_exclude = {"help", "txt", "norg", "md"},
+            buftype_exclude = {"terminal", "nofile"}
+        })
+        -- vim.g.indent_blankline_char = "·"
+    end}
 
     -- reduce the start up time
   use({ 'lewis6991/impatient.nvim', config = function()

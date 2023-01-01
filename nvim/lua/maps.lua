@@ -12,8 +12,15 @@ keymap.set('n', '-', '<C-x>')
 -- Delete a word backwards
 keymap.set('n', 'dw', 'vb"_d')
 
+keymap.set('n', '<leader>q', '<cmd>q<cr>')
+keymap.set('n', '<leader>w', '<cmd>w<cr>')
+
 -- turn spelling off or on
 keymap.set('n', ',s', ':setlocal spell!<Cr>', opts)
+
+-- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+-- keymap.set('n', 'zR', require('ufo').openAllFolds)
+-- keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
 -- Move to the start/end of current line
 keymap.set('n', 'H', '^', opts)
@@ -24,8 +31,8 @@ keymap.set('v', 'L', 'g_', opts)
 -- Clean highlight search
 keymap.set('n', '<Esc><Esc>', ':nohlsearch<CR>', opts)
 
-keymap.set('i', 'jk', '<Esc>')
-keymap.set('i', 'kj', '<Esc>')
+-- keymap.set('i', 'jk', '<Esc>')
+-- keymap.set('i', 'kj', '<Esc>')
 
 -- Select all
 keymap.set('n', '<C-a>', 'gg<S-v>G')
@@ -88,6 +95,6 @@ keymap.set('n', '<C-w><down>', '<C-w>-')
 
 keymap.set('n', '<S-Tab>', ':BufferPrevious<Return>')
 keymap.set('n', '<Tab>', ':BufferNext<Return>')
-keymap.set('n', '.c', ':BufferClose<Return>')
+keymap.set('n', '<leader>x', ':BufferClose<Return>')
 
 vim.opt.clipboard:append { 'unnamedplus' }

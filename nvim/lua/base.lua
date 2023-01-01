@@ -9,7 +9,8 @@ vim.o.termguicolors = true
 -- Faster completion
 vim.cmd('set updatetime=300')
 vim.cmd('set timeoutlen=500')
-vim.cmd('set list listchars=tab:»·,trail:·')
+-- vim.cmd('set list listchars=tab:»·,trail:·')
+-- vim.cmd('set backspace=indent,eol,start')
 vim.cmd('set mouse=a')
 vim.cmd('set noshowmode')
 vim.cmd('set hidden')                              -- Required to keep multiple buffers open multiple buffers
