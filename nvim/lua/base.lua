@@ -60,6 +60,7 @@ vim.cmd([[au FileType go set noexpandtab]])
 vim.cmd([[au FileType go set shiftwidth=4]])
 vim.cmd([[au FileType go set softtabstop=4]])
 vim.cmd([[au FileType go set tabstop=4]])
+vim.cmd([[au FileType go set list listchars=tab:»·,trail:·]])
 
 -- Turn off paste mode when leaving insert
 vim.api.nvim_create_autocmd("InsertLeave", {

@@ -100,6 +100,7 @@ return require('packer').startup(function()
 
   -- Comment
   use { 'tpope/vim-commentary' }
+  use { 'axelvc/template-string.nvim', config = require 'plugins.template-string'}
 
   -- Lsp
   use { 'neovim/nvim-lspconfig', config = require 'plugins.lsp' }
@@ -200,26 +201,66 @@ return require('packer').startup(function()
       config = function()
           vim.g.floaterm_wintype = 'float'
           vim.g.floaterm_position = 'center'
-          vim.g.floaterm_width = 0.6
-          vim.g.floaterm_height = 0.5
+          vim.g.floaterm_width = 0.8
+          vim.g.floaterm_height = 0.8
           vim.g.floaterm_keymap_toggle = '<C-\\>'
       end
   }
   
-  use { 'jose-elias-alvarez/null-ls.nvim', config = require('plugins.null') }
+  -- use { 'jose-elias-alvarez/null-ls.nvim', config = require('plugins.null') }
 
   use { 'folke/todo-comments.nvim', config = require('todo-comments').setup({}) }
 
-  use { "lukas-reineke/indent-blankline.nvim" , config = function ()
+  use { 'MattesGroeger/vim-bookmarks', config = require('plugins.bookmark') }
+  use 'tom-anders/telescope-vim-bookmarks.nvim'
+
+  use {
+    'phaazon/mind.nvim',
+    branch = 'v2.2',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require'mind'.setup()
+    end,
+    config = require 'plugins.mind'
+  }
+
+  use {'stevearc/dressing.nvim'}
+
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      require("which-key").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
+
+  -- use({
+  --   "folke/noice.nvim",
+  --   requires = {
+  --     "MunifTanjim/nui.nvim",
+  --     "rcarriga/nvim-notify",
+  --   }
+  -- })
+
+  use { 'lukas-reineke/indent-blankline.nvim' , config = function ()
         require("indent_blankline").setup({
             show_current_context = false,
             show_current_context_start = true,
             space_char_blankline = " ",
-            filetype_exclude = {"help", "txt", "norg", "md"},
+            filetype_exclude = {"help", "txt", "norg", "md", "go"},
             buftype_exclude = {"terminal", "nofile"}
         })
         -- vim.g.indent_blankline_char = "·"
     end}
+
+  use{  'github/copilot.vim', config = function()
+    vim.cmd([[imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")]])
+    vim.cmd([[let g:copilot_no_tab_map = v:true]])
+  end
+  }
 
     -- reduce the start up time
   use({ 'lewis6991/impatient.nvim', config = function()

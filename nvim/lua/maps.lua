@@ -9,11 +9,18 @@ keymap.set('n', 'x', '"_x')
 keymap.set('n', '+', '<C-a>')
 keymap.set('n', '-', '<C-x>')
 
+-- ESC with kj or jk
+-- vim.api.nvim_set_keymap('i', 'kj', '<esc>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('i', 'jk', '<esc>', { noremap = true, silent = true })
+
 -- Delete a word backwards
 keymap.set('n', 'dw', 'vb"_d')
 
 keymap.set('n', '<leader>q', '<cmd>q<cr>')
-keymap.set('n', '<leader>w', '<cmd>w<cr>')
+
+-- Ctrl-s to save
+keymap.set('n', '<C-s>', ':w!<CR>', opts)
+keymap.set('i', 'ww', '<Esc>:w!<cr>', opts)
 
 -- turn spelling off or on
 keymap.set('n', ',s', ':setlocal spell!<Cr>', opts)
@@ -54,8 +61,8 @@ keymap.set('n', 'te', ':tabedit')
 -- Split window
 keymap.set('n', 'ss', ':split<Return><C-w>w')
 keymap.set('n', 'sv', ':vsplit<Return><C-w>w')
+
 -- Move window
-keymap.set('n', '<Space>', '<C-w>w')
 keymap.set('', 'sh', '<C-w>h')
 keymap.set('', 'sk', '<C-w>k')
 keymap.set('', 'sj', '<C-w>j')
