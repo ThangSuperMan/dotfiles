@@ -29,6 +29,7 @@ vim.wo.number = true
 
 vim.opt.title = true
 vim.opt.autoindent = true
+vim.opt.undofile = true
 vim.opt.smartindent = true
 vim.opt.hlsearch = true
 vim.opt.relativenumber = true
@@ -60,7 +61,6 @@ vim.cmd([[au FileType go set noexpandtab]])
 vim.cmd([[au FileType go set shiftwidth=4]])
 vim.cmd([[au FileType go set softtabstop=4]])
 vim.cmd([[au FileType go set tabstop=4]])
-vim.cmd([[au FileType go set list listchars=tab:»·,trail:·]])
 
 -- Turn off paste mode when leaving insert
 vim.api.nvim_create_autocmd("InsertLeave", {

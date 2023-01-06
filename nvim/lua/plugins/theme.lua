@@ -3,7 +3,7 @@ return function()
 	cmd("syntax on")
 
 	-- everforest theme
-	vim.g.everforest_background = "dark"
+	vim.g.everforest_background = "soft"
   vim.g.everforest_diagnostic_line_highlight = 1
 	vim.g.everforest_enable_italic = 1
 	vim.g.everforest_disable_italic_comment = 0

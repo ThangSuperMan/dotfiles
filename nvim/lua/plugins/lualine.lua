@@ -23,8 +23,8 @@ require('lualine').setup {
   },
   sections = {
     lualine_a = { 'mode' },
-    lualine_b = { { 'filename', path = 1 } },
-    lualine_c = { { symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}, sources = {"nvim_diagnostic"}, 'diagnostics' } },
+    lualine_b = { { symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}, sources = {"nvim_diagnostic"}, 'diagnostics' } },
+    lualine_c = { { 'filename', path = 1 } },
     lualine_x = {},
     lualine_y = { '' },
     lualine_z = { 'filetype' }
