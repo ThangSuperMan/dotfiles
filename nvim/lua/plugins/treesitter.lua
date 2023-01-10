@@ -17,6 +17,7 @@ local treesitter = require'nvim-treesitter.configs'.setup {
    "tsx",
    "go",
    "org",
+   "fish",
   },
   autotag = {
     enable = true,

@@ -1,0 +1,34 @@
+[character]
+success_symbol = "[](bold green)"
+error_symbol = "[](bold red)"
+vicmd_symbol = "[](bold green)"
+
+# [git_commit]
+# tag_symbol = " tag "
+
+# [git_status]
+# ahead = "⇡"
+# behind = "⇣"
+# diverged = "⇕"
+# renamed = "»"
+# deleted = "✘"
+# stashed = "$"
+# untracked = "?"
+
+[directory]
+style = "blue bold"
+
+[git_branch]
+disabled = true
+
+[git_commit]
+disabled = true
+
+[git_state]
+disabled = true
+
+[git_metrics]
+disabled = true
+
+[git_status]
+disabled = true

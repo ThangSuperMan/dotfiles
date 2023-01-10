@@ -9,13 +9,15 @@ set -g theme_display_user yes
 set -g theme_hide_hostname no
 set -g theme_hostname always
 
+# Turn on vim mode
+# Run fish_vi_key_bindings to start vi mode
+# Run fish_default_key_bindings to go back to default mode
+fish_vi_key_bindings
+
 # aliases
-alias ls "ls -p -G"
-alias la "ls -A"
-alias ll "ls -l"
-alias lla "ll -A"
+alias ll "exa -l -g --icons"
+alias lla "ll -a"
 alias g git
-command -qv nvim && alias vim nvim
 
 fish_add_path /opt/homebrew/bin
 
@@ -24,12 +26,25 @@ alias n "cd notes/"
 alias v "nvim"
 alias emacs "emacs -nw"
 alias tks "tmux kill-server"
+alias pn "pnpm"
+
+# Go
+alias grm "go run main.go"
+
+# Tmux
+alias tn "tmux new -s (pwd | sed 's/.*\///g')"
+alias ta "tmux attach"
+
+# Netcat
+alias nc "nc -z -vv"
 
 # alias ide "tmux split-window -v -p 30 && tmux split-window -h -p 64 && tmux split-window -h -p 50"
-alias ide "tmux split-window -v -p 24 && tmux split-window -h -p 64 && tmux split-window -h -p 50"
+# alias ide "tmux split-window -v -p 24 && tmux split-window -h -p 64 && tmux split-window -h -p 50" 
 # Simple ide
-alias ide1 "tmux split-window -v -p 24 "
+# alias ide "tmux split-window -v -p 24 && tmux split-window -h -p 52"
+alias ide "tmux split-window -v -p 24"
 alias e "exit"
+alias http "xh"
 
 set -gx EDITOR nvim
 

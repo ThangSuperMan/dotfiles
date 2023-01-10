@@ -62,6 +62,12 @@ nvim_lsp.sumneko_lua.setup {
   },
 }
 
+-- Dart
+nvim_lsp.dartls.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
+
 -- nvim_lsp.gopls.setup {
 --   capabilities = capabilities,
 --   on_attach = on_attach,

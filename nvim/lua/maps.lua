@@ -16,18 +16,14 @@ keymap.set('n', '-', '<C-x>')
 -- Delete a word backwards
 keymap.set('n', 'dw', 'vb"_d')
 
-keymap.set('n', '<leader>q', '<cmd>q<cr>')
+-- keymap.set('n', '<leader>q', '<cmd>q<cr>')
 
 -- Ctrl-s to save
-keymap.set('n', '<C-s>', ':w!<CR>', opts)
-keymap.set('i', 'ww', '<Esc>:w!<cr>', opts)
+-- keymap.set('n', '<C-s>', ':w!<CR>', opts)
+-- keymap.set('i', 'ww', '<Esc>:w!<cr>', opts)
 
 -- turn spelling off or on
 keymap.set('n', ',s', ':setlocal spell!<Cr>', opts)
-
--- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
--- keymap.set('n', 'zR', require('ufo').openAllFolds)
--- keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
 -- Move to the start/end of current line
 keymap.set('n', 'H', '^', opts)
@@ -45,9 +41,6 @@ keymap.set('n', '<Esc><Esc>', ':nohlsearch<CR>', opts)
 keymap.set('n', '<C-a>', 'gg<S-v>G')
 
 keymap.set('n', ';', ':', opts)
-
--- Save with root permission (not working for now)
--- vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
 
 -- Jump to the last of the still inside the insert mode
 keymap.set('i', '<c-l>', '<C-o>A')

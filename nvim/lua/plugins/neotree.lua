@@ -76,7 +76,7 @@ require("neo-tree").setup({
 },
 window = {
     position = "left",
-    width = 40,
+    width = 30,
     mapping_options = {noremap = true, nowait = true},
     mappings = {
 	["<space>"] = {
@@ -125,8 +125,8 @@ nesting_rules = {},
 filesystem = {
   filtered_items = {
 	visible = false, -- when true, they will just be displayed differently than normal items
-	hide_dotfiles = true,
-	hide_gitignored = true,
+	hide_dotfiles = false,
+	hide_gitignored = false,
 	hide_hidden = true, -- only works on Windows for hidden files/directories
 	hide_by_name = {
 	    -- "node_modules"
@@ -193,5 +193,5 @@ git_status = {
 })
 
 vim.cmd([[nnoremap <c-f> :Neotree reveal<cr>]])
-vim.cmd([[nnoremap <c-b> :Neotree toggle<cr>]])
+vim.cmd([[nnoremap <c-s> :Neotree toggle<cr>]])
 end
