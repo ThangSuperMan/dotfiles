@@ -1,0 +1,8 @@
+{
+  "Prompt": " ",
+  "SelectionPrefix": " ",
+  "Style": {
+    "Selected": ["underline", "on_cyan", "black"],
+    "Query": ["yellow", "bold"]
+  }
+}
