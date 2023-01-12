@@ -201,8 +201,8 @@ return require('packer').startup(function()
       config = function()
           vim.g.floaterm_wintype = 'float'
           vim.g.floaterm_position = 'center'
-          vim.g.floaterm_width = 0.5
-          vim.g.floaterm_height = 0.6
+          vim.g.floaterm_width = 0.8
+          vim.g.floaterm_height = 0.8
           vim.g.floaterm_keymap_toggle = '<C-\\>'
       end
   }
@@ -215,17 +215,6 @@ return require('packer').startup(function()
   use 'tom-anders/telescope-vim-bookmarks.nvim'
 
   use {'stevearc/dressing.nvim'}
-
-  -- use {
-  --   "folke/which-key.nvim",
-  --   config = function()
-  --     require("which-key").setup {
-  --       -- your configuration comes here
-  --       -- or leave it empty to use the default settings
-  --       -- refer to the configuration section below
-  --     }
-  --   end
-  -- }
 
   -- use { 'sunjon/shade.nvim', config = require('plugins.shade') }
 

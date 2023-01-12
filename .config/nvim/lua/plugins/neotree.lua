@@ -193,5 +193,5 @@ git_status = {
 })
 
 vim.cmd([[nnoremap <c-f> :Neotree reveal<cr>]])
-vim.cmd([[nnoremap <c-s> :Neotree toggle<cr>]])
+vim.cmd([[nnoremap <c-t> :Neotree toggle<cr>]])
 end

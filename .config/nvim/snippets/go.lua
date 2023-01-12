@@ -30,15 +30,19 @@ local use_state = s(
   )
 )
 
-local main = s(
-  "main",
+local hello = s(
+  "hello",
   fmt([[
+    package main
+
+    import "fmt"
+
     func main() {{
-      {}
+      fmt.Println("{}")
     }}
   ]],
     {
-      i(1, ""),
+      i(1, "hello"),
     }
   )
 )
@@ -84,7 +88,7 @@ local halt_on = s(
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 table.insert(autosnippets, print_line)
 table.insert(snippets, print_object)
-table.insert(snippets, main)
+table.insert(snippets, hello)
 table.insert(snippets, halt_on)
 -- table.insert(autosnippets, short_hand_if_statement)
 

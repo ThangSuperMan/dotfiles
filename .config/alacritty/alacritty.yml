@@ -13,7 +13,7 @@ font:
   italic:
     family: "Recursive"
     style: Italic
-  size: 13
+  size: 20
   offset:
     x: 0
     y: 0
@@ -68,7 +68,7 @@ window:
   # - transparent: title bar, transparent background and title bar buttons
   # - buttonless: title bar, transparent background, but no title bar buttons
   decorations: None
-  opacity: 1.0
+  opacity: 0.96
 
   # Startup Mode (changes require restart)
   #
@@ -314,7 +314,7 @@ schemes:
       cyan: "0xf69c5e"
       white: "0xe1e3e4"
 # Apply
-colors: *everforest_dark_soft
+colors: *everforest_dark_hard
 
 draw_bold_text_with_bright_colors: false
 # draw_bold_text_with_bright_colors: false
@@ -332,3 +332,26 @@ key_bindings:
       mods: Command,
       command: { program: "open", args: ["-nb", "io.alacritty"] },
     }
+  # Rename the current tmux window
+  - { key: Comma, mods: Command, chars: "\x02\x2c" }
+  # Switch to last tmux session
+  - { key: L, mods: Command, chars: "\x02\x4c" }
+  - { key: LBracket, mods: Command, chars: "\x02\x5b" }
+  # Change to the previous tmux window
+  - { key: LBracket, mods: Command|Shift, chars: "\x02\x70" }
+  # Split the current pane into two, left and right
+  - { key: N, mods: Command|Shift, chars: "\x02\x25" }
+  # Split the current pane into two, top and bottom.
+  - { key: N, mods: Command, chars: "\x02\x22" }
+  # Change to the next tmux window
+  - { key: RBracket, mods: Command|Shift, chars: "\x02\x6e" }
+  # Type <escape>:w<enter> to save neovim
+  - { key: S, mods: Command, chars: "\x1b\x3a\x77\x0a" }
+  # Create a new tmux window
+  - { key: T, mods: Command, chars: "\x02\x63" }
+  # Break the current tmux pane out of the tmux window
+  - { key: T, mods: Command|Shift, chars: "\x02\x21" }
+  # Kill the current tmux pane (and window if last pane)
+  - { key: W, mods: Command, chars: "\x02\x78" }
+  # Toggle the zoom state of the current tmux pane
+  - { key: Z, mods: Command, chars: "\x02\x7a" }

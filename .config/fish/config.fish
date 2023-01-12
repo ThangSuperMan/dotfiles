@@ -12,39 +12,28 @@ set -g theme_hostname always
 # Turn on vim mode
 # Run fish_vi_key_bindings to start vi mode
 # Run fish_default_key_bindings to go back to default mode
-fish_vi_key_bindings
 
 # aliases
 alias ll "exa -l -g --icons"
 alias lla "ll -a"
 alias g git
-
-fish_add_path /opt/homebrew/bin
-
 alias p "cd Projects/"
 alias n "cd notes/"
+#alias d "docker"
 alias v "nvim"
 alias emacs "emacs -nw"
 alias tks "tmux kill-server"
 alias pn "pnpm"
-
-# Go
 alias grm "go run main.go"
-
-# Tmux
 alias tn "tmux new -s (pwd | sed 's/.*\///g')"
 alias ta "tmux attach"
-
-# Netcat
 alias nc "nc -z -vv"
-
 # alias ide "tmux split-window -v -p 30 && tmux split-window -h -p 64 && tmux split-window -h -p 50"
-# alias ide "tmux split-window -v -p 24 && tmux split-window -h -p 64 && tmux split-window -h -p 50" 
-# Simple ide
-# alias ide "tmux split-window -v -p 24 && tmux split-window -h -p 52"
 alias ide "tmux split-window -v -p 24"
 alias e "exit"
 alias http "xh"
+
+fish_add_path /opt/homebrew/bin
 
 set -gx EDITOR nvim
 
