@@ -24,15 +24,9 @@
       read-process-output-max (* 1024 1024)
       create-lockfiles nil) ;; lock files will kill `npm start'
 
-;; (defun efs/display-startup-time ()
-;;   (message "Emacs loaded in %s with %d garbage collections."
-;;            (format "%.2f seconds"
-;;                    (float-time
-;;                     (time-subtract after-init-time before-init-time)))
-;;            gcs-done))
-
-;; (add-hook 'emacs-startup-hook #'efs/display-startup-time)
-;; Customize function
+;; Full screen at startup
+(set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Custom functions
 
@@ -50,12 +44,12 @@
   ;; Move lines first
   (when (/= arg 1)
     (let ((line-move-visual nil))
-       (forward-line (1- arg))))
+      (forward-line (1- arg))))
 
   (let ((orig-point (point)))
     (back-to-indentation)
     (when (= orig-point (point))
-       (move-beginning-of-line 1))))
+      (move-beginning-of-line 1))))
 
 ;; Handle new windows
 (defun split-window-right-and-focus ()
@@ -103,7 +97,7 @@
 (setq-default scroll-up-aggressively 0.01
               scroll-down-aggressively 0.01)
 
-(set-face-attribute 'default nil :font "Inconsolata" :height 180)
+(set-face-attribute 'default nil :font "Inconsolata" :height 190)
 ;; (set-face-background 'hl-line "#3e4446")
 
 ;; Answering just 'y' or 'n' will do
@@ -126,31 +120,34 @@
 (require 'evil)
 (evil-mode 1)
 
+(global-set-key (kbd "C-u") #'evil-scroll-up)
+(global-set-key (kbd "C-d") #'evil-scroll-down)
+
 ;; Cursor
 ;; (setq evil-insert-state-cursor '((bar . 2) "orange")
 ;;       evil-normal-state-cursor '(box "orange"))
 
 (use-package general
-   :ensure t
-   :after evil
-   :init
-   (general-auto-unbind-keys)
-   :config
-   (general-create-definer thanglemon/underfine
-     :keymaps 'override
-     :states '(normal emacs))
-   (general-create-definer thanglemon/evil
-     :states '(normal))
-   (general-create-definer thanglemon/leader-key
-     :states '(normal insert visual emacs)
-     :keymaps 'override
-     :prefix "SPC"
-     :global-prefix "C-SPC")
-   (general-create-definer thanglemon/major-leader-key
-     :states '(normal insert visual emacs)
-     :keymaps 'override
-     :prefix ","
-     :global-prefix "M-m"))
+  :ensure t
+  :after evil
+  :init
+  (general-auto-unbind-keys)
+  :config
+  (general-create-definer thanglemon/underfine
+    :keymaps 'override
+    :states '(normal emacs))
+  (general-create-definer thanglemon/evil
+    :states '(normal))
+  (general-create-definer thanglemon/leader-key
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix "SPC"
+    :global-prefix "C-SPC")
+  (general-create-definer thanglemon/major-leader-key
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix ","
+    :global-prefix "M-m"))
 
  (thanglemon/evil
     :packages '(counsel)
@@ -208,6 +205,9 @@
   :config
   (global-set-key (kbd "C-=") 'er/expand-region))
 
+;; Unbinding some keys
+(global-set-key (kbd "C-e") 'er/expand-region)
+
 ;; Yasnippet
 (use-package yasnippet
   :ensure t
@@ -226,12 +226,42 @@
          doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode)
          doom-modeline-env-version t))
 
+(use-package projectile
+  :ensure t
+  :config
+  (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+  (projectile-mode +1))
+
 ;; Dired
 (use-package treemacs-icons-dired
   :hook (dired-mode . treemacs-icons-dired-enable-once)
   :ensure t)
 
+;; Ace window
+(use-package ace-window
+  :ensure t
+  :bind ("C-x o" . ace-window)
+  :config
+  (set-face-attribute
+   'aw-leading-char-face nil
+   :foreground "deep sky blue"
+   :weight 'bold
+   :height 3.0)
+   (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l)))
+
 ;; Org-mode stuff
+(use-package org
+  :ensure t
+  :hook (org-mode . org-setup)
+  :custom				;
+  (org-ellipsis " ▼")
+  (org-hide-emphasis-markers t)
+  :config
+  (setq org-cycle-separator-lines 2
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-src-preserve-indentation nil))
+
 (use-package org-bullets
   :ensure t
   :config
@@ -287,7 +317,7 @@
 ;; Avy
 (use-package avy
   :ensure t
-  :bind ("M-s" . avy-goto-char))
+  :bind ("C-;" . avy-goto-char))
 
 (use-package hydra
   :ensure t)
@@ -414,7 +444,6 @@
   :ensure t
   :mode "\\.js\\'")
 
-
 (use-package typescript-mode
   :ensure t
   :after flycheck
@@ -467,7 +496,25 @@
   :config
   (setq lsp-headerline-breadcrumb-enable nil))
 
-; Prettier
+(use-package files
+  :hook
+  (before-save . delete-trailing-whitespace) ; when save automatically delte whitespace
+  :custom
+  (make-backup-files nil)	 ; for backups filename~
+  (create-lockfiles nil)	 ; for backups .#filename - user@user
+  (auto-save-default nil)	 ;for backups #filename#
+)
+
+(use-package paren
+  :ensure t
+  :init
+  (show-paren-mode 1)
+  :config
+  (setq show-paren-style 'parenthesses)
+  :custom-face
+  (show-paren-match ((t(:background "none" :foreground "red")))))
+
+					; Prettier
 (use-package prettier-js
   :ensure t
   :defer t
@@ -522,6 +569,7 @@
 (add-hook 'js-mode-hook #'prettier-js-mode)
 (add-hook 'typescript-mode-hook #'prettier-js-mode)
 (add-hook 'typescript-mode-hook #'lsp)
+(add-hook 'typescript-mode-hook #'rjsx-mode)
 
 (use-package all-the-icons
   :ensure t)
@@ -544,13 +592,6 @@
           centaur-tabs-modified-marker "•")
   (centaur-tabs-headline-match)
   (centaur-tabs-mode t))
-
-;; (use-package lsp-treemacs
-;;   :ensure t 
-;;   :defer t
-;;   :requires treemacs
-;;   :config
-;;   (treemacs-resize-icons 15))
 
 (use-package engine-mode
   :ensure t
@@ -628,48 +669,60 @@
 ;; Super search feature
 
 
-(use-package ido-vertical-mode
-  :ensure t
-  :init
-  (require 'ido)
-  (ido-mode t)
-  (setq ido-enable-prefix nil
-        ido-enable-flex-matching t
-        ido-case-fold nil
-        ido-auto-merge-work-directories-length -1
-        ido-create-new-buffer 'always
-        ido-use-filename-at-point nil
-        ido-max-prospects 10)
+;; (use-package ido-vertical-mode
+;;   :ensure t
+;;   :init
+;;   (require 'ido)
+;;   (ido-mode t)
+;;   (setq ido-enable-prefix nil
+;;         ido-enable-flex-matching t
+;;         ido-case-fold nil
+;;         ido-auto-merge-work-directories-length -1
+;;         ido-create-new-buffer 'always
+;;         ido-use-filename-at-point nil
+;;         ido-max-prospects 10)
 
-  (require 'ido-vertical-mode)
-  (ido-vertical-mode)
+;;   (require 'ido-vertical-mode)
+;;   (ido-vertical-mode)
 
-  (require 'dash)
+;;   (require 'dash)
 
-  (defun my/ido-go-straight-home ()
-    (interactive)
-    (cond
-     ((looking-back "~/") (insert "Developments/"))
-     ((looking-back "/") (insert "~/"))
-     (:else (call-interactively 'self-insert-command))))
+;;   (defun my/ido-go-straight-home ()
+;;     (interactive)
+;;     (cond
+;;      ((looking-back "~/") (insert "Developments/"))
+;;      ((looking-back "/") (insert "~/"))
+;;      (:else (call-interactively 'self-insert-command))))
 
-  (defun my/setup-ido ()
-    ;; Go straight home
-    (define-key ido-file-completion-map (kbd "~") 'my/ido-go-straight-home)
-    (define-key ido-file-completion-map (kbd "C-~") 'my/ido-go-straight-home))
+;;   (defun my/setup-ido ()
+;;     ;; Go straight home
+;;     (define-key ido-file-completion-map (kbd "~") 'my/ido-go-straight-home)
+;;     (define-key ido-file-completion-map (kbd "C-~") 'my/ido-go-straight-home))
 
-  (add-hook 'ido-setup-hook 'my/setup-ido)
-  (add-to-list 'ido-ignore-directories "node_modules"))
+;;   (add-hook 'ido-setup-hook 'my/setup-ido)
+;;   (add-to-list 'ido-ignore-directories "node_modules"))
 
 (use-package ivy :ensure t)
 
-(use-package counsel 
+(use-package ivy-posframe
+  :ensure t
+  :after ivy
+  :custom
+  (ivy-posframe-width 70)
+  (ivy-posframe-height 15)
+  (ivy-posframe-border-width 4)
+  :config
+  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+  (ivy-posframe-mode 1))
+
+(use-package counsel
   :ensure t)
 
 (use-package swiper
   :ensure t
   :bind (("C-s" . swiper)
 	 ("C-r" . swiper)
+	 ("C-x C-f".  counsel-find-file)
 	 ("C-c C-r" . ivy-resume)
 	 ("M-x" . counsel-M-x))
   :config
@@ -702,7 +755,7 @@
 
 
 (use-package zenburn-theme
-  :ensure t) 
+  :ensure t)
 
 (load-theme 'zenburn t)
 
