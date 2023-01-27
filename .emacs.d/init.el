@@ -11,7 +11,8 @@
 (set-fringe-mode -1)
 (global-hl-line-mode -1)
 (blink-cursor-mode 0)
-(global-display-line-numbers-mode t)
+;; (global-display-line-numbers-mode t)
+(setq-default tab-width 2)
 
 ;; Better handling for files with so long lines
 (global-so-long-mode 1)
@@ -25,8 +26,8 @@
       create-lockfiles nil) ;; lock files will kill `npm start'
 
 ;; Full screen at startup
-(set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;; (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Custom functions
 
@@ -82,7 +83,11 @@
       fast-but-imprecise-scrolling t)
 (pixel-scroll-mode 1)
 
-;; Battery
+;; Modeline modules
+(require 'time)
+(setq display-time-format "%Y-%m-%d %H:%M")
+(display-time-mode 1) ; display time in modeline
+
 (let ((battery-str (battery)))
   (unless (or (equal "Battery status not available" battery-str)
               (string-match-p (regexp-quote "N/A") battery-str))
@@ -97,8 +102,8 @@
 (setq-default scroll-up-aggressively 0.01
               scroll-down-aggressively 0.01)
 
-(set-face-attribute 'default nil :font "Inconsolata" :height 190)
-;; (set-face-background 'hl-line "#3e4446")
+;; (set-face-attribute 'default nil :font "Inconsolata" :height 180)
+(set-face-attribute 'default nil :font "FiraCode Nerd Font" :height 190)
 
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -153,8 +158,8 @@
     :packages '(counsel)
     "K"   #'eldoc-doc-buffer
     "U"   #'evil-redo
-    "C-a" #'my-smarter-move-beginning-of-line
-    "C-e" #'end-of-line)
+    "C-h" #'my-smarter-move-beginning-of-line
+    "C-l" #'end-of-line)
 
 ;; Terminal
 (use-package popwin
@@ -203,10 +208,7 @@
 (use-package expand-region
   :ensure t
   :config
-  (global-set-key (kbd "C-=") 'er/expand-region))
-
-;; Unbinding some keys
-(global-set-key (kbd "C-e") 'er/expand-region)
+  (global-set-key (kbd "C-'") 'er/expand-region))
 
 ;; Yasnippet
 (use-package yasnippet
@@ -229,13 +231,19 @@
 (use-package projectile
   :ensure t
   :config
-  (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+  ;; (define-key projectile-mode-map (kbd "C-p") 'projectile-find-file)
   (projectile-mode +1))
+
+(define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
 
 ;; Dired
 (use-package treemacs-icons-dired
   :hook (dired-mode . treemacs-icons-dired-enable-once)
   :ensure t)
+
+;; Make dired less verbose
+
+(setq-default dired-details-hidden-string "--- ")
 
 ;; Ace window
 (use-package ace-window
@@ -247,7 +255,7 @@
    :foreground "deep sky blue"
    :weight 'bold
    :height 3.0)
-   (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l)))
+  (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l)))
 
 ;; Org-mode stuff
 (use-package org
@@ -278,10 +286,54 @@
 (add-hook 'prog-mode-hook #'prog-mode-set-symbols-alist)
 
 ;; Magit
+;; (use-package magit
+;;   :ensure t
+;;   :bind (
+;; 	 ("C-x g" . magit-status)))
+
 (use-package magit
-  :ensure t
-  :bind (
-	 ("C-x g" . magit-status)))
+	:ensure t
+  :defer t
+  :init
+  (setq forge-add-default-bindings nil)
+  :config
+  (setq magit-clone-default-directory "~/fromGIT/"
+         magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+  (with-eval-after-load 'evil-collection
+    (dqv/evil
+      :packages '(evil-collection magit)
+      :keymaps '(magit-mode-map magit-log-mode-map magit-status-mode-map)
+      :states 'normal
+      "t" #'magit-tag
+      "s" #'magit-stage))
+  :general
+  (:keymaps '(git-rebase-mode-map)
+   :packages 'magit
+   "C-j" #'evil-next-line
+   "C-k" #'evil-previous-line)
+  (dqv/major-leader-key
+    :keymaps 'git-rebase-mode-map
+    :packages 'magit
+    "," #'with-editor-finish
+    "k" #'with-editor-cancel
+    "a" #'with-editor-cancel)
+  (dqv/leader-key
+    :infix   "g"
+    :packages 'magit
+    ""   '(:ignore t :wk "git")
+    "b"  #'magit-blame
+    "c"  #'magit-clone
+    "d"  #'magit-dispatch
+    "i"  #'magit-init
+    "s"  #'magit-status
+    "y"  #'my/yadm
+    "S"  #'magit-stage-file
+    "U"  #'magit-unstage-file
+    "f"  '(:ignore t :wk "file")
+    "fd" #'magit-diff
+    "fc" #'magit-file-checkout
+    "fl" #'magit-file-dispatch
+    "fF" #'magit-find-file))
 
 ;; Commentary
 (use-package evil-nerd-commenter
@@ -322,6 +374,19 @@
 (use-package hydra
   :ensure t)
 
+(defhydra windows-adjust-size ()
+  "
+^Zoom^                                ^Other
+^^^^^^^-----------------------------------------
+[_j_/_k_] shrink/enlarge vertically   [_q_] quit
+[_h_/_l_] shrink/enlarge horizontally
+"
+  ("q" nil :exit t)
+  ("h" shrink-window-horizontally)
+  ("j" enlarge-window)
+  ("k" shrink-window)
+  ("l" enlarge-window-horizontally))
+
 (use-package which-key
   :ensure t
   :defer 0
@@ -336,10 +401,113 @@
 ;; Code completion
 
 (use-package company
-  :ensure t)
+  :ensure t
+  :hook (prog-mode . company-mode)
+  :bind (:map company-active-map
+              ("<tab>" . company-complete-selection))
+	:config
+	(setq company-minimum-prefix-length     2
+        company-toolsip-limit             14
+        company-tooltip-align-annotations t
+        company-require-match             'never
+        company-global-modes              '(not erc-mode message-mode help-mode gud-mode)
+        company-frontends
+        '(company-pseudo-tooltip-frontend ; always show candidates in overlay tooltip
+          company-echo-metadata-frontend) ; show selected candidate docs in echo area
+        company-backends '(company-capf)
+        company-auto-commit         nil
+        company-auto-complete-chars nil
+        company-dabbrev-other-buffers nil
+        company-dabbrev-ignore-case nil
+        company-dabbrev-downcase    nil))
+
+
+; (use-package company-box
+;   :ensure t
+;   :after company
+;   :after (company all-the-icons)
+;   :config
+;   (setq company-box-show-single-candidate t
+;         company-box-backends-colors       nil
+;         company-box-max-candidates        50
+;         company-box-icons-alist           'company-box-icons-all-the-icons
+;         company-box-icons-all-the-icons
+;         (let ((all-the-icons-scale-factor 0.8))
+;           `(
+;             <<gen-company-box-icons()>>))))
+
+(use-package company-box
+  :ensure t
+  :after (company all-the-icons)
+  :config
+  (setq company-box-show-single-candidate t
+        company-box-backends-colors       nil
+        company-box-max-candidates        50
+        company-box-icons-alist           'company-box-icons-all-the-icons
+        company-box-icons-all-the-icons
+        (let ((all-the-icons-scale-factor 0.8))
+          `(
+            (Unknown . ,(all-the-icons-material "find_in_page" :face 'all-the-icons-purple))
+            (Text . ,(all-the-icons-material "text_fields" :face 'all-the-icons-green))
+            (Method . ,(all-the-icons-material "functions" :face 'all-the-icons-red))
+            (Function . ,(all-the-icons-material "functions" :face 'all-the-icons-red))
+            (Constructor . ,(all-the-icons-material "functions" :face 'all-the-icons-red))
+            (Field . ,(all-the-icons-material "functions" :face 'all-the-icons-red))
+            (Variable . ,(all-the-icons-material "adjust" :face 'all-the-icons-blue))
+            (Class . ,(all-the-icons-material "class" :face 'all-the-icons-red))
+            (Interface . ,(all-the-icons-material "settings_input_component" :face 'all-the-icons-red))
+            (Module . ,(all-the-icons-material "view_module" :face 'all-the-icons-red))
+            (Property . ,(all-the-icons-material "settings" :face 'all-the-icons-red))
+            (Unit . ,(all-the-icons-material "straighten" :face 'all-the-icons-red))
+            (Value . ,(all-the-icons-material "filter_1" :face 'all-the-icons-red))
+            (Enum . ,(all-the-icons-material "plus_one" :face 'all-the-icons-red))
+            (Keyword . ,(all-the-icons-material "filter_center_focus" :face 'all-the-icons-red))
+            (Snippet . ,(all-the-icons-material "short_text" :face 'all-the-icons-red))
+            (Color . ,(all-the-icons-material "color_lens" :face 'all-the-icons-red))
+            (File . ,(all-the-icons-material "insert_drive_file" :face 'all-the-icons-red))
+            (Reference . ,(all-the-icons-material "collections_bookmark" :face 'all-the-icons-red))
+            (Folder . ,(all-the-icons-material "folder" :face 'all-the-icons-red))
+            (EnumMember . ,(all-the-icons-material "people" :face 'all-the-icons-red))
+            (Constant . ,(all-the-icons-material "pause_circle_filled" :face 'all-the-icons-red))
+            (Struct . ,(all-the-icons-material "streetview" :face 'all-the-icons-red))
+            (Event . ,(all-the-icons-material "event" :face 'all-the-icons-red))
+            (Operator . ,(all-the-icons-material "control_point" :face 'all-the-icons-red))
+            (TypeParameter . ,(all-the-icons-material "class" :face 'all-the-icons-red))
+            (Template . ,(all-the-icons-material "short_text" :face 'all-the-icons-green))
+            (ElispFunction . ,(all-the-icons-material "functions" :face 'all-the-icons-red))
+            (ElispVariable . ,(all-the-icons-material "check_circle" :face 'all-the-icons-blue))
+            (ElispFeature . ,(all-the-icons-material "stars" :face 'all-the-icons-orange))
+            (ElispFace . ,(all-the-icons-material "format_paint" :face 'all-the-icons-pink))
+            ))))
 
 ;; Turn on the company mode for all of the languages
 (add-hook 'after-init-hook 'global-company-mode)
+
+(use-package ligature
+	:ensure t
+  :config
+  (ligature-set-ligatures 't
+                          '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures '(eww-mode org-mode elfeed-show-mode)
+                          '("ff" "fi" "ffi"))
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode
+                          '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                            ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                            "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                            "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                            "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                            "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                            "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                            "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                            ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                            "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                            "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                            "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                            "\\\\" "://"))
+  (global-ligature-mode t))
 
 ;; Lsp client
 ;; Eglot
@@ -357,7 +525,7 @@
 
 ;; Require rust-analyzer
 ;; Masos install using homebrew: brew install rust-analyzer
-(add-hook 'rust-mode-hook 'eglot-ensure)
+;; (add-hook 'rust-mode-hook 'eglot-ensure)
 
 ;; Added some of the essentials path variables for emacs enviroment
 (use-package exec-path-from-shell
@@ -401,17 +569,20 @@
      (add-hook 'evil-replace-state-entry-hook
                #'flycheck-popup-tip-delete-popup)))
 
-;; (use-package flycheck-posframe
-;;   :ensure t
-;;   :hook (flycheck-mode . flycheck-posframe-mode)
-;;   :config
-;;   (setq flycheck-posframe-warning-prefix "! "
-;;         flycheck-posframe-info-prefix    "··· "
-;;         flycheck-posframe-error-prefix   "X "))
+(use-package flycheck-posframe
+  :ensure t
+  :hook (flycheck-mode . flycheck-posframe-mode)
+  :config
+  (setq flycheck-posframe-warning-prefix "! "
+        flycheck-posframe-info-prefix    "··· "
+        flycheck-posframe-error-prefix   "X "))
 
 ;; Show indicate error in the right bar
 (setq-default flycheck-indication-mode 'left-margin)
 (add-hook 'flycheck-mode-hook #'flycheck-set-indication-mode)
+
+;; Backend staff
+(use-package restclient :ensure t)
 
 ;; Prerequisite
 ;; sudo npm install -g vscode-langservers-extracted
@@ -452,30 +623,30 @@
   (add-to-list 'auto-mode-alist '("\\.tsx.*$" . typescript-mode))
   (add-to-list 'auto-mode-alist '("\\.ts.*$" . typescript-mode)))
 
-(defun setup-tide-mode()
-  "Setup function for tide."
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (company-mode +1))
+;; (defun setup-tide-mode()
+;;   "Setup function for tide."
+;;   (interactive)
+;;   (tide-setup)
+;;   (flycheck-mode +1)
+;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+;;   (company-mode +1))
 
-(use-package tide
-  :ensure t
-  :after (rjsx-mode company flycheck)
-  :hook (tide-mode . tide-hl-identifier-mode)
-  :hook (rjsx-mode . setup-tide-mode)
-  (typescript-mode . setup-tide-mode)
-  :general
-  (thanglemon/major-leader-key
-    :keymaps 'tide-mode-map
-    "R"   #'tide-restart-server
-    "f"   #'tide-format
-    "gd"   #'tide-jump-to-definition
-    "rrs" #'tide-rename-symbol
-    "roi" #'tide-organize-imports))
+;; (use-package tide
+;;   :ensure t
+;;   :after (rjsx-mode company flycheck)
+;;   :hook (tide-mode . tide-hl-identifier-mode)
+;;   :hook (rjsx-mode . setup-tide-mode)
+;;   (typescript-mode . setup-tide-mode)
+;;   :general
+;;   (thanglemon/major-leader-key
+;;     :keymaps 'tide-mode-map
+;;     "R"   #'tide-restart-server
+;;     "f"   #'tide-format
+;;     "gd"   #'tide-jump-to-definition
+;;     "rrs" #'tide-rename-symbol
+;;     "roi" #'tide-organize-imports))
 
-(advice-add #'tide-setup :after #'eldoc-mode)
+;; (advice-add #'tide-setup :after #'eldoc-mode)
 
 (use-package lsp-ui
   :ensure t
@@ -496,14 +667,10 @@
   :config
   (setq lsp-headerline-breadcrumb-enable nil))
 
-(use-package files
-  :hook
-  (before-save . delete-trailing-whitespace) ; when save automatically delte whitespace
-  :custom
-  (make-backup-files nil)	 ; for backups filename~
-  (create-lockfiles nil)	 ; for backups .#filename - user@user
-  (auto-save-default nil)	 ;for backups #filename#
-)
+; Stay Clean, Emacs!
+; Save the backup files to the directory .tmp/backups/
+(setq backup-directory-alist `(("." . ,(expand-file-name ".tmp/backups/"
+                                                         user-emacs-directory))))
 
 (use-package paren
   :ensure t
@@ -514,7 +681,7 @@
   :custom-face
   (show-paren-match ((t(:background "none" :foreground "red")))))
 
-					; Prettier
+; Prettier
 (use-package prettier-js
   :ensure t
   :defer t
@@ -524,8 +691,57 @@
   (setq prettier-js-args '("--trailing-comma" "all" "--bracket-spacing" "true")))
 
 ;; Rust
-(use-package rust-mode
-  :ensure t)
+;; (use-package rust-mode
+;;   :ensure t)
+
+(use-package rustic
+  :defer t
+	:ensure t
+  :mode ("\\.rs\\'" . rustic-mode)
+  :hook (rustic-mode-local-vars . rustic-setup-lsp)
+  :hook (rustic-mode . lsp-deferred)
+  :hook (rustic-mode . eglot-ensure)
+  :init
+  (with-eval-after-load 'org
+    (defalias 'org-babel-execute:rust #'org-babel-execute:rustic)
+    (add-to-list 'org-src-lang-modes '("rust" . rustic)))
+  (setq rustic-lsp-client 'lsp-mode)
+  (add-hook 'rustic-mode-hook #'tree-sitter-hl-mode)
+  :general
+  (general-define-key
+   :keymaps 'rustic-mode-map
+   :packages 'lsp
+   "M-t" #'lsp-ui-imenu
+   "M-?" #'lsp-find-references)
+  (dqv/major-leader-key
+   :keymaps 'rustic-mode-map
+   :packages 'rustic
+   "b"  '(:ignore t :which-key "build")
+   "bb" #'rustic-cargo-build
+   "bB" #'rustic-cargo-bench
+   "bc" #'rustic-cargo-check
+   "bC" #'rustic-cargo-clippy
+   "bd" #'rustic-cargo-doc
+   "bf" #'rustic-cargo-fmt
+   "bn" #'rustic-cargo-new
+   "bo" #'rustic-cargo-outdated
+   "br" #'rustic-cargo-run
+   "l"  '(:ignore t :which-key "lsp")
+   "la" #'lsp-execute-code-action
+   "lr" #'lsp-rename
+   "lq" #'lsp-workspace-restart
+   "lQ" #'lsp-workspace-shutdown
+   "ls" #'lsp-rust-analyzer-status
+   "t"  '(:ignore t :which-key "cargo test")
+   "ta" #'rustic-cargo-test
+   "tt" #'rustic-cargo-current-test)
+  :config
+  (setq rustic-indent-method-chain    t
+        rustic-babel-format-src-block nil
+        rustic-format-trigger         nil)
+  (remove-hook 'rustic-mode-hook #'flycheck-mode)
+  (remove-hook 'rustic-mode-hook #'flymake-mode-off)
+  (remove-hook 'rustic-mode-hook #'rustic-setup-lsp))
 
 (use-package go-mode
   :ensure t
@@ -568,6 +784,7 @@
 (add-hook 'js-mode-hook #'lsp)
 (add-hook 'js-mode-hook #'prettier-js-mode)
 (add-hook 'typescript-mode-hook #'prettier-js-mode)
+(add-hook 'rust-mode-hook #'lsp)
 (add-hook 'typescript-mode-hook #'lsp)
 (add-hook 'typescript-mode-hook #'rjsx-mode)
 
@@ -674,7 +891,7 @@
 ;;   :init
 ;;   (require 'ido)
 ;;   (ido-mode t)
-;;   (setq ido-enable-prefix nil
+;;   (setq ido-enable
 ;;         ido-enable-flex-matching t
 ;;         ido-case-fold nil
 ;;         ido-auto-merge-work-directories-length -1
@@ -741,28 +958,31 @@
 ; (use-package spacemacs-theme :ensure t)
 ;; (load-theme 'spacemacs-light t)
 
-;; Themes
-;; (use-package doom-themes
-;;  :ensure t
-;;  :config
-;;  (load-theme 'doom-solarized-dark t))
-
-;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-;; (load-theme 'catppuccin t)
-
-;; (setq catppuccin-flavor 'mocha) ;; or 'latte, 'macchiato, or 'mocha
-;; (catppuccin-reload)
-
-
 (use-package zenburn-theme
   :ensure t)
 
 (load-theme 'zenburn t)
 
+;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+
+;; (load-theme 'default-black t)
+
+;; (use-package ef-themes
+;;   :ensure t
+;;   :custom
+;;    (ef-themes-headings
+;;          '((0 . (1.3))
+;;            (1 . (1.3))
+;;            (2 . (1.2))
+;;            (t . (1.1))))
+;;    (ef-themes-mixed-fonts t))
+
+;; (load-theme 'ef-spring t)
+
 (thanglemon/leader-key
   "SPC" '(counsel-M-x :wk "M-x")
   "."  '(dired-jump :which-key "Dired Jump")
-  ","   #'magit-status
+  ;; ","   #'magit-status
 
   ;; Windows
   "w" '(:ignore t :wk "windows")
@@ -770,6 +990,7 @@
   "wj" #'evil-window-down
   "wk" #'evil-window-up
   "wl" #'evil-window-right
+	"w." #'windows-adjust-size/body
   "ws" #'split-window-below-and-focus
   "wv" #'split-window-right-and-focus
   "w0" '(winum-select-window-0-or-10 :wk t)
@@ -828,7 +1049,7 @@
   "mrw" #'treemacs-rename-workspace
   "mt" #'treemacs
   "mT" '(:ignore t :wk "toggles")
-  "mTd" #'treemacs-toggle-show-dotfiles
+  "mTd" #'treemacs-toggle-show-dotfil
   "mTn" #'treemacs-toggle-node
   "mv" '(:ignore t :wk "visit node")
   "mva" #'treemacs-visit-node-ace
@@ -861,7 +1082,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "3c451787cee570710bff441154a7db8b644cdbb7d270189b2724c6041a262381" default))
+	 '("fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "3c451787cee570710bff441154a7db8b644cdbb7d270189b2724c6041a262381" default))
  '(package-selected-packages '(evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
