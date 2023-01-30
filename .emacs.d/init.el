@@ -2,43 +2,49 @@
 
 (setq inhibit-startup-message t)
 
-;; Better simple ui
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(tooltip-mode -1)
-(setq create-lockfiles -1)
-(set-fringe-mode -1)
-(global-hl-line-mode -1)
-(blink-cursor-mode 0)
-;; (global-display-line-numbers-mode t)
+;;
+;; Garbage colector threshold
+;;
+
+(setq gc-cons-threshold (* 20 1024 1024)
+			) ;; initial threshold
+
+(add-hook 'emacs-startup-hook ;; threshold after init
+          (lambda () (setq gc-cons-threshold (* 128 1024 1024)))) 
+
+;;
+;; Layout
+;;
+
+(setq inhibit-startup-message t)
+
+(scroll-bar-mode -1)        ; Disable visible scrollbar
+(tool-bar-mode -1)          ; Disable the toolbar
+(set-fringe-mode 10)        ; Give some breathing room
+(menu-bar-mode 1)           ; Disable the menu bar
+(blink-cursor-mode 0)       ; Disable the cursor blink
+(global-hl-line-mode -1)    ; Disable the highlight current line
+
+(setq visible-bell t)       ; Set up the visible bell
+
+(set-face-attribute 'default nil :font "Source Code Pro" :height 170)
+
+(global-display-line-numbers-mode t)
 (setq-default tab-width 2)
 
 ;; Better handling for files with so long lines
 (global-so-long-mode 1)
 
-;; initial threshold
-
-(setq gc-cons-threshold (* 100 1024 1024)
-      company-idle-delay 0.0
-      company-minimum-prefix-length 1
-      read-process-output-max (* 1024 1024)
-      create-lockfiles nil) ;; lock files will kill `npm start'
+; Make escape quite prompts
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;; Full screen at startup
-;; (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
+(set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Custom functions
 
 (defun my-smarter-move-beginning-of-line (arg)
-  "Move point back to indentation of beginning of line.
-       Move point to the first non-whitespace character on this line.
-       If point is already there, move to the beginning of the line.
-       Effectively toggle between the first non-whitespace character and
-       the beginning of the line.
-       If ARG is not nil or 1, move forward ARG - 1 lines first.  If
-       point reaches the beginning or end of the buffer, stop there."
   (interactive "^p")
   (setq arg (or arg 1))
 
@@ -102,28 +108,22 @@
 (setq-default scroll-up-aggressively 0.01
               scroll-down-aggressively 0.01)
 
-;; (set-face-attribute 'default nil :font "Inconsolata" :height 180)
-(set-face-attribute 'default nil :font "FiraCode Nerd Font" :height 190)
-
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (show-paren-mode t)
 
 ;; Packages
-
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 (require 'use-package)
 
-(unless (package-installed-p 'evil)
-  (package-install 'evil))
-
-;; Enable Evil
-
-(require 'evil)
-(evil-mode 1)
+(use-package evil
+	:ensure t
+	:config
+	(evil-mode)
+	(evil-set-undo-system 'undo-redo))
 
 (global-set-key (kbd "C-u") #'evil-scroll-up)
 (global-set-key (kbd "C-d") #'evil-scroll-down)
@@ -161,21 +161,20 @@
     "C-h" #'my-smarter-move-beginning-of-line
     "C-l" #'end-of-line)
 
-;; Terminal
 (use-package popwin
-  :ensure t)
+	:ensure t)
 
- (with-eval-after-load 'popwin
-   (thanglemon/leader-key
-     "oe" '(+popwin:eshell :wk "Eshell popup")
-     "oE" '(eshell :wk "Eshell"))
-   (defun +popwin:eshell ()
-     (interactive)
-     (popwin:display-buffer-1
-      (or (get-buffer "*eshell*")
-          (save-window-excursion
-            (call-interactively 'eshell)))
-      :default-config-keywords '(:position :bottom :height 14))))
+(with-eval-after-load 'popwin
+  (thanglemon/leader-key
+    "oe" '(+popwin:eshell :wk "Eshell popup")
+    "oE" '(eshell :wk "Eshell"))
+  (defun +popwin:eshell ()
+    (interactive)
+    (popwin:display-buffer-1
+     (or (get-buffer "*eshell*")
+         (save-window-excursion
+           (call-interactively 'eshell)))
+     :default-config-keywords '(:position :bottom :height 14))))
 
 (use-package vterm
   :ensure t
@@ -204,6 +203,25 @@
               (call-interactively 'vterm)))
         :default-config-keywords '(:position :bottom :height 14)))))
 
+(use-package multi-vterm
+  :ensure t
+  :after vterm
+  :defer t
+  :general
+  (thanglemon/major-leader-key
+    :packages '(vterm multi-vterm)
+    :keymap 'vterm-mode-map
+    "c" #'multi-vterm
+    "j" #'multi-vterm-next
+    "k" #'multi-vterm-prev))
+
+;; Tab
+(use-package tab-bar
+	:ensure t)
+
+(use-package spinner
+	:ensure t)
+
 ;; Expand text, text in double quote or the whole file
 (use-package expand-region
   :ensure t
@@ -218,15 +236,24 @@
   (yas-global-mode 1))
 
 ;; Statusline
-(use-package doom-modeline
+;; (use-package doom-modeline
+;;   :ensure t
+;;   :defer t
+;;   :init (doom-modeline-mode 1)
+;;   :config
+;;   (setq doom-modeline-height 15
+;;          doom-modeline-env-version t))
+
+(use-package simple-modeline
   :ensure t
-  :defer t
-  :init (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-height 15
-         doom-modeline-enable-word-count t
-         doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode)
-         doom-modeline-env-version t))
+  :hook (after-init . simple-modeline-mode))
+
+;; (use-package minions
+;;   :ensure t
+;;   :config
+;;   (setq minions-mode-line-lighter ""
+;;         minions-mode-line-delimiters '("" . ""))
+;;   (minions-mode 1))
 
 (use-package projectile
   :ensure t
@@ -241,28 +268,36 @@
   :hook (dired-mode . treemacs-icons-dired-enable-once)
   :ensure t)
 
-;; Make dired less verbose
-
-(setq-default dired-details-hidden-string "--- ")
-
-;; Ace window
-(use-package ace-window
+(use-package org-bullets
   :ensure t
-  :bind ("C-x o" . ace-window)
   :config
-  (set-face-attribute
-   'aw-leading-char-face nil
-   :foreground "deep sky blue"
-   :weight 'bold
-   :height 3.0)
-  (setq aw-keys '(?a ?s ?d ?f ?j ?k ?l)))
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-;; Org-mode stuff
+;; Org Mode Configuration ------------------------------------------------------
+
+(defun efs/org-font-setup ()
+  ;; Replace list hyphen with dot
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+	(org-indent-mode t)
+
+  ;; Set faces for heading levels
+  (dolist (face '((org-level-1 . 1.2)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1)))
+    (set-face-attribute (car face) nil :font "FiraCode Nerd Font" :weight 'regular :height (cdr face))))
+
+;; Src block
 (use-package org
-  :ensure t
-  :hook (org-mode . org-setup)
-  :custom				;
-  (org-ellipsis " ▼")
+  :hook (org-mode . efs/org-font-setup)
+  :custom					;
+  (org-ellipsis " ⤵")
   (org-hide-emphasis-markers t)
   :config
   (setq org-cycle-separator-lines 2
@@ -270,10 +305,27 @@
         org-src-tab-acts-natively t
         org-src-preserve-indentation nil))
 
-(use-package org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+;; Org babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((js . t)
+	 (python . t)
+	 (shell . t)
+))
+
+(require 'org-tempo)
+(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+(add-to-list 'org-structure-template-alist '("js" . "src js"))
+(add-to-list 'org-structure-template-alist '("shell" . "src shell"))
+(add-to-list 'org-structure-template-alist '("http" . "src restclient"))
+
+;; (use-package org-tempo
+;; 	:ensure t
+;; 	:config
+;; 	(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp :tangle ./init.el"))
+;; 	(add-to-list 'org-structure-template-alist '("js" . "src js :result output"))
+;; 	(add-to-list 'org-structure-template-alist '("http" . "src restclient")))
+
 
 ;; Prettify
 (defun prog-mode-set-symbols-alist ()
@@ -351,12 +403,19 @@
 ;; Devops
 (use-package yaml-mode :ensure t)
 
+(use-package toml-mode :ensure t)
+
 (use-package dockerfile-mode :ensure t)
 
 (use-package smartparens
   :ensure t
   :defer t
   :hook (prog-mode . smartparens-mode))
+
+(use-package rainbow-delimiters
+  :ensure t)
+
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 ;; Move text
 (use-package move-text
@@ -365,6 +424,9 @@
 ;; Command keys
 (global-set-key (kbd "s-j") #'move-text-down)
 (global-set-key (kbd "s-k") #'move-text-up)
+
+(use-package cfrs
+  :ensure t)
 
 ;; Avy
 (use-package avy
@@ -392,7 +454,8 @@
   :defer 0
   :diminish which-key-mode
   :config
-  (which-key-mode))
+  (which-key-mode)
+	(setq which-key-idle-delay 0.3))
 
 ;; General keybindins
 ;; Jump out of the surrounding
@@ -407,6 +470,8 @@
               ("<tab>" . company-complete-selection))
 	:config
 	(setq company-minimum-prefix-length     2
+	      company-idle-delay 0.0
+        company-minimum-prefix-length 1
         company-toolsip-limit             14
         company-tooltip-align-annotations t
         company-require-match             'never
@@ -420,21 +485,6 @@
         company-dabbrev-other-buffers nil
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase    nil))
-
-
-; (use-package company-box
-;   :ensure t
-;   :after company
-;   :after (company all-the-icons)
-;   :config
-;   (setq company-box-show-single-candidate t
-;         company-box-backends-colors       nil
-;         company-box-max-candidates        50
-;         company-box-icons-alist           'company-box-icons-all-the-icons
-;         company-box-icons-all-the-icons
-;         (let ((all-the-icons-scale-factor 0.8))
-;           `(
-;             <<gen-company-box-icons()>>))))
 
 (use-package company-box
   :ensure t
@@ -480,6 +530,12 @@
             (ElispFace . ,(all-the-icons-material "format_paint" :face 'all-the-icons-pink))
             ))))
 
+(use-package eldoc
+  :delight
+  :hook (prog-mode . eldoc-mode)
+  :custom
+  (eldoc-idle-delay 0.5))
+
 ;; Turn on the company mode for all of the languages
 (add-hook 'after-init-hook 'global-company-mode)
 
@@ -511,17 +567,17 @@
 
 ;; Lsp client
 ;; Eglot
-(use-package eglot
-  :ensure t)
+;; (use-package eglot
+;;   :ensure t)
 
 ;; Brew command to install lsp: brew install ccls
-(add-to-list 'eglot-server-programs '((c++-mode c-mode) "ccls"))
+;; (add-to-list 'eglot-server-programs '((c++-mode c-mode) "ccls"))
 
-(add-hook 'c-mode-hook 'eglot-ensure)
-(add-hook 'c++-mode-hook 'eglot-ensure)
+;; (add-hook 'c-mode-hook 'eglot-ensure)
+;; (add-hook 'c++-mode-hook 'eglot-ensure)
 
 ;; Require gopls
-(add-hook 'go-mode-hook 'eglot-ensure)
+;; (add-hook 'go-mode-hook 'eglot-ensure)
 
 ;; Require rust-analyzer
 ;; Masos install using homebrew: brew install rust-analyzer
@@ -569,20 +625,49 @@
      (add-hook 'evil-replace-state-entry-hook
                #'flycheck-popup-tip-delete-popup)))
 
-(use-package flycheck-posframe
-  :ensure t
-  :hook (flycheck-mode . flycheck-posframe-mode)
-  :config
-  (setq flycheck-posframe-warning-prefix "! "
-        flycheck-posframe-info-prefix    "··· "
-        flycheck-posframe-error-prefix   "X "))
+;; (use-package flycheck-pos-tip
+;;   :disabled
+;;   :after flycheck
+;;   :hook (flycheck-mode . flycheck-pos-tip-mode))
 
 ;; Show indicate error in the right bar
 (setq-default flycheck-indication-mode 'left-margin)
 (add-hook 'flycheck-mode-hook #'flycheck-set-indication-mode)
 
+;; Status flycheck icons
+(use-package flycheck-indicator
+	:ensure t
+  :after flycheck
+  :hook (flycheck-mode . flycheck-indicator-mode)
+  :custom
+  (flycheck-indicator-icon-error 9632)
+  (flycheck-indicator-icon-info 9679)
+  (flycheck-indicator-icon-warning 9650)
+  (flycheck-indicator-status-icons
+  '((running . "◉")
+     (errored . "◙")
+     (finished . "●")
+     (interrupted . "◘")
+     (suspicious . "◘")
+     (not-checked . "○"))))
+
+;; (use-package flycheck-posframe
+;;   :ensure t
+;;   :hook (flycheck-mode . flycheck-posframe-mode)
+;;   :config
+;;   (setq flycheck-posframe-warning-prefix "! "
+;;         flycheck-posframe-info-prefix    "··· "
+;;         flycheck-posframe-error-prefix   "X "))
+
+(use-package highlight-indentation
+	:ensure t
+	:init
+  (highlight-indentation-mode 1))
+;; (add-hook 'lsp-mode-hook #'highlight-indentation-mode)
+
 ;; Backend staff
-(use-package restclient :ensure t)
+(use-package restclient
+	:ensure t)
 
 ;; Prerequisite
 ;; sudo npm install -g vscode-langservers-extracted
@@ -623,34 +708,12 @@
   (add-to-list 'auto-mode-alist '("\\.tsx.*$" . typescript-mode))
   (add-to-list 'auto-mode-alist '("\\.ts.*$" . typescript-mode)))
 
-;; (defun setup-tide-mode()
-;;   "Setup function for tide."
-;;   (interactive)
-;;   (tide-setup)
-;;   (flycheck-mode +1)
-;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
-;;   (company-mode +1))
-
-;; (use-package tide
-;;   :ensure t
-;;   :after (rjsx-mode company flycheck)
-;;   :hook (tide-mode . tide-hl-identifier-mode)
-;;   :hook (rjsx-mode . setup-tide-mode)
-;;   (typescript-mode . setup-tide-mode)
-;;   :general
-;;   (thanglemon/major-leader-key
-;;     :keymaps 'tide-mode-map
-;;     "R"   #'tide-restart-server
-;;     "f"   #'tide-format
-;;     "gd"   #'tide-jump-to-definition
-;;     "rrs" #'tide-rename-symbol
-;;     "roi" #'tide-organize-imports))
-
-;; (advice-add #'tide-setup :after #'eldoc-mode)
-
 (use-package lsp-ui
+  :after lsp-mode
   :ensure t
   :commands lsp-ui-mode)
+
+(global-set-key (kbd "C-k") #'lsp-ui-doc-toggle)
 
 ;; lsp-mode
 (setq lsp-log-io nil) ;; Don't log everything = speed
@@ -660,26 +723,37 @@
 ;; (setq lsp-ui-sideline-show-hover t)
 (setq lsp-ui-sideline-show-code-actions t)
 
+				 ;; (lsp-mode . '(lambda () (add-multiple-into-list 'prettify-symbols-alist
+				 ;; 																						'((">=" . "≥")
+				 ;; 																							("<=" . "≤")
+				 ;; 																							("!=" . "≠")
+				 ;; 																							("=>" . "⇒")
+				 ;; 																							("<=" . "⇐")
+				 ;; 																							("->" . "→")
+				 ;; 																							("<-" . "←")))))
+
 (use-package lsp-mode
   :ensure t
-  :hook ((lsp-mode . lsp-enable-which-key-integration))
+  :hook ((rustic-mode . lsp-deferred)
+				 (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp-deferred
   :config
-  (setq lsp-headerline-breadcrumb-enable nil))
+  (setq lsp-headerline-breadcrumb-enable t)
+	(setq lsp-auto-guess-root nil))
 
 ; Stay Clean, Emacs!
 ; Save the backup files to the directory .tmp/backups/
 (setq backup-directory-alist `(("." . ,(expand-file-name ".tmp/backups/"
                                                          user-emacs-directory))))
-
-(use-package paren
-  :ensure t
-  :init
-  (show-paren-mode 1)
-  :config
-  (setq show-paren-style 'parenthesses)
-  :custom-face
-  (show-paren-match ((t(:background "none" :foreground "red")))))
+;; Highlight the parenthese
+;; (use-package paren
+;;   :ensure t
+;;   :init
+;;   (show-paren-mode 1)
+;;   :config
+;;   (setq show-paren-style 'parenthesses)
+;;   :custom-face
+;;   (show-paren-match ((t(:background "none" :foreground "red")))))
 
 ; Prettier
 (use-package prettier-js
@@ -691,78 +765,41 @@
   (setq prettier-js-args '("--trailing-comma" "all" "--bracket-spacing" "true")))
 
 ;; Rust
-;; (use-package rust-mode
-;;   :ensure t)
-
+;; If the lsp error failed can not load workspace and then run these command: lsp-workspace-folders-remove, lsp
 (use-package rustic
-  :defer t
-	:ensure t
-  :mode ("\\.rs\\'" . rustic-mode)
-  :hook (rustic-mode-local-vars . rustic-setup-lsp)
-  :hook (rustic-mode . lsp-deferred)
-  :hook (rustic-mode . eglot-ensure)
-  :init
-  (with-eval-after-load 'org
-    (defalias 'org-babel-execute:rust #'org-babel-execute:rustic)
-    (add-to-list 'org-src-lang-modes '("rust" . rustic)))
-  (setq rustic-lsp-client 'lsp-mode)
-  (add-hook 'rustic-mode-hook #'tree-sitter-hl-mode)
-  :general
-  (general-define-key
-   :keymaps 'rustic-mode-map
-   :packages 'lsp
-   "M-t" #'lsp-ui-imenu
-   "M-?" #'lsp-find-references)
-  (dqv/major-leader-key
-   :keymaps 'rustic-mode-map
-   :packages 'rustic
-   "b"  '(:ignore t :which-key "build")
-   "bb" #'rustic-cargo-build
-   "bB" #'rustic-cargo-bench
-   "bc" #'rustic-cargo-check
-   "bC" #'rustic-cargo-clippy
-   "bd" #'rustic-cargo-doc
-   "bf" #'rustic-cargo-fmt
-   "bn" #'rustic-cargo-new
-   "bo" #'rustic-cargo-outdated
-   "br" #'rustic-cargo-run
-   "l"  '(:ignore t :which-key "lsp")
-   "la" #'lsp-execute-code-action
-   "lr" #'lsp-rename
-   "lq" #'lsp-workspace-restart
-   "lQ" #'lsp-workspace-shutdown
-   "ls" #'lsp-rust-analyzer-status
-   "t"  '(:ignore t :which-key "cargo test")
-   "ta" #'rustic-cargo-test
-   "tt" #'rustic-cargo-current-test)
+  :ensure t
+  :bind (:map rustic-mode-map
+              ("M-j" . lsp-ui-imenu)
+              ("M-?" . lsp-find-references)
+              ("C-c C-c l" . flycheck-list-errors)
+              ("C-c C-c a" . lsp-execute-code-action)
+              ("C-c C-c r" . lsp-rename)
+              ("C-c C-c q" . lsp-workspace-restart)
+              ("C-c C-c Q" . lsp-workspace-shutdown)
+              ("C-c C-c s" . lsp-rust-analyzer-status))
   :config
-  (setq rustic-indent-method-chain    t
-        rustic-babel-format-src-block nil
-        rustic-format-trigger         nil)
-  (remove-hook 'rustic-mode-hook #'flycheck-mode)
-  (remove-hook 'rustic-mode-hook #'flymake-mode-off)
-  (remove-hook 'rustic-mode-hook #'rustic-setup-lsp))
+  ;; uncomment for less flashiness
+  ;; (setq lsp-eldoc-hook nil)
+  ;; (setq lsp-enable-symbol-highlighting nil)
+  ;; (setq lsp-signature-auto-activate nil)
+
+  ;; comment to disable rustfmt on save
+  (setq rustic-format-on-save t)
+  (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
+
+(defun rk/rustic-mode-hook ()
+  ;; so that run C-c C-c C-r works without having to confirm, but don't try to
+  ;; save rust buffers that are not file visiting. Once
+  ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
+  ;; no longer be necessary.
+  (when buffer-file-name
+    (setq-local buffer-save-without-query t))
+  (add-hook 'before-save-hook 'lsp-format-buffer nil t))
 
 (use-package go-mode
   :ensure t
   :mode "//.go$"
   :interpreter "go"
-  :bind (:map go-mode-map
-	      ("C-," . 'hydra-go/body))
-  :init (defhydra hydra-go (:hint nil :color teal)
-	  "
-            ^Command^      ^Imports^     ^Doc^
-            ^-------^      ^-------^     ^---^
-            _r_: run       _ig_: goto    _d_: doc at point
-                           _ia_: add
-          ^  ^             _ir_: remove
-           "
-	  ("r" go-run-main)
-	  ("d" godoc-at-point)
-	  ("ig" go-goto-imports)
-	  ("ia" go-import-add)
-	  ("ir" go-remove-unused-imports)
-	  ("q" nil "quit" :color blue))
   :config
   (setq gofmt-command "goimports")
   (if (not (executable-find "goimports"))
@@ -781,10 +818,10 @@
     )
 
 ;; Automatically trigger the js-mode when open a js,ts or tsx file
+(add-hook 'go-mode-hook #'lsp)
 (add-hook 'js-mode-hook #'lsp)
 (add-hook 'js-mode-hook #'prettier-js-mode)
 (add-hook 'typescript-mode-hook #'prettier-js-mode)
-(add-hook 'rust-mode-hook #'lsp)
 (add-hook 'typescript-mode-hook #'lsp)
 (add-hook 'typescript-mode-hook #'rjsx-mode)
 
@@ -797,18 +834,18 @@
 (use-package treemacs-evil
   :ensure t)
 
-(use-package centaur-tabs
-  :ensure t
-  :demand
-  :config
-  (setq centaur-tabs-set-bar 'over
-          centaur-tabs-set-icons t
-          centaur-tabs-gray-out-icons 'buffer
-          centaur-tabs-height 24
-          centaur-tabs-set-modified-marker t
-          centaur-tabs-modified-marker "•")
-  (centaur-tabs-headline-match)
-  (centaur-tabs-mode t))
+;; (use-package centaur-tabs
+;;   :ensure t
+;;   :demand
+;;   :config
+;;   (setq centaur-tabs-set-bar 'over
+;;         centaur-tabs-set-icons t
+;;         centaur-tabs-gray-out-icons 'buffer
+;;         centaur-tabs-height 24
+;;         centaur-tabs-set-modified-marker t
+;;         centaur-tabs-modified-marker "•")
+;;   (centaur-tabs-headline-match)
+;;   (centaur-tabs-mode t))
 
 (use-package engine-mode
   :ensure t
@@ -883,44 +920,15 @@
   :init
   (add-hook 'emacs-startup-hook 'dashboard-refresh-buffer))
 
-;; Super search feature
-
-
-;; (use-package ido-vertical-mode
-;;   :ensure t
-;;   :init
-;;   (require 'ido)
-;;   (ido-mode t)
-;;   (setq ido-enable
-;;         ido-enable-flex-matching t
-;;         ido-case-fold nil
-;;         ido-auto-merge-work-directories-length -1
-;;         ido-create-new-buffer 'always
-;;         ido-use-filename-at-point nil
-;;         ido-max-prospects 10)
-
-;;   (require 'ido-vertical-mode)
-;;   (ido-vertical-mode)
-
-;;   (require 'dash)
-
-;;   (defun my/ido-go-straight-home ()
-;;     (interactive)
-;;     (cond
-;;      ((looking-back "~/") (insert "Developments/"))
-;;      ((looking-back "/") (insert "~/"))
-;;      (:else (call-interactively 'self-insert-command))))
-
-;;   (defun my/setup-ido ()
-;;     ;; Go straight home
-;;     (define-key ido-file-completion-map (kbd "~") 'my/ido-go-straight-home)
-;;     (define-key ido-file-completion-map (kbd "C-~") 'my/ido-go-straight-home))
-
-;;   (add-hook 'ido-setup-hook 'my/setup-ido)
-;;   (add-to-list 'ido-ignore-directories "node_modules"))
+;; Adding more useful staff for searching file features
+(use-package marginalia
+	:ensure t
+	:config
+	(marginalia-mode))
 
 (use-package ivy :ensure t)
 
+;; Center popup window (Good for you neck haha)
 (use-package ivy-posframe
   :ensure t
   :after ivy
@@ -956,33 +964,17 @@
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 
 ; (use-package spacemacs-theme :ensure t)
-;; (load-theme 'spacemacs-light t)
+(load-theme 'spacemacs-light t)
 
-(use-package zenburn-theme
-  :ensure t)
+;; (use-package zenburn-theme
+;;   :ensure t)
 
-(load-theme 'zenburn t)
-
-;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-
-;; (load-theme 'default-black t)
-
-;; (use-package ef-themes
-;;   :ensure t
-;;   :custom
-;;    (ef-themes-headings
-;;          '((0 . (1.3))
-;;            (1 . (1.3))
-;;            (2 . (1.2))
-;;            (t . (1.1))))
-;;    (ef-themes-mixed-fonts t))
-
-;; (load-theme 'ef-spring t)
+;; (load-theme 'zenburn t)
 
 (thanglemon/leader-key
   "SPC" '(counsel-M-x :wk "M-x")
   "."  '(dired-jump :which-key "Dired Jump")
-  ;; ","   #'magit-status
+  ","   #'magit-status
 
   ;; Windows
   "w" '(:ignore t :wk "windows")
@@ -1010,9 +1002,9 @@
   "aC" #'calendar
 
   ;; Tab bar
-  "t" '(:ignore t :wk "Tabs")
-  "tp" #'centaur-tabs-backward
-  "tn" #'centaur-tabs-forward
+  ;; "t" '(:ignore t :wk "Tabs")
+  ;; "tp" #'centaur-tabs-backward
+  ;; "tn" #'centaur-tabs-forward
 
   ;; Treemacs
   "m" '(:ignore t :wk "treemacs")
@@ -1033,7 +1025,7 @@
   "mls" #'treemacs-expand-lsp-symbol
   "mld" #'treemacs-expand-lsp-treemacs-deps
   "mlD" #'treemacs-collapse-lsp-treemacs-deps
-  "mlS" #'treemacs-collapse-lsp-symbol
+  "mlS" #'tre
   "mp" '(:ignore t :wk "projects")
   "mpa" #'treemacs-add-project
   "mpf" #'treemacs-project-follow-mode
