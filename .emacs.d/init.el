@@ -35,8 +35,16 @@
 ;; Better handling for files with so long lines
 (global-so-long-mode 1)
 
-; Make escape quite prompts
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+;;
+;; Load external config files
+;;
+
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
+(require 'lauremacs-ide-extra)
+
+;; Make escape quite prompts
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit) 
 
 ;; Full screen at startup
 (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
@@ -228,21 +236,24 @@
   :config
   (global-set-key (kbd "C-'") 'er/expand-region))
 
+;;
+;; Tabbar
+;;
+
+(use-package tab-bar-groups
+  :ensure t
+  :config
+  (tab-bar-groups-activate))
+
+;;
 ;; Yasnippet
+;;
+
 (use-package yasnippet
   :ensure t
   :config
   (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
   (yas-global-mode 1))
-
-;; Statusline
-;; (use-package doom-modeline
-;;   :ensure t
-;;   :defer t
-;;   :init (doom-modeline-mode 1)
-;;   :config
-;;   (setq doom-modeline-height 15
-;;          doom-modeline-env-version t))
 
 (use-package simple-modeline
   :ensure t
@@ -732,17 +743,32 @@
 				 ;; 																							("->" . "→")
 				 ;; 																							("<-" . "←")))))
 
+;; Thansk to lauremacs
+;;;###autoload
+(defun lauremacs/lsp-organize-imports-before-save ()
+	"Run `lsp-organize-imports' before save."
+	(when (bound-and-true-p lsp-mode)
+		(if (lsp-organize-imports)
+				(message "Organized imports!")
+			(message "Didn't organize imports")))
+	t)
+
 (use-package lsp-mode
   :ensure t
   :hook ((rustic-mode . lsp-deferred)
 				 (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp-deferred
   :config
+	(add-hook 'before-save-hook 'lauremacs/lsp-organize-imports-before-save)
   (setq lsp-headerline-breadcrumb-enable t)
-	(setq lsp-auto-guess-root nil))
+	(setq lsp-auto-guess-root t)
+	:init
+	(setq lsp-use-workspace-root-for-server-default-directory t))
 
-; Stay Clean, Emacs!
-; Save the backup files to the directory .tmp/backups/
+(setq lsp-keymap-prefix "C-c l")
+
+																				; Stay Clean, Emacs!
+																				; Save the backup files to the directory .tmp/backups/
 (setq backup-directory-alist `(("." . ,(expand-file-name ".tmp/backups/"
                                                          user-emacs-directory))))
 ;; Highlight the parenthese
@@ -976,6 +1002,17 @@
   "."  '(dired-jump :which-key "Dired Jump")
   ","   #'magit-status
 
+	;; Files
+  "f" '(:ignore t :wk "Files")
+  "fr" #'lauremacs-ide-lsp-ts-rename-file
+
+	;; Tab bar
+  "g" '(:ignore t :wk "Tab bar")
+  "g2" #'tab-bar-groups-new-tab
+  "gr" #'tab-bar-groups-rename-group
+  "gp" #'tab-bar-switch-to-prev-tab
+  "gn" #'tab-bar-switch-to-next-tab
+
   ;; Windows
   "w" '(:ignore t :wk "windows")
   "wh" #'evil-window-left
@@ -1052,7 +1089,6 @@
   "myp" #'treemacs-copy-project-path-at-point
   "myr" #'treemacs-copy-relative-path-at-point
   "myf" #'treemacs-copy-file
-
 
   "e"  '(:ignore t :which-key "errors")
   "e." '(hydra-flycheck/body :wk "hydra"))
