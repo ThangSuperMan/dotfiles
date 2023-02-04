@@ -24,12 +24,11 @@
 (menu-bar-mode 1)           ; Disable the menu bar
 (blink-cursor-mode 0)       ; Disable the cursor blink
 (global-hl-line-mode -1)    ; Disable the highlight current line
-
 (setq visible-bell t)       ; Set up the visible bell
 
-(set-face-attribute 'default nil :font "Source Code Pro" :height 170)
+(set-face-attribute 'default nil :font "SF Mono" :height 180)
 
-(global-display-line-numbers-mode t)
+;; (global-display-line-numbers-mode t)
 (setq-default tab-width 2)
 
 ;; Better handling for files with so long lines
@@ -44,13 +43,15 @@
 (require 'lauremacs-ide-extra)
 
 ;; Make escape quite prompts
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit) 
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;; Full screen at startup
 (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+;;
 ;; Custom functions
+;;
 
 (defun my-smarter-move-beginning-of-line (arg)
   (interactive "^p")
@@ -66,7 +67,10 @@
     (when (= orig-point (point))
       (move-beginning-of-line 1))))
 
+;;
 ;; Handle new windows
+;;
+
 (defun split-window-right-and-focus ()
   "Spawn a new window right of the current one and focus it."
   (interactive)
@@ -86,7 +90,20 @@
     (kill-this-buffer)
     (delete-window)))
 
+(defun dqv/goto-match-paren (arg)
+  "Go to the matching if on (){}[], similar to vi style of % ."
+  (interactive "p")
+  (cond ((looking-at "[\[\(\{]") (evil-jump-item))
+        ((looking-back "[\]\)\}]" 1) (evil-jump-item))
+        ((looking-at "[\]\)\}]") (forward-char) (evil-jump-item))
+        ((looking-back "[\[\(\{]" 1) (backward-char) (evil-jump-item))
+        (t nil)))
+  (global-set-key (kbd "s-;") #'dqv/goto-match-paren)
+
+;;
 ;; Scrolling
+;;
+
 (setq hscroll-step 1
       hscroll-margin 0
       scroll-step 1
@@ -97,7 +114,10 @@
       fast-but-imprecise-scrolling t)
 (pixel-scroll-mode 1)
 
+;;
 ;; Modeline modules
+;;
+
 (require 'time)
 (setq display-time-format "%Y-%m-%d %H:%M")
 (display-time-mode 1) ; display time in modeline
@@ -121,7 +141,10 @@
 
 (show-paren-mode t)
 
+;;
 ;; Packages
+;;
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
@@ -137,8 +160,8 @@
 (global-set-key (kbd "C-d") #'evil-scroll-down)
 
 ;; Cursor
-;; (setq evil-insert-state-cursor '((bar . 2) "orange")
-;;       evil-normal-state-cursor '(box "orange"))
+(setq evil-insert-state-cursor '((bar . 2) "orange")
+      evil-normal-state-cursor '(box "orange"))
 
 (use-package general
   :ensure t
@@ -223,6 +246,9 @@
     "j" #'multi-vterm-next
     "k" #'multi-vterm-prev))
 
+;; (use-package spacemacs-theme :ensure t)
+(load-theme 'spacemacs-light t)
+
 ;; Tab
 (use-package tab-bar
 	:ensure t)
@@ -235,6 +261,71 @@
   :ensure t
   :config
   (global-set-key (kbd "C-'") 'er/expand-region))
+
+;;
+;; Transparency
+;;
+
+(defvar lauremacs-state//opacity 85
+	"The value used as opacity when transparency is enabled.")
+
+;;;###autoload
+(defun lauremacs/toggle-transparency ()
+	"Toggle transparency between alpha = `lauremacs-state//opacity' and 100."
+	(interactive)
+	(let* ((frame (selected-frame))
+				 (current-alpha (or (car (frame-parameter frame
+																								 'alpha)) 100))
+				(new-alpha (if (= current-alpha 100) lauremacs-state//opacity 100)))
+		(set-frame-parameter frame 'alpha
+												 (cons new-alpha new-alpha))))
+
+;;;###autoload
+(defun lauremacs/set-transparency (&optional opacity)
+	"Set transparency to OPACITY.
+The default value is `lauremacs-state//opacity'."
+	(interactive "nInsert alpha from 20 to 100: ")
+	(throw-unless (if (bool opacity) (numberp opacity) t) "OPACITY should be a number")
+	(let* ((alpha (or opacity lauremacs-state//opacity))
+				 (new-alpha (min (max alpha 20) 100))
+				(frame (selected-frame)))
+		(set-frame-parameter frame 'alpha
+												 (cons new-alpha new-alpha))
+		(message (format "Transparency set to %s" new-alpha))))
+;;
+;; SQL mode
+;;
+
+;; (use-package sql
+;; 	:ensure t
+;; 	:mode ("\\.sql\\'" . sql-mode)
+;; 	:hook ((sql-mode . lsp-deferred)
+;; 				 (sql-mode . sqlind-minor-mode)
+;; 				 (sql-interactive-mode . (lambda () (toggle-truncate-lines 1))))
+;; 	:init
+;; 	(require 'sqlau)
+;; 	(require-without-throw 'sql-private)
+;; 	(thanglemon/leader-key
+;; 		:keymaps 'sql-mode-map
+;; 		"s"  '(nil :which-key "repl")
+;; 		"sb" '(sql-send-buffer              :which-key "send buffer to repl")
+;; 		"sf" '(sql-send-paragraph           :which-key "send paragraph to repl")
+;; 		"sr" '(sql-send-region              :which-key "send region to repl")
+;; 		"sB" '(sql-send-buffer-and-focus    :which-key "send buffer repl and focus")
+;; 		"sF" '(sql-send-paragraph-and-focus :which-key "send paragraph and focus")
+;; 		"sR" '(sql-send-region-and-focus    :which-key "send region and focus")
+;; 		"ss" '(sql-show-sqli-buffer         :which-key "show sqli buffer")
+;; 		"c"  '(nil :which-key "connection")
+;; 	  "cc" '(sql-connect                  :which-key "sql connect")
+;; 		"cb" '(sql-set-sqli-buffer          :which-key "set sqli buffer")
+;; 		"l"  '(nil :which-key "lsp functions")
+;; 		"ls" '(lsp-sql-switch-connection    :which-key "switch connections")
+;; 		"==" '(sqlfmt-buffer                :which-key "format buffer")
+;; 		"=r" '(sqlfmt-region                :which-key "format region")))
+
+;; (use-package sql-indent
+;; 	:ensure t
+;; 	:after sql)
 
 ;;
 ;; Tabbar
@@ -255,9 +346,30 @@
   (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
   (yas-global-mode 1))
 
-(use-package simple-modeline
+;; (use-package simple-modeline
+;;   :ensure t
+;;   :hook (after-init . simple-modeline-mode))
+
+;;
+;; Doom modeline
+;;
+
+(use-package doom-modeline
   :ensure t
-  :hook (after-init . simple-modeline-mode))
+  :init
+  (doom-modeline-mode 1)
+
+  (doom-modeline-def-modeline 'lauremacs-modeline
+    '(bar window-number buffer-info matches selection-info media-info)
+    '(checker lsp word-count pdf-pages major-mode workspace-name vcs hud buffer-position))
+
+  (doom-modeline-set-modeline 'lauremacs-modeline 'default)
+  
+  :custom
+  (doom-modeline-buffer-file-name-style 'file-name)
+  (doom-modeline-enable-word-count t)
+  (doom-modeline-buffer-encoding nil)
+  (doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode emacs-lisp-mode)))
 
 ;; (use-package minions
 ;;   :ensure t
@@ -330,20 +442,18 @@
 (add-to-list 'org-structure-template-alist '("shell" . "src shell"))
 (add-to-list 'org-structure-template-alist '("http" . "src restclient"))
 
-;; (use-package org-tempo
-;; 	:ensure t
-;; 	:config
-;; 	(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp :tangle ./init.el"))
-;; 	(add-to-list 'org-structure-template-alist '("js" . "src js :result output"))
-;; 	(add-to-list 'org-structure-template-alist '("http" . "src restclient")))
-
-
 ;; Prettify
 (defun prog-mode-set-symbols-alist ()
   (setq prettify-symbols-alist '(("lambda"  . ?λ)
                                  ("null"    . ?∅)
                                  ("nil"    . ?∅)
-                                 ("NULL"    . ?∅)))
+                                 ("NULL"    . ?∅)
+																 ("<=" . "≤")
+																 ("!=" . "≠")
+																 ("=>" . "⇒")
+																 ("<=" . "⇐")
+																 ("->" . "→")
+																 ("<-" . "←")))
   (prettify-symbols-mode 1))
 
 (add-hook 'prog-mode-hook #'prog-mode-set-symbols-alist)
@@ -607,6 +717,20 @@
   :defer t
   :init
   (global-flycheck-mode)
+
+	;; Customize flycheck icons
+  (set-face-attribute 'flycheck-fringe-info nil
+                      :background "#3a81c3"
+                      :foreground "white")
+  
+  (set-face-attribute 'flycheck-fringe-error nil
+                      :background "#e0211d"
+                      :foreground "white")
+  
+  (set-face-attribute 'flycheck-fringe-warning nil
+                      :background "#dc752f"
+                      :foreground "white")
+
   :config
   (setq flycheck-emacs-lisp-load-path 'inherit)
 
@@ -624,17 +748,18 @@
   ;; Display errors a little quicker (default is 0.9s)
   (setq flycheck-display-errors-delay 0.2))
 
+
 (use-package flycheck-popup-tip
-   :ensure t
-   :after (flycheck evil)
-   :hook (flycheck-mode . flycheck-popup-tip-mode)
-   :config
-   (setq flycheck-popup-tip-error-prefix "X ")
-   (with-eval-after-load 'evil
-     (add-hook 'evil-insert-state-entry-hook
-               #'flycheck-popup-tip-delete-popup)
-     (add-hook 'evil-replace-state-entry-hook
-               #'flycheck-popup-tip-delete-popup)))
+  :ensure t
+  :after (flycheck evil)
+  :hook (flycheck-mode . flycheck-popup-tip-mode)
+  :config
+  (setq flycheck-popup-tip-error-prefix "X ")
+  (with-eval-after-load 'evil
+    (add-hook 'evil-insert-state-entry-hook
+              #'flycheck-popup-tip-delete-popup)
+    (add-hook 'evil-replace-state-entry-hook
+              #'flycheck-popup-tip-delete-popup)))
 
 ;; (use-package flycheck-pos-tip
 ;;   :disabled
@@ -644,6 +769,7 @@
 ;; Show indicate error in the right bar
 (setq-default flycheck-indication-mode 'left-margin)
 (add-hook 'flycheck-mode-hook #'flycheck-set-indication-mode)
+
 
 ;; Status flycheck icons
 (use-package flycheck-indicator
@@ -662,13 +788,13 @@
      (suspicious . "◘")
      (not-checked . "○"))))
 
-;; (use-package flycheck-posframe
-;;   :ensure t
-;;   :hook (flycheck-mode . flycheck-posframe-mode)
-;;   :config
-;;   (setq flycheck-posframe-warning-prefix "! "
-;;         flycheck-posframe-info-prefix    "··· "
-;;         flycheck-posframe-error-prefix   "X "))
+(use-package flycheck-posframe
+  :ensure t
+  :hook (flycheck-mode . flycheck-posframe-mode)
+  :config
+  (setq flycheck-posframe-warning-prefix "! "
+        flycheck-posframe-info-prefix    "··· "
+        flycheck-posframe-error-prefix   "X "))
 
 (use-package highlight-indentation
 	:ensure t
@@ -679,6 +805,15 @@
 ;; Backend staff
 (use-package restclient
 	:ensure t)
+
+;;
+;; Solidity
+;;
+
+(use-package solidity-mode
+	:ensure t) 
+
+;; HTML
 
 ;; Prerequisite
 ;; sudo npm install -g vscode-langservers-extracted
@@ -734,14 +869,6 @@
 ;; (setq lsp-ui-sideline-show-hover t)
 (setq lsp-ui-sideline-show-code-actions t)
 
-				 ;; (lsp-mode . '(lambda () (add-multiple-into-list 'prettify-symbols-alist
-				 ;; 																						'((">=" . "≥")
-				 ;; 																							("<=" . "≤")
-				 ;; 																							("!=" . "≠")
-				 ;; 																							("=>" . "⇒")
-				 ;; 																							("<=" . "⇐")
-				 ;; 																							("->" . "→")
-				 ;; 																							("<-" . "←")))))
 
 ;; Thansk to lauremacs
 ;;;###autoload
@@ -755,7 +882,8 @@
 
 (use-package lsp-mode
   :ensure t
-  :hook ((rustic-mode . lsp-deferred)
+  :hook (
+				 (rustic-mode . lsp-deferred)
 				 (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp-deferred
   :config
@@ -781,7 +909,28 @@
 ;;   :custom-face
 ;;   (show-paren-match ((t(:background "none" :foreground "red")))))
 
-; Prettier
+;;
+;; Show paren mode
+;;
+
+(use-package paren
+	:ensure t
+  :commands show-paren-mode
+  :hook (prog-mode . show-paren-mode)
+  :init
+  (set-face-attribute 'show-paren-mismatch nil
+                      :background "red"
+                      :foreground "black"
+                      :underline nil)
+  (set-face-attribute 'show-paren-match nil
+                      :background "#c93360"
+                      :foreground "#f4d6df"
+                      :underline nil))
+
+;;
+;; Prettier
+;;
+
 (use-package prettier-js
   :ensure t
   :defer t
@@ -854,11 +1003,11 @@
 (use-package all-the-icons
   :ensure t)
 
-(use-package treemacs
-  :ensure t)
+;; (use-package treemacs
+;;   :ensure t)
 
-(use-package treemacs-evil
-  :ensure t)
+;; (use-package treemacs-evil
+;;   :ensure t)
 
 ;; (use-package centaur-tabs
 ;;   :ensure t
@@ -929,9 +1078,11 @@
 (use-package dashboard
   :ensure t
   :config
-  (setq dashboard-items '((recents . 15)))
+  (setq dashboard-items '((recents . 10)))
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
+	(setq dashboard-center-content nil)
+	(setq dashboard-set-navigator t)
   (setq dashboard-banner-logo-title "T H A N G L E M O N")
   (setq dashboard-footer-messages '("Made with love"))
   (setq dashboard-startup-banner "~/.emacs.d/banners/squirrel.gif")
@@ -989,13 +1140,12 @@
 
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 
-; (use-package spacemacs-theme :ensure t)
-(load-theme 'spacemacs-light t)
 
 ;; (use-package zenburn-theme
 ;;   :ensure t)
 
 ;; (load-theme 'zenburn t)
+
 
 (thanglemon/leader-key
   "SPC" '(counsel-M-x :wk "M-x")
@@ -1012,8 +1162,8 @@
   "gr" #'tab-bar-groups-rename-group
   "gp" #'tab-bar-switch-to-prev-tab
   "gn" #'tab-bar-switch-to-next-tab
-
   ;; Windows
+
   "w" '(:ignore t :wk "windows")
   "wh" #'evil-window-left
   "wj" #'evil-window-down
@@ -1103,6 +1253,7 @@
   ("gg" flycheck-first-error "First")
   ("G" (progn (goto-char (point-max)) (flycheck-previous-error)) "Last")
   ("q" nil))
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
