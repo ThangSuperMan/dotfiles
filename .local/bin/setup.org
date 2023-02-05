@@ -1,0 +1,5 @@
+* Setup the execute role for my script files
+
+** Make the file execute for newsbloat pacakge 
+ - Command: chmod +x linkhandler
+

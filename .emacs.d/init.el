@@ -26,7 +26,8 @@
 (global-hl-line-mode -1)    ; Disable the highlight current line
 (setq visible-bell t)       ; Set up the visible bell
 
-(set-face-attribute 'default nil :font "SF Mono" :height 180)
+;; (set-face-attribute 'default nil :font "SF Mono" :height 180)
+(set-face-attribute 'default nil :font "Source Code Pro" :height 180)
 
 ;; (global-display-line-numbers-mode t)
 (setq-default tab-width 2)
@@ -90,7 +91,7 @@
     (kill-this-buffer)
     (delete-window)))
 
-(defun dqv/goto-match-paren (arg)
+(defun my/goto-match-paren (arg)
   "Go to the matching if on (){}[], similar to vi style of % ."
   (interactive "p")
   (cond ((looking-at "[\[\(\{]") (evil-jump-item))
@@ -98,7 +99,7 @@
         ((looking-at "[\]\)\}]") (forward-char) (evil-jump-item))
         ((looking-back "[\[\(\{]" 1) (backward-char) (evil-jump-item))
         (t nil)))
-  (global-set-key (kbd "s-;") #'dqv/goto-match-paren)
+  (global-set-key (kbd "s-;") #'my/goto-match-paren)
 
 ;;
 ;; Scrolling
