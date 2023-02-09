@@ -49,8 +49,17 @@ return require('packer').startup(function()
 
   -- My mood
   -- use { 'psliwka/vim-smoothie' }
-  use { 'xiyaowong/nvim-transparent', config = require 'plugins.transparent' }
-  use { 'sainnhe/everforest', config = require 'plugins.theme' }
+  -- use { 'xiyaowong/nvim-transparent', config = require 'plugins.transparent' }
+  use({"xiyaowong/nvim-transparent",config = function()
+        require("transparent").setup({
+          enable = false, -- boolean: enable transparent
+            extra_groups = {
+                "NeoTreeFileIcon",
+                "NeoTreeExpander"
+            },
+            exclude = {}, -- table: groups you don't want to clear
+        })
+    end})
 
   -- Treesitter
   use {
@@ -59,12 +68,24 @@ return require('packer').startup(function()
       config = require 'plugins.treesitter'
   }
 
+  use({
+        "vuki656/package-info.nvim",
+        requires = "MunifTanjim/nui.nvim",
+        config = function()
+            require('package-info').setup()
+            vim.keymap.set({ "n" }, "<LEADER>ns", require("package-info").show,
+                { silent = true, noremap = true })
+            vim.keymap.set({ "n" }, "<LEADER>nc", require("package-info").hide,
+                { silent = true, noremap = true })
+        end
+    })
+
   -- Colorizer
   use { 'norcalli/nvim-colorizer.lua', config = require 'plugins.colorizer' }
 
   -- Surround
   use { 'tpope/vim-surround' }
-  use { 'windwp/nvim-ts-autotag' }
+  use { 'windwp/nvim-ts-autotag'}
   use { 'alvan/vim-closetag', config = require 'plugins.closetag' }
   use { 'jiangmiao/auto-pairs' }
 
@@ -104,7 +125,12 @@ return require('packer').startup(function()
 
   -- Lsp
   use { 'neovim/nvim-lspconfig', config = require 'plugins.lsp' }
-  use { 'glepnir/lspsaga.nvim', branch = 'main', config = require 'plugins.saga' }
+  use({
+        "glepnir/lspsaga.nvim",
+        branch = "main",
+        config = require('plugins.saga')
+    })
+
   use { 'onsails/lspkind-nvim', config = require 'plugins.kind' }
 
   -- debugging
@@ -186,16 +212,6 @@ return require('packer').startup(function()
         config = require('plugins.neotree')
     }
 
-  -- use {
-  --   'nvim-tree/nvim-tree.lua',
-  --   requires = {
-  --     'nvim-tree/nvim-web-devicons',
-  --     'nvim-lua/plenary.nvim'
-  --   },
-  --   tag = 'nightly',
-  --   config = require('plugins.tree')
-  -- }
-
   use {
       'voldikss/vim-floaterm',
       config = function()
@@ -206,6 +222,11 @@ return require('packer').startup(function()
           vim.g.floaterm_keymap_toggle = '<C-\\>'
       end
   }
+
+  -- use { 'AndrewRadev/tagalong.vim',
+  -- config = function ()
+  --   end
+  -- }
   
   -- use { 'jose-elias-alvarez/null-ls.nvim', config = require('plugins.null') }
 
@@ -215,6 +236,8 @@ return require('packer').startup(function()
   use 'tom-anders/telescope-vim-bookmarks.nvim'
 
   use {'stevearc/dressing.nvim'}
+
+  use { 'sainnhe/everforest', config = require 'plugins.theme' }
 
   -- use { 'sunjon/shade.nvim', config = require('plugins.shade') }
 
@@ -226,7 +249,7 @@ return require('packer').startup(function()
             filetype_exclude = {"help", "txt", "norg", "md"},
             buftype_exclude = {"terminal", "nofile"}
         })
-        -- vim.g.indent_blankline_char = "·"
+           vim.g.indent_blankline_char = "∘"
     end}
 
   -- use{  'github/copilot.vim', config = require 'plugins.copilot'}

@@ -18,6 +18,107 @@ local file_pattern = "*.tsx"
 
 -- Note: {{}}: Means escape curly brackets symbols
 
+local normal_function = s(
+  "random-img",
+  fmt([[
+    function {}({}) {{
+      {}
+    }}
+  ]],
+    {
+      i(1, "myFunc"),
+      -- Choice node
+      -- c(2, { t(""), i(1, "myArg") }),
+      i(2, ""),
+      i(3, "// TODO:"),
+    }
+  )
+)
+
+local normal_function = s(
+  "func",
+  fmt([[
+    function {}({}) {{
+      {}
+    }}
+  ]],
+    {
+      i(1, "myFunc"),
+      -- Choice node
+      -- c(2, { t(""), i(1, "myArg") }),
+      i(2, ""),
+      i(3, "// TODO:"),
+    }
+  )
+)
+
+local const_function = s(
+  "constf",
+  fmt([[
+    const {} = ({}) => {{
+      {}
+    }}
+    {}
+  ]],
+    {
+      i(1, "myFunc"),
+      i(2, ""),
+      i(3, "// TODO:"),
+      i(4),
+    }
+  )
+)
+
+
+
+local onclick_event = s(
+  "onclick",
+  fmt([[ 
+    onClick={}
+  ]],
+    i(1, "")
+  )
+)
+
+
+local class_name = s(
+  "cln",
+  fmt([[ 
+    className="{}"
+  ]],
+    i(1, "")
+  )
+)
+
+-- Use state
+
+local use_state = s(
+  "uses",
+  fmt([[
+    const [{}, {}] = React.useState<{}>({});
+  ]],
+    {
+      i(1, ""),
+      i(2, ""),
+      c(3, { i(1, "TypeOf"), i(1, "") }),
+      i(4, ""),
+    }
+  )
+)
+
+local use_effect = s(
+  "usee",
+  fmt([[
+    React.useEffect(() => {{
+      {}
+    }}, []);
+  ]],
+    {
+      i(1, "// TODO:"),
+    }
+  )
+)
+
 -- Website for lua pattern matching
 -- https://www.educba.com/lua-regex/
 
@@ -32,19 +133,8 @@ local file_pattern = "*.tsx"
 --   }
 -- )
 
-local console_log = s(
-  { trig = "jj", regTrig = true },
-  fmt([[
-    console.log({});
-  ]],
-    {
-      i(1, ""),
-    }
-  )
-)
-
 -- local console_log = s(
---   "cl",
+--   { trig = "jj", regTrig = true },
 --   fmt([[
 --     console.log({});
 --   ]],
@@ -54,8 +144,45 @@ local console_log = s(
 --   )
 -- )
 
+local random_image = s("random-img", {
+  t( "https://source.unsplash.com/random" ),
+})
+
+local image_tag = s(
+  "image",
+  fmt([[
+    <img src={} alt="" />
+  ]],
+    {
+      i(1, "imageSource"),
+    }
+  )
+)
+
+local link_tag = s(
+  "link",
+  fmt([[
+    <a href="#">{}</a>
+  ]],
+    {
+      i(1, "Link content"),
+    }
+  )
+)
+
+local console_log = s(
+  "lg",
+  fmt([[
+    console.log({});
+  ]],
+    {
+      i(1, ""),
+    }
+  )
+)
+
 local console_log_object = s(
-  "pO",
+  "lgo",
   fmt([[ 
     console.log("{} :>> ", {});
   ]],
@@ -207,17 +334,16 @@ function {}({}) {{
 local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) --}}}
 
 -- table.insert(snippets, normal_function)
+table.insert(snippets, const_function)
+table.insert(snippets, use_state)
+table.insert(snippets, use_effect)
+table.insert(snippets, class_name)
+table.insert(snippets, console_log)
 table.insert(snippets, console_log_object)
-
-table.insert(autosnippets, console_log)
--- Auto snippets when finished typed the whole key trigger (Regular expressions)
--- table.insert(autosnippets, console_log)
--- table.insert(autosnippets, function_component)
--- table.insert(autosnippets, for_loop)
--- table.insert(autosnippets, if_snippet)
--- table.insert(autosnippets, function_snippet_func)
--- table.insert(autosnippets, function_component)
--- table.insert(autosnippets, short_hand_if_statement)
+table.insert(snippets, random_image)
+table.insert(snippets, image_tag)
+table.insert(snippets, link_tag)
+table.insert(snippets, onclick_event)
 
 -- End Refactoring --
 

@@ -19,6 +19,23 @@ local file_pattern = "*.tsx"
 -- Note: {{}}: Means escape curly brackets symbols
 
 local normal_function = s(
+  "random-img",
+  fmt([[
+    function {}({}) {{
+      {}
+    }}
+  ]],
+    {
+      i(1, "myFunc"),
+      -- Choice node
+      -- c(2, { t(""), i(1, "myArg") }),
+      i(2, ""),
+      i(3, "// TODO:"),
+    }
+  )
+)
+
+local normal_function = s(
   "func",
   fmt([[
     function {}({}) {{
@@ -51,6 +68,18 @@ local const_function = s(
     }
   )
 )
+
+
+
+local onclick_event = s(
+  "onclick",
+  fmt([[ 
+    onClick={}
+  ]],
+    i(1, "")
+  )
+)
+
 
 local class_name = s(
   "cln",
@@ -104,19 +133,8 @@ local use_effect = s(
 --   }
 -- )
 
-local console_log = s(
-  { trig = "jj", regTrig = true },
-  fmt([[
-    console.log({});
-  ]],
-    {
-      i(1, ""),
-    }
-  )
-)
-
 -- local console_log = s(
---   "cl",
+--   { trig = "jj", regTrig = true },
 --   fmt([[
 --     console.log({});
 --   ]],
@@ -126,8 +144,45 @@ local console_log = s(
 --   )
 -- )
 
+local random_image = s("random-img", {
+  t( "https://source.unsplash.com/random" ),
+})
+
+local image_tag = s(
+  "image",
+  fmt([[
+    <img src={} alt="" />
+  ]],
+    {
+      i(1, "imageSource"),
+    }
+  )
+)
+
+local link_tag = s(
+  "link",
+  fmt([[
+    <a href="#">{}</a>
+  ]],
+    {
+      i(1, "Link content"),
+    }
+  )
+)
+
+local console_log = s(
+  "lg",
+  fmt([[
+    console.log({});
+  ]],
+    {
+      i(1, ""),
+    }
+  )
+)
+
 local console_log_object = s(
-  "pO",
+  "lgo",
   fmt([[ 
     console.log("{} :>> ", {});
   ]],
@@ -283,18 +338,12 @@ table.insert(snippets, const_function)
 table.insert(snippets, use_state)
 table.insert(snippets, use_effect)
 table.insert(snippets, class_name)
+table.insert(snippets, console_log)
 table.insert(snippets, console_log_object)
-
-table.insert(autosnippets, console_log)
-table.insert(autosnippets, function_component)
--- Auto snippets when finished typed the whole key trigger (Regular expressions)
--- table.insert(autosnippets, console_log)
--- table.insert(autosnippets, function_component)
--- table.insert(autosnippets, for_loop)
--- table.insert(autosnippets, if_snippet)
--- table.insert(autosnippets, function_snippet_func)
--- table.insert(autosnippets, function_component)
--- table.insert(autosnippets, short_hand_if_statement)
+table.insert(snippets, random_image)
+table.insert(snippets, image_tag)
+table.insert(snippets, link_tag)
+table.insert(snippets, onclick_event)
 
 -- End Refactoring --
 

@@ -14,81 +14,9 @@ local rep = require("luasnip.extras").rep
 local snippets, autosnippets = {}, {} --}}}
 
 local group = vim.api.nvim_create_augroup("Typescript React Snippets", { clear = true })
-local file_pattern = "*.js"
+local file_pattern = "*.tsx"
 
 -- Note: {{}}: Means escape curly brackets symbols
-
-local normal_function = s(
-  "func",
-  fmt([[
-    function {}({}) {{
-      {}
-    }}
-  ]],
-    {
-      i(1, "myFunc"),
-      -- Choice node
-      -- c(2, { t(""), i(1, "myArg") }),
-      i(2, ""),
-      i(3, "// TODO:"),
-    }
-  )
-)
-
-local const_function = s(
-  "constf",
-  fmt([[
-    const {} = ({}) => {{
-      {}
-    }}
-    {}
-  ]],
-    {
-      i(1, "myFunc"),
-      i(2, ""),
-      i(3, "// TODO:"),
-      i(4),
-    }
-  )
-)
-
-local class_name = s(
-  "cln",
-  fmt([[ 
-    className="{}"
-  ]],
-    i(1, "")
-  )
-)
-
--- Use state
-
-local use_state = s(
-  "uses",
-  fmt([[
-    const [{}, {}] = React.useState<{}>({});
-  ]],
-    {
-      i(1, ""),
-      i(2, ""),
-      c(3, { i(1, "TypeOf"), i(1, "") }),
-      i(4, ""),
-    }
-  )
-)
-
-local use_effect = s(
-  "usee",
-  fmt([[
-    React.useEffect(() => {{
-      {}
-    }}, []);
-  ]],
-    {
-      i(1, "// TODO:"),
-    }
-  )
-)
 
 -- Website for lua pattern matching
 -- https://www.educba.com/lua-regex/
@@ -105,7 +33,7 @@ local use_effect = s(
 -- )
 
 local console_log = s(
-  "log",
+  { trig = "jj", regTrig = true },
   fmt([[
     console.log({});
   ]],
@@ -116,7 +44,7 @@ local console_log = s(
 )
 
 local console_log_object = s(
-  "logO",
+  "lgo",
   fmt([[ 
     console.log("{} :>> ", {});
   ]],
@@ -126,6 +54,30 @@ local console_log_object = s(
     }
   )
 )
+
+
+-- local function_component = s(
+--   "fc",
+--   fmt([[
+--     const [{}, {}] = React.useState<{}>({});
+--     import React from 'react'
+--
+--     const {}() => {{
+--       return (
+--       <div>{}</div>
+--       )
+--     }}
+--
+--     export default
+--   ]],
+--     {
+--       i(1, ""),
+--       i(2, ""),
+--       c(3, { i(1, "TypeOf"), i(1, "") }),
+--       i(4, ""),
+--     }
+--   )
+-- )
 
 
 local function_component = s(
@@ -242,9 +194,9 @@ function {}({}) {{
 local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) --}}}
 
 -- table.insert(snippets, normal_function)
-table.insert(snippets, console_log)
 table.insert(snippets, console_log_object)
 
+table.insert(autosnippets, console_log)
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 -- table.insert(autosnippets, console_log)
 -- table.insert(autosnippets, function_component)

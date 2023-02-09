@@ -43,19 +43,8 @@ local console_log = s(
   )
 )
 
--- local console_log = s(
---   "cl",
---   fmt([[
---     console.log({});
---   ]],
---     {
---       i(1, ""),
---     }
---   )
--- )
-
 local console_log_object = s(
-  "pO",
+  "lgo",
   fmt([[ 
     console.log("{} :>> ", {});
   ]],
@@ -65,8 +54,6 @@ local console_log_object = s(
     }
   )
 )
-
-      -- c(2, { t(""), i(1, "myArg") }),
 
 
 -- local function_component = s(

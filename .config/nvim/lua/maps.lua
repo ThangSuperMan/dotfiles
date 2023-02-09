@@ -9,21 +9,15 @@ keymap.set('n', 'x', '"_x')
 keymap.set('n', '+', '<C-a>')
 keymap.set('n', '-', '<C-x>')
 
--- ESC with kj or jk
--- vim.api.nvim_set_keymap('i', 'kj', '<esc>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('i', 'jk', '<esc>', { noremap = true, silent = true })
-
 -- Delete a word backwards
 keymap.set('n', 'dw', 'vb"_d')
 
--- keymap.set('n', '<leader>q', '<cmd>q<cr>')
-
--- Ctrl-s to save
--- keymap.set('n', '<C-s>', ':w!<CR>', opts)
--- keymap.set('i', 'ww', '<Esc>:w!<cr>', opts)
-
 -- turn spelling off or on
 keymap.set('n', ',s', ':setlocal spell!<Cr>', opts)
+
+-- Commentary
+keymap.set('n', '<leader>/', ':Commentary<Cr>', opts)
+keymap.set('v', '<leader>/', ':Commentary<Cr>', opts)
 
 -- Move to the start/end of current line
 keymap.set('n', 'H', '^', opts)
@@ -31,11 +25,16 @@ keymap.set('n', 'L', 'g_', opts)
 keymap.set('v', 'H', '^', opts)
 keymap.set('v', 'L', 'g_', opts)
 
+-- Diagnostic jump can use `<c-o>` to jump back
+keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
+keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
+
+
+  -- Float terminal
+keymap.set('n', '<C-e>', '<Cmd>Lspsaga diagnostic_jump_next<CR>')
+
 -- Clean highlight search
 keymap.set('n', '<Esc><Esc>', ':nohlsearch<CR>', opts)
-
--- keymap.set('i', 'jk', '<Esc>')
--- keymap.set('i', 'kj', '<Esc>')
 
 -- Select all
 keymap.set('n', '<C-a>', 'gg<S-v>G')
@@ -44,9 +43,6 @@ keymap.set('n', ';', ':', opts)
 
 -- Jump to the last of the still inside the insert mode
 keymap.set('i', '<c-l>', '<C-o>A')
-
-keymap.set('n', '<C-e>', '<Cmd>Lspsaga diagnostic_jump_next<CR>')
-keymap.set('n', 'K', '<Cmd>lua require("lspsaga.hover").render_hover_doc()<CR>')
 
 -- New tab
 keymap.set('n', 'te', ':tabedit')

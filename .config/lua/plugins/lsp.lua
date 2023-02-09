@@ -15,7 +15,7 @@ return function()
       buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
       buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
       buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-      buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+      -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
 
       -- Config with nvim nightly
       -- if client.server_capabilities.documentFormattingProvider then
@@ -123,7 +123,8 @@ nvim_lsp.rust_analyzer.setup{
 }
 
 nvim_lsp.tailwindcss.setup{
-  on_attach = on_attach
+  on_attach = on_attach,
+  capabilities = capabilities,
 }
 
  -- nvim_lsp.pyright.setup {
@@ -179,11 +180,11 @@ nvim_lsp.sourcekit.setup {
 }
 
 -- Diagnostic symbols in the sign column (gutter)
--- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
--- for type, icon in pairs(signs) do
---   local hl = "DiagnosticSign" .. type
---   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
--- end
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
 
 -- Hanle disappear the lspconfig when using the insertmode
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
