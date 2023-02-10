@@ -17,6 +17,7 @@ return function()
    ensure_installed = {
      "prisma",
      "javascript",
+     "java",
      "lua",
      "tsx",
      "go",

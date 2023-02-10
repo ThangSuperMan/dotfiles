@@ -77,8 +77,11 @@ return require('packer').startup(function()
                 { silent = true, noremap = true })
             vim.keymap.set({ "n" }, "<LEADER>nc", require("package-info").hide,
                 { silent = true, noremap = true })
+
         end
     })
+
+  use { 'preservim/tagbar' }
 
   -- Colorizer
   use { 'norcalli/nvim-colorizer.lua', config = require 'plugins.colorizer' }
@@ -90,7 +93,6 @@ return require('packer').startup(function()
   use { 'jiangmiao/auto-pairs' }
 
   use { 'terryma/vim-multiple-cursors' }
-  use { 'rmagatti/alternate-toggler', config = require('plugins.alternate')  }
 
   -- Completion
   use { 'hrsh7th/cmp-nvim-lsp' }
@@ -122,6 +124,11 @@ return require('packer').startup(function()
   -- Comment
   use { 'tpope/vim-commentary' }
   use { 'axelvc/template-string.nvim', config = require 'plugins.template-string'}
+
+  use { 'mfussenegger/nvim-jdtls' }
+
+  -- Mason - helper to install needed lsps
+  use { "williamboman/mason.nvim", config = require 'plugins.mason'}
 
   -- Lsp
   use { 'neovim/nvim-lspconfig', config = require 'plugins.lsp' }

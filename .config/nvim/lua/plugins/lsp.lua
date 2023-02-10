@@ -170,14 +170,20 @@ nvim_lsp.dockerls.setup {
   on_attach = on_attach,
 }
 
+nvim_lsp.phpactor.setup {
+  on_attach = on_attach,
+}
+
+nvim_lsp.jdtls.setup{ on_attach = on_attach,cmd = { 'jdtls' } }
+
 nvim_lsp.tsserver.setup {
   on_attach = on_attach,
   filetypes = { "typescript",  "typescriptreact", "typescript.tsx", "typescript.jsx",  "javascript" },
 }
 
-nvim_lsp.sourcekit.setup {
-  on_attach = on_attach,
-}
+-- nvim_lsp.sourcekit.setup {
+--   on_attach = on_attach,
+-- }
 
 -- Diagnostic symbols in the sign column (gutter)
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
