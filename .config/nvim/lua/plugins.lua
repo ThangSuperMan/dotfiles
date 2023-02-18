@@ -44,42 +44,21 @@ packer.init {
 }
 
 return require('packer').startup(function()
-	-- packer can manage itself
+  -- packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  -- My mood
-  -- use { 'psliwka/vim-smoothie' }
-  -- use { 'xiyaowong/nvim-transparent', config = require 'plugins.transparent' }
-  use({"xiyaowong/nvim-transparent",config = function()
-        require("transparent").setup({
-          enable = false, -- boolean: enable transparent
-            extra_groups = {
-                "NeoTreeFileIcon",
-                "NeoTreeExpander"
-            },
-            exclude = {}, -- table: groups you don't want to clear
-        })
-    end})
-
-  -- Treesitter
-  use {
-      'nvim-treesitter/nvim-treesitter',
-      run = ':TSUpdate',
-      config = require 'plugins.treesitter'
-  }
-
   use({
-        "vuki656/package-info.nvim",
-        requires = "MunifTanjim/nui.nvim",
-        config = function()
-            require('package-info').setup()
-            vim.keymap.set({ "n" }, "<LEADER>ns", require("package-info").show,
-                { silent = true, noremap = true })
-            vim.keymap.set({ "n" }, "<LEADER>nc", require("package-info").hide,
-                { silent = true, noremap = true })
+    "vuki656/package-info.nvim",
+    requires = "MunifTanjim/nui.nvim",
+    config = function()
+      require('package-info').setup()
+      vim.keymap.set({ "n" }, "<LEADER>ns", require("package-info").show,
+        { silent = true, noremap = true })
+      vim.keymap.set({ "n" }, "<LEADER>nc", require("package-info").hide,
+        { silent = true, noremap = true })
 
-        end
-    })
+    end
+  })
 
   use { 'preservim/tagbar' }
 
@@ -88,7 +67,7 @@ return require('packer').startup(function()
 
   -- Surround
   use { 'tpope/vim-surround' }
-  use { 'windwp/nvim-ts-autotag'}
+  use { 'windwp/nvim-ts-autotag' }
   use { 'alvan/vim-closetag', config = require 'plugins.closetag' }
   use { 'jiangmiao/auto-pairs' }
 
@@ -102,10 +81,12 @@ return require('packer').startup(function()
 
   use { 'nvim-telescope/telescope.nvim', config = require 'plugins.telescope' }
 
+  use { 'dimaportenko/telescope-simulators.nvim', config = require 'plugins.simulators' }
+
   -- Write notes
-  use {'nvim-orgmode/orgmode', config = function()
-  end}
-  use {'akinsho/org-bullets.nvim', config = function()
+  use { 'nvim-orgmode/orgmode', config = function()
+  end }
+  use { 'akinsho/org-bullets.nvim', config = function()
     require('org-bullets').setup({
       concealcursor = true, -- If false then when the cursor is on a line underlying characters are visible
       symbols = {
@@ -119,25 +100,27 @@ return require('packer').startup(function()
         },
       }
     })
-  end}
+  end }
 
   -- Comment
   use { 'tpope/vim-commentary' }
-  use { 'axelvc/template-string.nvim', config = require 'plugins.template-string'}
+  use { 'axelvc/template-string.nvim', config = require 'plugins.template-string' }
+
+  -- Smooth scroll
+  use { 'psliwka/vim-smoothie' }
 
   use { 'mfussenegger/nvim-jdtls' }
 
   -- Mason - helper to install needed lsps
-  use { "williamboman/mason.nvim", config = require 'plugins.mason'}
+  use { "williamboman/mason.nvim", config = require 'plugins.mason' }
 
   -- Lsp
   use { 'neovim/nvim-lspconfig', config = require 'plugins.lsp' }
   use({
-        "glepnir/lspsaga.nvim",
-        branch = "main",
-        config = require('plugins.saga')
-    })
-
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    config = require('plugins.saga')
+  })
   use { 'onsails/lspkind-nvim', config = require 'plugins.kind' }
 
   -- debugging
@@ -147,12 +130,12 @@ return require('packer').startup(function()
     require('dap-go').setup()
   end
   }
-  use { 'rcarriga/nvim-dap-ui', config = require 'plugins.dapui'}
+  use { 'rcarriga/nvim-dap-ui', config = require 'plugins.dapui' }
   use { 'theHamsta/nvim-dap-virtual-text', config = function()
     require('nvim-dap-virtual-text').setup()
-    vim.fn.sign_define('DapBreakpoint', {text='🟥', texthl='', linehl='', numhl=''})
-    vim.fn.sign_define('DapStopped', {text='🟢', texthl='', linehl='', numhl=''})
-  end}
+    vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
+    vim.fn.sign_define('DapStopped', { text = '🟢', texthl = '', linehl = '', numhl = '' })
+  end }
   use 'nvim-telescope/telescope-dap.nvim'
 
   -- Snippet
@@ -165,76 +148,76 @@ return require('packer').startup(function()
   use { 'kyazdani42/nvim-web-devicons' }
 
   use {
-      'nvim-lualine/lualine.nvim',
-      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-      config = require('plugins.lualine')
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    config = require('plugins.lualine')
   }
 
   -- Prettier
   use { 'mhartington/formatter.nvim', config = require 'plugins.prettier' }
-  use 'simrat39/rust-tools.nvim'
+  -- use 'simrat39/rust-tools.nvim'
 
   -- Git
   use { 'tpope/vim-fugitive' }
 
   use {
-  'lewis6991/gitsigns.nvim',
-  -- tag = 'release' -- To use the latest release (do not use this if you run Neovim nightly or dev builds!)
-  config = function()
+    'lewis6991/gitsigns.nvim',
+    -- tag = 'release' -- To use the latest release (do not use this if you run Neovim nightly or dev builds!)
+    config = function()
       require('gitsigns').setup()
-  end
+    end
   }
 
-	use {
-        "nvim-neo-tree/neo-tree.nvim",
-        branch = "v2.x",
-        requires = {
-            "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-            "MunifTanjim/nui.nvim", {
-                -- only needed if you want to use the commands with "_with_window_picker" suffix
-                's1n7ax/nvim-window-picker',
-                tag = "1.*",
-                config = function()
-                    require 'window-picker'.setup({
-                        autoselect_one = true,
-                        include_current = false,
-                        filter_rules = {
-                            -- filter using buffer options
-                            bo = {
-                                -- if the file type is one of following, the window will be ignored
-                                filetype = {
-                                    'neo-tree', "neo-tree-popup", "notify",
-                                    "quickfix"
-                                },
+  use {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
+    requires = {
+      "nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim", {
+        -- only needed if you want to use the commands with "_with_window_picker" suffix
+        's1n7ax/nvim-window-picker',
+        tag = "1.*",
+        config = function()
+          require 'window-picker'.setup({
+            autoselect_one = true,
+            include_current = false,
+            filter_rules = {
+              -- filter using buffer options
+              bo = {
+                -- if the file type is one of following, the window will be ignored
+                filetype = {
+                  'neo-tree', "neo-tree-popup", "notify",
+                  "quickfix"
+                },
 
-                                -- if the buffer type is one of following, the window will be ignored
-                                buftype = { 'terminal' }
-                            }
-                        },
-                        other_win_hl_color = '#f3a14e'
-                    })
-                end
+                -- if the buffer type is one of following, the window will be ignored
+                buftype = { 'terminal' }
+              }
             },
-        },
-        config = require('plugins.neotree')
-    }
+            other_win_hl_color = '#f3a14e'
+          })
+        end
+      },
+    },
+    config = require('plugins.neotree')
+  }
 
   use {
-      'voldikss/vim-floaterm',
-      config = function()
-          vim.g.floaterm_wintype = 'float'
-          vim.g.floaterm_position = 'center'
-          vim.g.floaterm_width = 0.8
-          vim.g.floaterm_height = 0.8
-          vim.g.floaterm_keymap_toggle = '<C-\\>'
-      end
+    'voldikss/vim-floaterm',
+    config = function()
+      vim.g.floaterm_wintype = 'float'
+      vim.g.floaterm_position = 'center'
+      vim.g.floaterm_width = 0.8
+      vim.g.floaterm_height = 0.8
+      vim.g.floaterm_keymap_toggle = '<C-\\>'
+    end
   }
 
   -- use { 'AndrewRadev/tagalong.vim',
   -- config = function ()
   --   end
   -- }
-  
+
   -- use { 'jose-elias-alvarez/null-ls.nvim', config = require('plugins.null') }
 
   use { 'folke/todo-comments.nvim', config = require('todo-comments').setup({}) }
@@ -242,28 +225,46 @@ return require('packer').startup(function()
   use { 'MattesGroeger/vim-bookmarks', config = require('plugins.bookmark') }
   use 'tom-anders/telescope-vim-bookmarks.nvim'
 
-  use {'stevearc/dressing.nvim'}
+  use { 'stevearc/dressing.nvim' }
 
   use { 'sainnhe/everforest', config = require 'plugins.theme' }
 
   -- use { 'sunjon/shade.nvim', config = require('plugins.shade') }
 
-  use { 'lukas-reineke/indent-blankline.nvim' , config = function ()
-        require("indent_blankline").setup({
-            show_current_context = false,
-            show_current_context_start = true,
-            space_char_blankline = " ",
-            filetype_exclude = {"help", "txt", "norg", "md"},
-            buftype_exclude = {"terminal", "nofile"}
-        })
-           vim.g.indent_blankline_char = "∘"
-    end}
+  -- use { 'lukas-reineke/indent-blankline.nvim' , config = function ()
+  --       require("indent_blankline").setup({
+  --           show_current_context = false,
+  --           show_current_context_start = true,
+  --           space_char_blankline = " ",
+  --           filetype_exclude = {"help", "txt", "norg", "md"},
+  --           buftype_exclude = {"terminal", "nofile"}
+  --       })
+  --          vim.g.indent_blankline_char = "∘"
+  --   end}
+
+  -- Treesitter
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
+    config = require 'plugins.treesitter'
+  }
+
+  use({ "xiyaowong/nvim-transparent", config = function()
+    require("transparent").setup({
+      enable = true, -- boolean: enable transparent
+      extra_groups = {
+        "NeoTreeFileIcon",
+        "NeoTreeExpander"
+      },
+      exclude = {}, -- table: groups you don't want to clear
+    })
+  end })
 
   -- use{  'github/copilot.vim', config = require 'plugins.copilot'}
 
-    -- reduce the start up time
+  -- reduce the start up time
   use({ 'lewis6991/impatient.nvim', config = function()
     require('impatient')
-  end})
+  end })
 
 end)

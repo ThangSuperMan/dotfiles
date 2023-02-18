@@ -7,7 +7,6 @@ return function()
     highlight = {
       enable = true,
       disable = {
-        "solidity",
       },
     },
     indent = {
