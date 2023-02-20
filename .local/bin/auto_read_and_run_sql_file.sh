@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-mysqlPassword="chaungoanbacho"
+mysqlPassword="password"
 
 # Read the content of the file (sql file)
 sqlFile=$(<main.sql)
