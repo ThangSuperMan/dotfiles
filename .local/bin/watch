@@ -1,0 +1,19 @@
+#!/bin/bash
+
+FILE="$1"
+# CMD="$(sh auto.sh)"
+
+# If the file change something
+# The command: sh auto.sh will be call
+
+LAST=`ls -l "$FILE"`
+while true; do
+  sleep 1
+  NEW=`ls -l "$FILE"`
+  if [ "$NEW" != "$LAST" ]; then
+    # "$CMD" "$FILE"
+    # sh auto.sh "$FILE"
+    sh auto_read_and_run_sql_file.sh
+    LAST="$NEW"
+  fi
+done
