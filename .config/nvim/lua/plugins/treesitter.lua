@@ -17,6 +17,7 @@ return function()
      "prisma",
      "javascript",
      "java",
+     "dart",
      "lua",
      "tsx",
      "go",

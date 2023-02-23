@@ -168,6 +168,10 @@ return require('packer').startup(function()
     end
   }
 
+  use { 'dart-lang/dart-vim-plugin' }
+
+  use { 'akinsho/flutter-tools.nvim', config = require 'plugins.flutter-tools' }
+
   use {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
@@ -231,16 +235,16 @@ return require('packer').startup(function()
 
   -- use { 'sunjon/shade.nvim', config = require('plugins.shade') }
 
-  -- use { 'lukas-reineke/indent-blankline.nvim' , config = function ()
-  --       require("indent_blankline").setup({
-  --           show_current_context = false,
-  --           show_current_context_start = true,
-  --           space_char_blankline = " ",
-  --           filetype_exclude = {"help", "txt", "norg", "md"},
-  --           buftype_exclude = {"terminal", "nofile"}
-  --       })
-  --          vim.g.indent_blankline_char = "∘"
-  --   end}
+  use { 'lukas-reineke/indent-blankline.nvim' , config = function ()
+        require("indent_blankline").setup({
+            show_current_context = false,
+            show_current_context_start = true,
+            space_char_blankline = " ",
+            filetype_exclude = {"help", "txt", "norg", "md"},
+            buftype_exclude = {"terminal", "nofile"}
+        })
+           vim.g.indent_blankline_char = "∘"
+    end}
 
   -- Treesitter
   use {

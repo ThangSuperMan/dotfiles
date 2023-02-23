@@ -1,6 +1,39 @@
 return function()
   local nvim_lsp = require('lspconfig')
   local protocol = require('vim.lsp.protocol')
+  
+  local another_on_attach = function(client, bufnr)
+    -- require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
+
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+    -- Mappings.
+    local opts = { noremap = true, silent = true }
+    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', '<space>oi', ':lua require("jdtls").organize_imports()<CR>', opts)
+    -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+
+    -- Config with nvim nightly
+    -- if client.server_capabilities.documentFormattingProvider then
+    --   vim.api.nvim_command [[augroup Format]]
+    --   vim.api.nvim_command [[autocmd! * <buffer>]]
+    --   vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
+    --   vim.api.nvim_command [[augroup END]]
+    -- end
+
+    -- Format on save (just for java and jsp)
+    -- if client.resolved_capabilities.document_formatting then
+    if client.server_capabilities.document_formatting then
+      vim.api.nvim_command [[augroup Format]]
+      vim.api.nvim_command [[autocmd! * <buffer>]]
+      vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
+      vim.api.nvim_command [[augroup END]]
+    end
+  end
 
   -- Use an on_attach function to only map the following keys
   -- after the language server attaches to the current buffer
@@ -28,12 +61,13 @@ return function()
     -- end
 
     -- Format on save (just for java and jsp)
-    if client.resolved_capabilities.document_formatting then
-      vim.api.nvim_command [[augroup Format]]
-      vim.api.nvim_command [[autocmd! * <buffer>]]
-      vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
-      vim.api.nvim_command [[augroup END]]
-    end
+    -- if client.resolved_capabilities.document_formatting then
+    -- if client.server_capabilities.document_formatting then
+    --   vim.api.nvim_command [[augroup Format]]
+    --   vim.api.nvim_command [[autocmd! * <buffer>]]
+    --   vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
+    --   vim.api.nvim_command [[augroup END]]
+    -- end
   end
 
   --Enable (broadcasting) snippet capability for completion
@@ -65,9 +99,11 @@ return function()
   }
 
   -- Dart
+  -- Cmd for install: brew tap dart-lang/dart
+  -- And: brew install dart
   nvim_lsp.dartls.setup {
     capabilities = capabilities,
-    on_attach = on_attach,
+    on_attach = another_on_attach,
   }
 
   -- nvim_lsp.gopls.setup {
@@ -180,7 +216,7 @@ return function()
 
   nvim_lsp.tsserver.setup {
     on_attach = on_attach,
-    filetypes = { "typescript", "typescriptreact", "typescript.tsx", "typescript.jsx", "javascript" },
+    filetypes = { "typescript", "typescriptreact", "typescript.tsx", "typescript.jsx", "javascript", "javascriptreact" },
   }
 
   -- nvim_lsp.sourcekit.setup {

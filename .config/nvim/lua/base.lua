@@ -2,7 +2,7 @@ vim.cmd("autocmd!")
 vim.cmd('set noswapfile')
 vim.cmd [[ augroup highlight_yank]]
 vim.cmd [[ autocmd!]]
-vim.cmd [[ autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({higroup = "Substitute", timeout = 100})]]
+vim.cmd [[ autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({higroup = "DiffDelete", timeout = 100})]]
 vim.cmd [[ augroup END]]
 
 vim.o.termguicolors = true
@@ -13,12 +13,12 @@ vim.cmd('set timeoutlen=500')
 -- vim.cmd('set backspace=indent,eol,start')
 vim.cmd('set mouse=a')
 vim.cmd('set noshowmode')
-vim.cmd('set hidden')                              -- Required to keep multiple buffers open multiple buffers
-vim.cmd('set lazyredraw')                          -- Improve scrolling performance when navigating through large results
-vim.cmd('set ttyfast')                             -- U got a fast terminal
+vim.cmd('set hidden') -- Required to keep multiple buffers open multiple buffers
+vim.cmd('set lazyredraw') -- Improve scrolling performance when navigating through large results
+vim.cmd('set ttyfast') -- U got a fast terminal
 vim.cmd('set synmaxcol=4096')
 -- vim.cmd('set formatoptions-=cro')                  -- Stop newline continution of comments
--- vim.cmd('set scroll=15')     
+-- vim.cmd('set scroll=15')
 vim.cmd('set shortmess+=c')
 
 vim.scriptencoding = 'utf-8'
@@ -32,7 +32,7 @@ vim.opt.autoindent = true
 vim.opt.undofile = true
 vim.opt.smartindent = true
 vim.opt.hlsearch = true
-vim.opt.relativenumber = true
+-- vim.opt.relativenumber = true
 vim.opt.backup = false
 vim.opt.showcmd = true
 vim.opt.cmdheight = 2
