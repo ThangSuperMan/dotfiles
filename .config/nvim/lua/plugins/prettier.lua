@@ -43,7 +43,6 @@ return function()
       yaml = { prettier },
       markdown = { prettier },
       sh = { prettier },
-
       -- rust = {
       --     -- Rustfmt
       --     function()
@@ -57,6 +56,21 @@ return function()
       go = {
         function()
           return { exe = "gofmt", stdin = true }
+        end
+      },
+      dart = {
+        function(t)
+          t = t or {}
+          local args = { "--output show" }
+          if t.line_length ~= nil then
+            table.insert(args, "--line-length " .. t.line_length)
+          end
+
+          return {
+            exe = "dart format",
+            -- args = args,
+            stdin = true,
+          }
         end
       },
       lua = {

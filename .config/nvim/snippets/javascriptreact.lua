@@ -14,13 +14,13 @@ local rep = require("luasnip.extras").rep
 local snippets, autosnippets = {}, {} --}}}
 
 local group = vim.api.nvim_create_augroup("Typescript React Snippets", { clear = true })
-local file_pattern = "*.js"
+local file_pattern = "*.jsx"
 
 -- Note: {{}}: Means escape curly brackets symbols
 
 local normal_function = s(
   "func",
-  fmt([[
+ fmt([[
     function {}({}) {{
       {}
     }}
@@ -105,7 +105,7 @@ local use_effect = s(
 -- )
 
 local console_log = s(
-  "lg",
+  "jj",
   fmt([[
     console.log({});
   ]],
@@ -241,11 +241,11 @@ function {}({}) {{
 local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) --}}}
 
 -- table.insert(snippets, normal_function)
-table.insert(snippets, console_log)
+-- table.insert(snippets, console_log)
 table.insert(snippets, console_log_object)
 
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
--- table.insert(autosnippets, console_log)
+table.insert(autosnippets, console_log)
 -- table.insert(autosnippets, function_component)
 -- table.insert(autosnippets, for_loop)
 -- table.insert(autosnippets, if_snippet)

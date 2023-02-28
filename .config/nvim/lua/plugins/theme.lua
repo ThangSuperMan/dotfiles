@@ -5,8 +5,6 @@ return function()
   -- everforest theme
   -- Original
   vim.g.everforest_background = "soft"
-  -- New
-  -- vim.g.everforest_background = "hard"
   vim.g.everforest_diagnostic_line_highlight = 1
   vim.g.everforest_enable_italic = 1
   vim.g.everforest_disable_italic_comment = 0

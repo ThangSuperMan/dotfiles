@@ -20,3 +20,6 @@ disabled = true
 
 [git_status]
 disabled = true
+
+[dart]
+symbol = " "

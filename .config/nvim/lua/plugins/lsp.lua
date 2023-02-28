@@ -102,8 +102,7 @@ return function()
   -- Cmd for install: brew tap dart-lang/dart
   -- And: brew install dart
   nvim_lsp.dartls.setup {
-    capabilities = capabilities,
-    on_attach = another_on_attach,
+    on_attach = on_attach,
   }
 
   -- nvim_lsp.gopls.setup {
@@ -224,7 +223,7 @@ return function()
   -- }
 
   -- Diagnostic symbols in the sign column (gutter)
-  local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+  local signs = { Error = " ", Warn = " ", Hint = "ﴞ ", Info = " " }
   for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })

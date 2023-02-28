@@ -142,6 +142,12 @@ return require('packer').startup(function()
   use { 'L3MON4D3/LuaSnip' }
   use { 'saadparwaiz1/cmp_luasnip', config = require 'plugins.luasnip' }
 
+  use { 'beauwilliams/focus.nvim', config = require 'plugins.focus' }
+
+  -- Popup window for cmd
+  use { 'gelguy/wilder.nvim', config = require 'plugins.wilder' }
+  use { 'nvim-lua/popup.nvim' } 
+  
   -- Barbar, bufferline
   use { 'romgrk/barbar.nvim', config = require 'plugins.barbar' }
 
@@ -155,18 +161,17 @@ return require('packer').startup(function()
 
   -- Prettier
   use { 'mhartington/formatter.nvim', config = require 'plugins.prettier' }
-  -- use 'simrat39/rust-tools.nvim'
 
   -- Git
   use { 'tpope/vim-fugitive' }
 
-  use {
-    'lewis6991/gitsigns.nvim',
-    -- tag = 'release' -- To use the latest release (do not use this if you run Neovim nightly or dev builds!)
-    config = function()
-      require('gitsigns').setup()
-    end
-  }
+  -- use {
+  --   'lewis6991/gitsigns.nvim',
+  --   -- tag = 'release' -- To use the latest release (do not use this if you run Neovim nightly or dev builds!)
+  --   config = function()
+  --     require('gitsigns').setup()
+  --   end
+  -- }
 
   use { 'dart-lang/dart-vim-plugin' }
 
@@ -217,11 +222,6 @@ return require('packer').startup(function()
     end
   }
 
-  -- use { 'AndrewRadev/tagalong.vim',
-  -- config = function ()
-  --   end
-  -- }
-
   -- use { 'jose-elias-alvarez/null-ls.nvim', config = require('plugins.null') }
 
   use { 'folke/todo-comments.nvim', config = require('todo-comments').setup({}) }
@@ -243,7 +243,7 @@ return require('packer').startup(function()
             filetype_exclude = {"help", "txt", "norg", "md"},
             buftype_exclude = {"terminal", "nofile"}
         })
-           vim.g.indent_blankline_char = "∘"
+           -- vim.g.indent_blankline_char = "∘"
     end}
 
   -- Treesitter

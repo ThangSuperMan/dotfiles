@@ -5,6 +5,34 @@ local opts = { noremap = true }
 vim.g.mapleader = ' '
 keymap.set('n', 'x', '"_x')
 
+-- Use shift + arrow to resize windows
+keymap.set('n', '<S-Up>', '<M-j> :resize -5<CR>', { noremap = true })
+keymap.set('n', '<S-Down>', '<M-k> :resize +5<CR>', { noremap = true })
+keymap.set('n', '<S-Left>', '<M-h> :vertical resize -5<CR>', { noremap = true })
+keymap.set('n', '<S-Right>', '<M-l> :vertical resize +5<CR>', { noremap = true })
+
+-- ESC with kj or jk
+keymap.set('i', 'kj', '<esc>', { noremap = true, silent = true })
+keymap.set('i', 'jk', '<esc>', { noremap = true, silent = true })
+
+-- Flutter tool
+  -- FLUTTER-TOOLS
+    -- ######################################
+    -- ["<leader>fd"] = { "<cmd> FlutterDevices <CR>", "Flutter devices" },
+    -- ["<leader>fD"] = { "<cmd> FlutterDetatch <CR>", "Flutter detatch" },
+    -- ["<leader>ff"] = { "<cmd> FlutterRun <CR>", "Flutter run" },
+    -- ["<leader>fq"] = { "<cmd> FlutterQuit <CR>", "Flutter quit" },
+    -- ["<leader>fr"] = { "<cmd> FlutterReload <CR>", "Flutter reload" },
+    -- ["<leader>fR"] = { "<cmd> FlutterRestart <CR>", "Flutter restart" },
+    -- ["<leader>fpu"] = { "<cmd> FlutterPubUpgrade <CR>", "Flutter pub upgrade" },
+    -- ["<leader>fpg"] = { "<cmd> FlutterPubGet <CR>", "Flutter pub get" },
+keymap.set('n', '<leader>fd', '<cmd> FlutterDevices <CR>')
+keymap.set('n', '<leader>fD', '<cmd> FlutterDetatch <CR>')
+keymap.set('n', '<leader>ff', '<cmd> Flutter run <CR>')
+keymap.set('n', '<leader>fq', '<cmd> Flutter quite <CR>')
+keymap.set('n', '<leader>fr', '<cmd> Flutter reload <CR>')
+keymap.set('n', '<leader>fR', '<cmd> Flutter restart <CR>')
+
 -- Increment/decrement
 keymap.set('n', '+', '<C-a>')
 keymap.set('n', '-', '<C-x>')

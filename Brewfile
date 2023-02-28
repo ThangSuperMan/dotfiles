@@ -30,9 +30,26 @@ brew "ranger"
 brew "lazygit"
 brew "skhd"
 
+# Read articles and watch video from terminal
+brew "newsboat"
+brew "mpv"
+
+# IOS 
+brew "brew install cocoapods"
+
+# Java
+brew "maven"
+
+# Download the music from youtube
+# bash cmd: youtube-dl -f bestaudio $(curl https://b-v.neocities.org/music | grep -iEo "https:\/\/youtu.be/.{11}
+brew "youtube-dl"
+
 # Casks
 cask "spotify"
 cask "alacritty"
 cask "numi"
 cask "alfred"
 cask "spacelauncher"
+
+# Dart, tool.. (included)
+cask "flutter"
