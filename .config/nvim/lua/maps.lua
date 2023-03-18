@@ -16,16 +16,6 @@ keymap.set('i', 'kj', '<esc>', { noremap = true, silent = true })
 keymap.set('i', 'jk', '<esc>', { noremap = true, silent = true })
 
 -- Flutter tool
-  -- FLUTTER-TOOLS
-    -- ######################################
-    -- ["<leader>fd"] = { "<cmd> FlutterDevices <CR>", "Flutter devices" },
-    -- ["<leader>fD"] = { "<cmd> FlutterDetatch <CR>", "Flutter detatch" },
-    -- ["<leader>ff"] = { "<cmd> FlutterRun <CR>", "Flutter run" },
-    -- ["<leader>fq"] = { "<cmd> FlutterQuit <CR>", "Flutter quit" },
-    -- ["<leader>fr"] = { "<cmd> FlutterReload <CR>", "Flutter reload" },
-    -- ["<leader>fR"] = { "<cmd> FlutterRestart <CR>", "Flutter restart" },
-    -- ["<leader>fpu"] = { "<cmd> FlutterPubUpgrade <CR>", "Flutter pub upgrade" },
-    -- ["<leader>fpg"] = { "<cmd> FlutterPubGet <CR>", "Flutter pub get" },
 keymap.set('n', '<leader>fd', '<cmd> FlutterDevices <CR>')
 keymap.set('n', '<leader>fD', '<cmd> FlutterDetatch <CR>')
 keymap.set('n', '<leader>ff', '<cmd> Flutter run <CR>')
@@ -36,6 +26,14 @@ keymap.set('n', '<leader>fR', '<cmd> Flutter restart <CR>')
 -- Increment/decrement
 keymap.set('n', '+', '<C-a>')
 keymap.set('n', '-', '<C-x>')
+
+-- ESC with kj or jk
+keymap.set('i', 'kj', '<esc>', { noremap = true, silent = true })
+keymap.set('i', 'jk', '<esc>', { noremap = true, silent = true })
+
+-- Ctrl-s to save
+keymap.set('n', '<C-s>', ':w!<CR>', { noremap = true })
+keymap.set('i', 'ww', '<ESC>:w!<CR>', { noremap = true })
 
 -- Delete a word backwards
 keymap.set('n', 'dw', 'vb"_d')
@@ -57,8 +55,7 @@ keymap.set('v', 'L', 'g_', opts)
 keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
 keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
 
-
-  -- Float terminal
+-- Float terminal
 keymap.set('n', '<C-e>', '<Cmd>Lspsaga diagnostic_jump_next<CR>')
 
 -- Clean highlight search

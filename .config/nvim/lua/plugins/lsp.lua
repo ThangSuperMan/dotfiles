@@ -189,18 +189,18 @@ return function()
 
   -- Devops
   -- Docker compose
-  nvim_lsp.yamlls.setup {
-    on_attach = on_attach,
-    settings = {
-      yaml = {
-        schemas = {
-          ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-          ["../path/relative/to/file.yml"] = "/.github/workflows/*",
-          ["/path/from/root/of/project"] = "/.github/workflows/*",
-        },
-      },
-    }
-  }
+  -- nvim_lsp.yamlls.setup {
+  --   on_attach = on_attach,
+  --   settings = {
+  --     yaml = {
+  --       schemas = {
+  --         ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+  --         ["../path/relative/to/file.yml"] = "/.github/workflows/*",
+  --         ["/path/from/root/of/project"] = "/.github/workflows/*",
+  --       },
+  --     },
+  --   }
+  -- }
 
   -- Dockerfile
   nvim_lsp.dockerls.setup {

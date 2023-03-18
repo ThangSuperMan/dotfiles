@@ -33,15 +33,15 @@ local has_words_before = function()
 end
 
 cmp.setup({
-  window = {
-    completion = {
-      border = border "CmpBorder",
-      winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
-    },
-    documentation = {
-      border = border "CmpDocBorder",
-    },
-  },
+  -- window = {
+  --   completion = {
+  --     border = border "CmpBorder",
+  --     winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+  --   },
+  --   documentation = {
+  --     border = border "CmpDocBorder",
+  --   },
+  -- },
   snippet = {
     expand = function(args)
       -- luasnip.lsp_expand(args.body)
