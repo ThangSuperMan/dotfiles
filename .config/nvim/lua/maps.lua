@@ -35,6 +35,10 @@ keymap.set('i', 'jk', '<esc>', { noremap = true, silent = true })
 keymap.set('n', '<C-s>', ':w!<CR>', { noremap = true })
 keymap.set('i', 'ww', '<ESC>:w!<CR>', { noremap = true })
 
+-- Fzf
+keymap.set('n', ';f', ':lua require("fzf-lua").files()<CR>')
+keymap.set('n', ';r', ':lua require("fzf-lua").live_grep()<CR>')
+
 -- Delete a word backwards
 keymap.set('n', 'dw', 'vb"_d')
 
