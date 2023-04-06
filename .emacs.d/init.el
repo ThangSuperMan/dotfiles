@@ -26,8 +26,8 @@
 (global-hl-line-mode -1)    ; Disable the highlight current line
 (setq visible-bell t)       ; Set up the visible bell
 
-;; (set-face-attribute 'default nil :font "SF Mono" :height 180)
 (set-face-attribute 'default nil :font "Source Code Pro" :height 180)
+;; (set-face-attribute 'default nil :font "Source Code Pro" :height 200)
 
 ;; (global-display-line-numbers-mode t)
 (setq-default tab-width 2)
@@ -161,8 +161,8 @@
 (global-set-key (kbd "C-d") #'evil-scroll-down)
 
 ;; Cursor
-(setq evil-insert-state-cursor '((bar . 2) "orange")
-      evil-normal-state-cursor '(box "orange"))
+;; (setq evil-insert-state-cursor '((bar . 2) "orange")
+;;       evil-normal-state-cursor '(box "orange"))
 
 (use-package general
   :ensure t
@@ -692,6 +692,11 @@ The default value is `lauremacs-state//opacity'."
 ;; (use-package eglot
 ;;   :ensure t)
 
+;; (use-package eglot-java
+;;   :ensure t)
+
+;; (add-hook 'java-mode-hook 'eglot-ensure)
+
 ;; Brew command to install lsp: brew install ccls
 ;; (add-to-list 'eglot-server-programs '((c++-mode c-mode) "ccls"))
 
@@ -813,6 +818,41 @@ The default value is `lauremacs-state//opacity'."
 
 (use-package solidity-mode
 	:ensure t) 
+
+;;
+;; SQL mode
+;;
+
+(use-package sql
+	:ensure t
+	:mode ("\\.sql\\'" . sql-mode)
+	:hook ((sql-mode . lsp-deferred)
+				 (sql-mode . sqlind-minor-mode)
+				 (sql-interactive-mode . (lambda () (toggle-truncate-lines 1)))))
+	;; :init
+	;; (require 'sqlau)
+	;; (require-without-throw 'sql-private)
+	;; (lauremacs-major-mode-leader
+	;; 	:keymaps 'sql-mode-map
+	;; 	"s"  '(nil :which-key "repl")
+	;; 	"sb" '(sql-send-buffer              :which-key "send buffer to repl")
+	;; 	"sf" '(sql-send-paragraph           :which-key "send paragraph to repl")
+	;; 	"sr" '(sql-send-region              :which-key "send region to repl")
+	;; 	"sB" '(sql-send-buffer-and-focus    :which-key "send buffer repl and focus")
+	;; 	"sF" '(sql-send-paragraph-and-focus :which-key "send paragraph and focus")
+	;; 	"sR" '(sql-send-region-and-focus    :which-key "send region and focus")
+	;; 	"ss" '(sql-show-sqli-buffer         :which-key "show sqli buffer")
+	;; 	"c"  '(nil :which-key "connection")
+	;;   "cc" '(sql-connect                  :which-key "sql connect")
+	;; 	"cb" '(sql-set-sqli-buffer          :which-key "set sqli buffer")
+	;; 	"l"  '(nil :which-key "lsp functions")
+	;; 	"ls" '(lsp-sql-switch-connection    :which-key "switch connections")
+	;; 	"==" '(sqlfmt-buffer                :which-key "format buffer")
+	;; 	"=r" '(sqlfmt-region                :which-key "format region")))
+
+(use-package sql-indent
+	:ensure t
+	:after sql)
 
 ;; HTML
 
@@ -972,6 +1012,26 @@ The default value is `lauremacs-state//opacity'."
     (setq-local buffer-save-without-query t))
   (add-hook 'before-save-hook 'lsp-format-buffer nil t))
 
+(use-package lsp-java
+	:ensure t)
+
+(add-hook 'java-mode-hook #'lsp)
+
+;; Enable lombok for java project
+;; (setq lsp-java-vmargs
+;; 	(list "-noverify"
+;; 				"-Xmx1G"
+;; 				"-XX:+UseG1GC"
+;; 				"-XX:+UseStringDeduplication"
+;; 				"-javaagent:/Users/thangphan/.local/share/nvim/mason/packages/jdtls/lombok.jar"))
+
+(setq lsp-java-vmargs
+	(list "-noverify"
+				"-Xmx1G"
+				"-XX:+UseG1GC"
+				"-XX:+UseStringDeduplication"
+				"-javaagent:/Users/thangphan/.emacs.d/java/lombok.jar"))
+
 (use-package go-mode
   :ensure t
   :mode "//.go$"
@@ -983,7 +1043,7 @@ The default value is `lauremacs-state//opacity'."
     (add-hook 'before-save-hook 'gofmt-before-save))
   (if (not (string-match "go" compile-command))	; set compile command default
       (set (make-local-variable 'compile-command)
-	   "go build -v && go test -v && go vet")))
+					 "go build -v && go test -v && go vet")))
 
 (use-package guru-mode
   :ensure t)
@@ -1187,7 +1247,7 @@ The default value is `lauremacs-state//opacity'."
   "wd" #'delete-window
   "wo" #'delete-other-windows
 
-  "aC" #'calendar
+  "ac" #'calendar
 
   ;; Tab bar
   ;; "t" '(:ignore t :wk "Tabs")
@@ -1254,7 +1314,6 @@ The default value is `lauremacs-state//opacity'."
   ("gg" flycheck-first-error "First")
   ("G" (progn (goto-char (point-max)) (flycheck-previous-error)) "Last")
   ("q" nil))
-
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
