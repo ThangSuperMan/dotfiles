@@ -14,7 +14,7 @@ return function()
     buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
     buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', '<space>oi', ':lua require("jdtls").organize_imports()<CR>', opts)
+    -- buf_set_keymap('n', '<space>oi', ':lua require("jdtls").organize_imports()<CR>', opts)
     -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
 
     -- Config with nvim nightly
@@ -102,6 +102,10 @@ return function()
   -- Cmd for install: brew tap dart-lang/dart
   -- And: brew install dart
   nvim_lsp.dartls.setup {
+    on_attach = on_attach,
+  }
+
+  nvim_lsp.clangd.setup{
     on_attach = on_attach,
   }
 
@@ -207,16 +211,25 @@ return function()
     on_attach = on_attach,
   }
 
-  -- ,cmd = { 'jdtls' }
-  nvim_lsp.jdtls.setup {
-    on_attach = on_attach,
-    cmd = { 'jdtls' }
-  }
+  -- nvim_lsp.jdtls.setup {
+  --   on_attach = on_attach,
+  --   cmd = { 'jdtls' }
+  -- }
+
+  -- nvim_lsp.denols.setup{
+  --   on_attach = on_attach,
+  --   root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+  -- }
 
   nvim_lsp.tsserver.setup {
     on_attach = on_attach,
+    -- root_dir = nvim_lsp.util.root_pattern("package.json"),
     filetypes = { "typescript", "typescriptreact", "typescript.tsx", "typescript.jsx", "javascript", "javascriptreact" },
   }
+
+  -- nvim_lsp.csharp_ls.setup{
+  --   on_attach = on_attach,
+  -- }
 
   -- nvim_lsp.sourcekit.setup {
   --   on_attach = on_attach,

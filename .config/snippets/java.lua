@@ -14,7 +14,7 @@ local rep = require("luasnip.extras").rep
 local snippets, autosnippets = {}, {} --}}}
 
 local group = vim.api.nvim_create_augroup("Typescript React Snippets", { clear = true })
-local file_pattern = "*.rust"
+local file_pattern = "*.java"
 
 local use_state = s(
   "uses",
@@ -30,31 +30,19 @@ local use_state = s(
   )
 )
 
--- Texts
-local trait_debug = s("debug", {
-  t( "#[derive(Debug)]" ),
-})
-
-local string_from = s(
-  "sf",
+local hello = s(
+  "hello",
   fmt([[
-    String::from("{}");
-  ]],
-    {
-      i(1, ""),
-    }
-  )
-)
+    package main
 
-local main = s(
-  "main",
-  fmt([[
-    fn main() {{
-      {}
+    import "fmt"
+
+    func main() {{
+      fmt.Println("{}")
     }}
   ]],
     {
-      i(1, ""),
+      i(1, "hello"),
     }
   )
 )
@@ -62,7 +50,7 @@ local main = s(
 local print_line = s(
   { trig = "jj", regTrig = true },
   fmt([[
-    println!({});
+    System.out.println({});
   ]],
     {
       i(1, ""),
@@ -70,17 +58,38 @@ local print_line = s(
   )
 )
 
+local print_object = s(
+  "lgo",
+  fmt([[
+    System.out.println("{} :>> " + {});
+  ]],
+    {
+      i(1, ""),
+      i(2, ""),
+    }
+  )
+)
+
+local halt_on = s(
+  "haltOn",
+  fmt([[
+    func haltOn(err error) {{
+      if err != nil {{
+        {}
+      }}
+    }}
+  ]],
+    {
+      i(1, 'log.Fatal("Error here: ", err)'),
+    }
+  )
+)
+
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 table.insert(autosnippets, print_line)
-table.insert(snippets, string_from)
-table.insert(snippets, trait_debug)
-table.insert(snippets, main)
--- table.insert(snippets, )
--- table.insert(autosnippets, function_component)
--- table.insert(autosnippets, for_loop)
--- table.insert(autosnippets, if_snippet)
--- table.insert(autosnippets, function_snippet_func)
--- table.insert(autosnippets, function_component)
+table.insert(snippets, print_object)
+table.insert(snippets, hello)
+table.insert(snippets, halt_on)
 -- table.insert(autosnippets, short_hand_if_statement)
 
 -- End Refactoring --

@@ -14,7 +14,7 @@ local rep = require("luasnip.extras").rep
 local snippets, autosnippets = {}, {} --}}}
 
 local group = vim.api.nvim_create_augroup("Css Snippets", { clear = true })
-local file_pattern = "*.css"
+local file_pattern = "*.scss"
 
 -- Layout
 

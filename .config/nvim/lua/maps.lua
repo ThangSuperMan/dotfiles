@@ -12,7 +12,7 @@ keymap.set('n', '<S-Left>', '<M-h> :vertical resize -5<CR>', { noremap = true })
 keymap.set('n', '<S-Right>', '<M-l> :vertical resize +5<CR>', { noremap = true })
 
 -- ESC with kj or jk
-keymap.set('i', 'kj', '<esc>', { noremap = true, silent = true })
+-- keymap.set('i', 'kj', '<esc>', { noremap = true, silent = true })
 keymap.set('i', 'jk', '<esc>', { noremap = true, silent = true })
 
 -- Flutter tool
@@ -28,7 +28,7 @@ keymap.set('n', '+', '<C-a>')
 keymap.set('n', '-', '<C-x>')
 
 -- ESC with kj or jk
-keymap.set('i', 'kj', '<esc>', { noremap = true, silent = true })
+-- keymap.set('i', 'kj', '<esc>', { noremap = true, silent = true })
 keymap.set('i', 'jk', '<esc>', { noremap = true, silent = true })
 
 -- Ctrl-s to save
@@ -55,9 +55,14 @@ keymap.set('n', 'L', 'g_', opts)
 keymap.set('v', 'H', '^', opts)
 keymap.set('v', 'L', 'g_', opts)
 
+-- Lsp
 -- Diagnostic jump can use `<c-o>` to jump back
 keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
 keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
+keymap.set("n", "<leader>oi", '<cmd>lua require("jdtls").organize_imports()<CR>')
+-- keymap.set("n", "gd", '<cmd>lua require("jdtls").organize_imports()<CR>', opts)
+keymap.set("n", "gd", '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 
 -- Float terminal
 keymap.set('n', '<C-e>', '<Cmd>Lspsaga diagnostic_jump_next<CR>')
@@ -81,10 +86,10 @@ keymap.set('n', 'ss', ':split<Return><C-w>w')
 keymap.set('n', 'sv', ':vsplit<Return><C-w>w')
 
 -- Move window
-keymap.set('', 'sh', '<C-w>h')
-keymap.set('', 'sk', '<C-w>k')
-keymap.set('', 'sj', '<C-w>j')
-keymap.set('', 'sl', '<C-w>l')
+-- keymap.set('', 'sh', '<C-w>h')
+-- keymap.set('', 'sk', '<C-w>k')
+-- keymap.set('', 'sj', '<C-w>j')
+-- keymap.set('', 'sl', '<C-w>l')
 
 -- Scroll setup
 -- keymap.set('n', '<C-d>', '10<C-d>')

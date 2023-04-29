@@ -3,11 +3,21 @@
 -- 'nvim/ftplugin/java.lua'.
 -- 'nvim/lang-servers/intellij-java-google-style.xml'
 
-local jdtls_dir = vim.fn.stdpath('data') .. '/mason/packages/jdtls'
-local path_to_lsp_server = jdtls_dir .. "/config_mac"
-local plugins_dir = jdtls_dir .. '/plugins'
-local path_to_jar = plugins_dir .. 'org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar'
-local lombok_path = jdtls_dir .. "lombok.jar"
+local jdtls_ok, jdtls = pcall(require, "jdtls")
+if not jdtls_ok then
+  vim.notify "JDTLS not found, install with `:LspInstall jdtls`"
+  return
+end
+
+-- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
+-- local jdtls_path = vim.fn.stdpath('data') .. "/lsp_servers/jdtls"
+local jdtls_path = vim.fn.stdpath('data') .. "/mason/packages/jdtls"
+local path_to_lsp_server = jdtls_path .. "/config_mac"
+-- local path_to_lsp_server = jdtls_path .. "/config_linux"
+local path_to_plugins = jdtls_path .. "/plugins/"
+local path_to_jar = path_to_plugins .. "org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar"
+-- local lombok_path = path_to_plugins .. "lombok.jar"
+local lombok_path = jdtls_path .. "/lombok.jar"
 
 local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
 local root_dir = require("jdtls.setup").find_root(root_markers)
@@ -24,7 +34,12 @@ local config = {
   -- The command that starts the language server
   -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
   cmd = {
-    'Java',
+    -- '/Users/ivanermolaev/Library/Java/JavaVirtualMachines/temurin-18.0.1/Contents/Home/bin/java',
+    -- '/usr/lib/jvm/java-19-openjdk/bin/java',
+    'java',
+    -- '/home/thangphan/.local/share/nvim/mason/packages/jdtls/bin/jdtls',
+    -- '/usr/bin/java',
+    -- 'java',
     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
     '-Dosgi.bundles.defaultStartLevel=4',
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
@@ -37,10 +52,10 @@ local config = {
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
 
     '-jar', path_to_jar,
-    '-configuration', path_to_lsp_server ,
+    '-configuration', path_to_lsp_server,
     '-data', workspace_dir,
   },
-  
+
   -- This is the default if not provided, you can remove it. Or adjust as needed.
   -- One dedicated LSP server & client will be started per unique root_dir
   root_dir = root_dir,
@@ -50,22 +65,17 @@ local config = {
   -- for a list of options
   settings = {
     java = {
-      home = '/Users/thangphan/Library/Java/JavaVirtualMachines/temurin-18.0.1/Contents/Home/',
+      -- home = '/Users/ivanermolaev/Library/Java/JavaVirtualMachines/temurin-18.0.1/Contents/Home/',
       eclipse = {
         downloadSources = true,
       },
       configuration = {
         updateBuildConfiguration = "interactive",
         runtimes = {
-          {
-            -- JDK link
-            name = "JavaSE-18",
-            path = "/usr/libexec/java_home",
-          },
           -- {
           --   name = "JavaSE-17",
-          --   path = "/Users/ivanermolaev/Library/Java/JavaVirtualMachines/temurin-17.0.4/Contents/Home",
-          -- }
+          --   path = "/usr/lib/jvm/java-17-openjdk/",
+          -- },
         }
       },
       maven = {
@@ -87,18 +97,9 @@ local config = {
           profile = "GoogleStyle",
         },
       },
-      -- format = {
-      --   enabled = true,
-      --   settings = {
-      --     url = vim.fn.stdpath "config" .. "/lang-servers/intellij-java-google-style.xml",
-      --     -- url = "/.config/nvim/lang-servers/intellij-java-google-style.xml",
-      --     profile = "GoogleStyle",
-      --   },
-      -- },
+
     },
-
     signatureHelp = { enabled = true },
-
     completion = {
       favoriteStaticMembers = {
         "org.hamcrest.MatcherAssert.assertThat",

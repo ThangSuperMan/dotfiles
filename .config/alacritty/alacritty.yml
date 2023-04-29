@@ -5,15 +5,18 @@
 # https://github.com/sainnhe/icursive-nerd-font
 font:
   normal:
-    family: "Cascursive"
+    # family: "Cascursive"
+    family: "JetBrainsMono Nerd Font"
     style: Regular
   bold:
-    family: "Recursive"
+    # family: "Recursive"
+    family: "JetBrainsMono Nerd Font"
     style: Bold
   italic:
-    family: "Recursive"
+    family: "JetBrainsMono Nerd Font"
+    # family: "Recursive"
     style: Italic
-  size: 20
+  size: 16
   offset:
     x: 0
     y: 0
@@ -67,8 +70,8 @@ window:
   # - none: neither borders nor title bar
   # - transparent: title bar, transparent background and title bar buttons
   # - buttonless: title bar, transparent background, but no title bar buttons
-  decorations: None
-  opacity: 0.96
+  decorations: full
+  opacity: 1
 
   # Startup Mode (changes require restart)
   #
@@ -314,7 +317,9 @@ schemes:
       cyan: "0xf69c5e"
       white: "0xe1e3e4"
 # Apply
+# colors: *everforest_dark_medium
 colors: *everforest_dark_hard
+# colors: *everforest_light_soft
 
 draw_bold_text_with_bright_colors: false
 # draw_bold_text_with_bright_colors: false
@@ -327,31 +332,27 @@ key_bindings:
   - { key: V, mods: Command, action: Paste }
   - { key: C, mods: Command, action: Copy }
   - { key: Q, mods: Command, action: Quit }
-  - {
-      key: N,
-      mods: Command,
-      command: { program: "open", args: ["-nb", "io.alacritty"] },
-    }
+  # - { key: J, mods: Command, chars: "\x02\x73" }
+  - { key: J, mods: Command, chars: "\x02\x54" }
+  # - {
+  #     key: N,
+  #     mods: Command,
+  #     command: { program: "open", args: ["-nb", "io.alacritty"] },
+  #   }
   # Rename the current tmux window
   - { key: Comma, mods: Command, chars: "\x02\x2c" }
   # Switch to last tmux session
-  - { key: L, mods: Command, chars: "\x02\x4c" }
+  # - { key: L, mods: Command, chars: "\x02\x4c" }
   - { key: LBracket, mods: Command, chars: "\x02\x5b" }
-  # Change to the previous tmux window
-  - { key: LBracket, mods: Command|Shift, chars: "\x02\x70" }
+  - { key: LBracket, mods: Command|Shift, chars: "\x02\x70" } # Change to the previous tmux window
   # Split the current pane into two, left and right
   - { key: N, mods: Command|Shift, chars: "\x02\x25" }
-  # Split the current pane into two, top and bottom.
-  - { key: N, mods: Command, chars: "\x02\x22" }
-  # Change to the next tmux window
-  - { key: RBracket, mods: Command|Shift, chars: "\x02\x6e" }
-  # Type <escape>:w<enter> to save neovim
-  - { key: S, mods: Command, chars: "\x1b\x3a\x77\x0a" }
-  # Create a new tmux window
-  - { key: T, mods: Command, chars: "\x02\x63" }
-  # Break the current tmux pane out of the tmux window
-  - { key: T, mods: Command|Shift, chars: "\x02\x21" }
-  # Kill the current tmux pane (and window if last pane)
-  - { key: W, mods: Command, chars: "\x02\x78" }
-  # Toggle the zoom state of the current tmux pane
-  - { key: Z, mods: Command, chars: "\x02\x7a" }
+  - { key: G, mods: Command, chars: "\x02g" } # open git manager 'jesseduffield/lazygit'
+  - { key: N, mods: Command, chars: "\x02\x22" } # Split the current pane into two, top and bottom.
+  - { key: RBracket, mods: Command|Shift, chars: "\x02\x6e" } # Change to the next tmux window
+  - { key: S, mods: Command, chars: "\x1b\x3a\x77\x0a" } # Type <escape>:w<enter> to save neovim
+  - { key: T, mods: Command, chars: "\x02\x63" } # Create a new tmux window
+  - { key: T, mods: Command|Shift, chars: "\x02\x21" } # Break the current tmux pane out of the tmux window
+  - { key: W, mods: Command, chars: "\x02\x78" } # Kill the current tmux pane (and window if last pane)
+  - { key: R, mods: Command, action: ResetFontSize }
+  - { key: Z, mods: Command, chars: "\x02\x7a" } # Toggle the zoom state of the current tmux pane

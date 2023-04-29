@@ -3,7 +3,6 @@ return function()
   cmd("syntax on")
 
   -- everforest theme
-  -- Original
   vim.g.everforest_background = "soft"
   vim.g.everforest_diagnostic_line_highlight = 1
   vim.g.everforest_enable_italic = 1
@@ -13,6 +12,8 @@ return function()
   cmd("set background=dark")
   cmd("set termguicolors")
   cmd("colorscheme everforest")
+  -- cmd("colorscheme tokyonight-night")
+  -- cmd("colorscheme rose-pine")
 
   -- vim.fn.sign_define({
   --   {

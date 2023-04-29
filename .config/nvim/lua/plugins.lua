@@ -47,6 +47,14 @@ return require('packer').startup(function()
   -- packer can manage itself
   use 'wbthomason/packer.nvim'
 
+  -- use {
+  --   'goolord/alpha-nvim',
+  --   requires = { 'nvim-tree/nvim-web-devicons' },
+  --   config = function ()
+  --       require'alpha'.setup(require'alpha.themes.startify'.config)
+  --   end
+  -- }
+
   use({
     "vuki656/package-info.nvim",
     requires = "MunifTanjim/nui.nvim",
@@ -60,10 +68,13 @@ return require('packer').startup(function()
     end
   })
 
+  use { 'christoomey/vim-tmux-navigator' }
   use { 'preservim/tagbar' }
 
   -- Colorizer
   use { 'norcalli/nvim-colorizer.lua', config = require 'plugins.colorizer' }
+
+  use { 'RRethy/vim-illuminate', config= require 'plugins.illuminate' }
 
   -- Surround
   use { 'tpope/vim-surround' }
@@ -78,6 +89,7 @@ return require('packer').startup(function()
   use { 'hrsh7th/cmp-buffer' }
   use { 'hrsh7th/cmp-nvim-lsp-signature-help' }
   use { 'hrsh7th/nvim-cmp', config = require 'plugins.cmp' }
+  use { 'sigmasd/deno-nvim' }
 
   -- use { 'nvim-telescope/telescope.nvim', config = require 'plugins.telescope' }
   use { 'nvim-telescope/telescope.nvim' }
@@ -167,6 +179,8 @@ return require('packer').startup(function()
 
   use { 'akinsho/flutter-tools.nvim', config = require 'plugins.flutter-tools' }
 
+  -- use { 'echasnovski/mini.indentscope', branch = 'stable' }
+
   use {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
@@ -222,8 +236,27 @@ return require('packer').startup(function()
   use { 'stevearc/dressing.nvim' }
 
   use { 'sainnhe/everforest', config = require 'plugins.theme' }
+  use({ 'rose-pine/neovim', as = 'rose-pine' })
+  -- use { 'folke/tokyonight.nvim' }
 
   -- use { 'sunjon/shade.nvim', config = require('plugins.shade') }
+
+
+  -- use { 'lukas-reineke/indent-blankline.nvim' , config = function ()
+  --       require("indent_blankline").setup({
+  --       char = "▏",
+  --       show_trailing_blankline_indent = false,
+  --       show_first_indent_level = true,
+  --       use_treesitter = true,
+  --       show_current_context = true,
+  --       buftype_exclude = { "terminal", "nofile" },
+  --       filetype_exclude = {
+  --         "help",
+  --         "packer",
+  --         "NvimTree"
+  --       }
+  --       })
+  --   end}
 
   -- use { 'lukas-reineke/indent-blankline.nvim' , config = function ()
   --       require("indent_blankline").setup({
