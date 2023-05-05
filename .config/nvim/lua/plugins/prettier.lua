@@ -23,7 +23,7 @@ return function()
   vim.api.nvim_exec([[
         augroup FormatAutogroup
           autocmd!
-          autocmd BufWritePost *.html,*.mjs,*.ts,*.tsx,*.jsx,*.js,*.lua,*.md,*.mdx,*.yml,*.json,*.svelte,*.sol,*.go, FormatWrite
+          autocmd BufWritePost *.html,*.mjs,*.ts,*.tsx,*.jsx,*.js,*.lua,*.md,*.mdx,*.yml,*.json,*.svelte,*.sol,*.go,*.scss,*.css FormatWrite
         augroup END
     ]], true)
 
@@ -37,9 +37,9 @@ return function()
       html = { prettier },
       svelte = { prettier },
       css = { prettier },
+      scss = { prettier },
       vue = { prettier },
       json = { prettier },
-      scss = { prettier },
       yaml = { prettier },
       markdown = { prettier },
       sh = { prettier },

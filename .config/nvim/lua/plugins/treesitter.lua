@@ -49,7 +49,7 @@ return function()
 			-- "rust",
 			-- "css",
 			-- "bash",
-			"lua",
+			-- "lua",
 			-- "scss",
 			-- "vim",
 		},

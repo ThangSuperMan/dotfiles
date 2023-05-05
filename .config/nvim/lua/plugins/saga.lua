@@ -1,10 +1,10 @@
 return function()
-	local saga = require("lspsaga")
+	-- local saga = require("lspsaga")
 	local keymap = vim.keymap.set
 
 	-- saga.init_lsp_saga()
 
-	saga.setup({
+	-- saga.setup({
 		-- symbol_in_winbar = {
 		-- 	enable = true,
 		-- 	separator = " ",
@@ -13,5 +13,8 @@ return function()
 		-- 	folder_level = 2,
 		-- 	respect_root = false,
 		-- },
-	})
+	-- })
+
+  -- require("lazy").setup({
+-- }, opt)
 end
