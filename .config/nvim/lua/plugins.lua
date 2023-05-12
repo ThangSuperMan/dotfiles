@@ -52,20 +52,21 @@ return require('lazy').setup({
   },
 
   { 'christoomey/vim-tmux-navigator' },
-	{ "psliwka/vim-smoothie" },
+	-- { "psliwka/vim-smoothie" },
 	{ "sainnhe/everforest", config = require("plugins.theme") },
-  -- { "catppuccin/nvim", as = "catppuccin", config = require("plugins.theme") },
+  { "sainnhe/edge", config = require("plugins.theme") },
+  { "catppuccin/nvim", as = "catppuccin", config = require("plugins.theme") },
   -- { 'folke/tokyonight.nvim', config = require("plugins.theme") },
 
-  { "xiyaowong/nvim-transparent", config = function()
-    require("transparent").setup({
-      extra_groups = {
-        "NeoTreeFileIcon",
-        "NeoTreeExpander"
-      },
-      exclude_grops = {}, -- table: groups you don't want to clear
-    })
-  end },
+  -- { "xiyaowong/nvim-transparent", config = function()
+  --   require("transparent").setup({
+  --     extra_groups = {
+  --       "NeoTreeFileIcon",
+  --       "NeoTreeExpander"
+  --     },
+  --     exclude_grops = {}, -- table: groups you don't want to clear
+  --   })
+  -- end },
 
   {
     "evanleck/vim-svelte",
@@ -160,7 +161,9 @@ return require('lazy').setup({
 	-- 	branch = "main",
 	-- 	config = require("plugins.saga"),
 	-- },
-  -- { 'kkharji/lspsaga.nvim',
+
+  -- { 
+  --   "kkharji/lspsaga.nvim",
   --   config = require('plugins.saga')
   -- },
 

@@ -92,8 +92,8 @@ keymap.set('n', 'sv', ':vsplit<Return><C-w>w')
 -- keymap.set('', 'sl', '<C-w>l')
 
 -- Scroll setup
--- keymap.set('n', '<C-d>', '10<C-d>')
--- keymap.set('n', '<C-u>', '10<C-u>')
+keymap.set('n', '<C-d>', '10<C-d>')
+keymap.set('n', '<C-u>', '10<C-u>')
 
 -- Debugging
 keymap.set('n', '<leader>dc', ':lua require"dap".continue()<CR>')

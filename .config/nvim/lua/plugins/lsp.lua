@@ -27,12 +27,12 @@ return function()
 
     -- Format on save (just for java and jsp)
     -- if client.resolved_capabilities.document_formatting then
-    if client.server_capabilities.document_formatting then
-      vim.api.nvim_command [[augroup Format]]
-      vim.api.nvim_command [[autocmd! * <buffer>]]
-      vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
-      vim.api.nvim_command [[augroup END]]
-    end
+    -- if client.server_capabilities.document_formatting then
+    --   vim.api.nvim_command [[augroup Format]]
+    --   vim.api.nvim_command [[autocmd! * <buffer>]]
+    --   vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
+    --   vim.api.nvim_command [[augroup END]]
+    -- end
   end
 
   -- Use an on_attach function to only map the following keys
