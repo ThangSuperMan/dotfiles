@@ -9,7 +9,7 @@ while true; do
   sleep 1
   NEW=`ls -l "$FILE"`
   if [ "$NEW" != "$LAST" ]; then
-    sh auto_read_and_run_sql_file.sh "$1"
+    auto_read_and_run_sql_file "$1"
     LAST="$NEW"
   fi
 done

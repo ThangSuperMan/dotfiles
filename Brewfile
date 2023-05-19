@@ -3,21 +3,25 @@
 brew "bat"
 brew "nvim"
 brew "tmux"
-brew "fish"
-brew "fisher"
-brew "peco"
+# brew "fish"
+# brew "fisher"
+# brew "peco"
 brew "starship"
 brew "htop"
 brew "go"
 brew "ruby"
 brew "shellcheck"
 brew "sqlite"
+# Browser terminal
+brew "lynx"
 brew "sqls"
 brew "awscli"
 brew "peco"
 brew "exa"
 brew "fd"
 brew "zoxide"
+# Search history command with bash
+brew "atuin"
 # Kubernetes
 brew "kubernetes-cli"
 # ...for configuring the Minikube cluster
