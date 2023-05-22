@@ -20,8 +20,6 @@ brew "peco"
 brew "exa"
 brew "fd"
 brew "zoxide"
-# Search history command with bash
-brew "atuin"
 # Kubernetes
 brew "kubernetes-cli"
 # ...for configuring the Minikube cluster
@@ -32,7 +30,6 @@ brew "netcat"
 brew "docker"
 # Docker runtime
 brew "colima"
-brew "ranger"
 brew "lazygit"
 
 # IOS 

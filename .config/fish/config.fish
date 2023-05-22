@@ -19,12 +19,11 @@ alias lla "ll -a"
 alias g git
 alias p "cd Projects/"
 alias n "cd notes/"
-#alias v "nvim"
-alias v "fd --type f --hidden --exclude .git | fzf-tmux -p --reverse | xargs nvim"
-# alias emacs "emacs -nw"
+alias v "nvim"
 alias tks "tmux kill-server"
 alias pn "pnpm"
 alias grm "go run main.go"
+alias cpp "g++ -std=c++17 -o main main.cpp"
 alias c "clear"
 alias tn "tmux new -s (pwd | sed 's/.*\///g')"
 alias ta "tmux attach"
@@ -32,9 +31,13 @@ alias d "cd Developments"
 alias nc "nc -z -vv"
 alias ide "tmux split-window -v -p 30 && tmux split-window -h -p 64 && tmux split-window -h -p 50"
 alias urls "echo https://youtube.com \nhttps://github.com/thangsuperman \nhttps://deno.com/manual@v1.32.5/introduction \nhttps://www.oxfordlearnersdictionaries.com"
-#alias ide "tmux split-window -v -p 24"
+alias path "PATH"
+abbr --add \? duck
 alias e "exit"
 alias http "xh"
+# study stream aliases
+alias work "echo 'we are working 🎅' | lolcat && timer 25m"
+# alias break "echo 'happy break time! ⛄' | lolcat && timer 10m"
 
 # Docker
 alias dco="docker-compose"
@@ -47,6 +50,14 @@ alias dpa="docker ps -a"
 alias di="docker images"
 alias dl="docker ps -l -q"
 
+set -Ux FZF_HISTORY --reverse --border rounded --no-info --pointer='' --marker=' ' --ansi --color='16,bg+:-1,gutter:-1,prompt:5,pointer:5,marker:6,border:4,label:4' --border-label=' history ' \
+       --prompt='  '
+
+function fish_user_key_bindings
+    bind \cr 'history --reverse | fzf-tmux -p 40%,40% $FZF_HISTORY | read -z -- __cmd; commandline -i $__cmd'
+end
+
+# Path
 fish_add_path /opt/homebrew/bin
 fish_add_path $HOME/.tmux/plugins/t-smart-tmux-session-manager/bin
 
@@ -59,20 +70,12 @@ set -gx PATH bin $PATH
 set -gx PATH ~/bin $PATH
 set -gx PATH ~/.local/bin $PATH
 
-# New
-# set -gx PATH ~/Library/Java/JavaVirtualMachines/jdk-20.jdk $PATH
-
-# Java 
-# set -gx PATH $PATH ~/usr/libexec/java_home
-
 # NodeJS
 set -gx PATH node_modules/.bin $PATH
 
 # Go
 set -g GOPATH $HOME/go
 set -gx PATH $GOPATH/bin $PATH
-
-# C, C++
 
 # Rust
 set -gx PATH $HOME/.cargo/bin $PATH
@@ -113,6 +116,5 @@ set LOCAL_CONFIG (dirname (status --current-filename))/config-local.fish
 if test -f $LOCAL_CONFIG
   source $LOCAL_CONFIG
 end
-
-starship init fish | source # https://starship.rs/
 zoxide init fish | source # 'ajeetdsouza/zoxide'
+starship init fish | source # 'ajeetdsouza/zoxide'
