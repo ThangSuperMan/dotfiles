@@ -3,16 +3,16 @@ return function()
   cmd("syntax on")
 
   -- everforest theme
-  -- vim.g.everforest_diagnostic_line_highlight = 1
-  -- vim.g.everforest_background = "soft"
-  -- vim.g.everforest_disable_italic_comment = 0
-  -- vim.g.everforest_transparent_background = 1
-  -- cmd("set background=dark")
-  -- cmd("set termguicolors")
-  -- cmd("colorscheme everforest")
+  vim.g.everforest_diagnostic_line_highlight = 1
+  vim.g.everforest_background = "soft"
+  vim.g.everforest_disable_italic_comment = 0
+  vim.g.everforest_transparent_background = 1
+  cmd("set background=dark")
+  cmd("set termguicolors")
+  cmd("colorscheme everforest")
 
-  cmd("set background=light")
-  cmd("colorscheme edge")
+  -- cmd("set background=light")
+  -- cmd("colorscheme edge")
 
   -- vim.fn.sign_define({
   --   {

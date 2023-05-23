@@ -28,6 +28,7 @@ brew "hyperkit"
 brew "minikube"
 brew "netcat"
 brew "docker"
+brew "podman"
 # Docker runtime
 brew "colima"
 brew "lazygit"
