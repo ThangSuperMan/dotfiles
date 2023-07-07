@@ -1,4 +1,5 @@
 return function()
+  local home = vim.fn.expand('~')
   local nvim_lsp = require('lspconfig')
   local protocol = require('vim.lsp.protocol')
   
@@ -40,6 +41,7 @@ return function()
   local on_attach = function(client, bufnr)
     -- require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
 
+    require("twoslash-queries").attach(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -51,23 +53,6 @@ return function()
     buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n', '<space>oi', ':lua require("jdtls").organize_imports()<CR>', opts)
     -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-
-    -- Config with nvim nightly
-    -- if client.server_capabilities.documentFormattingProvider then
-    --   vim.api.nvim_command [[augroup Format]]
-    --   vim.api.nvim_command [[autocmd! * <buffer>]]
-    --   vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
-    --   vim.api.nvim_command [[augroup END]]
-    -- end
-
-    -- Format on save (just for java and jsp)
-    -- if client.resolved_capabilities.document_formatting then
-    -- if client.server_capabilities.document_formatting then
-    --   vim.api.nvim_command [[augroup Format]]
-    --   vim.api.nvim_command [[autocmd! * <buffer>]]
-    --   vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
-    --   vim.api.nvim_command [[augroup END]]
-    -- end
   end
 
   --Enable (broadcasting) snippet capability for completion
@@ -168,10 +153,10 @@ return function()
     capabilities = capabilities,
   }
 
-  -- nvim_lsp.pyright.setup {
-  --  on_attach = on_attach,
-  --  capability = capabilities
-  -- }
+  nvim_lsp.pyright.setup {
+   on_attach = on_attach,
+   capability = capabilities
+  }
 
   -- Bash
   -- brew install shellcheck -> for linting(diagnostics)
@@ -191,10 +176,79 @@ return function()
     }
   }
 
-  -- Devops
-  -- Docker compose
+----------------------------------------------------------------------
+--                               YAML                               --
+----------------------------------------------------------------------
+-- Website for get json schemas
+-- https://www.schemastore.org/json/
+
+nvim_lsp.yamlls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "yml", "yaml", "yaml.docker-compose", "config" },
+  settings =  {
+    yaml = {
+      format = { enable = true },
+      editor = { formatOnType = true },
+      validate = true,
+      schemaDownload = { enable = true },
+      completion = true,
+      hover = true,
+      schemas = {
+        ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*.{yml,yaml}",
+        ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+        ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
+        ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+        ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+        -- Load the ansible json (dictionay for codecompletion) for yamls use
+        ["file://" .. home .. "/.config/nvim/json-schema/ansible/inventory.yml.json"] = "*inventory*.{yml,yaml}",
+        ["file://" .. home .. "/.config/nvim/json-schema/ansible/playbook.yml.json"] = "*play*.{yml,yaml}",
+        ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+        ["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
+        ["file://" .. home .. "/.config/nvim/json-schema/gitlab.yml.json"] = "*gitlab-ci*.{yml,yaml}",
+        ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
+        ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose.{yml,yaml}",
+        ["https://raw.githubusercontent.com/robbyki/schemas/1f05c98df4ca8398f502f554734ff5e87acfcc4c/openshift/all.json"] = "/*.yaml",
+        kubernetes = { "/*.yaml" },
+      },
+    },
+  },
+})
+
+nvim_lsp.ansiblels.setup{
+  on_attach = on_attach,
+  ansible = {
+    ansible = {
+      path = "ansible"
+    },
+    executionEnvironment = {
+      enabled = false
+    },
+    python = {
+      interpreterPath = "python"
+    },
+    validation = {
+      enabled = true,
+      lint = {
+        enabled = true,
+        path = "ansible-lint"
+      }
+  }
+}
+}
+
+----------------------------------------------------------------------
+--                               Terraform                          --
+----------------------------------------------------------------------
+
+-- nvim_lsp.tflint.setup{
+--   on_attach = on_attach
+-- }
+
+
   -- nvim_lsp.yamlls.setup {
   --   on_attach = on_attach,
+  --   capability = capabilities,
   --   settings = {
   --     yaml = {
   --       schemas = {
@@ -202,14 +256,13 @@ return function()
   --         ["../path/relative/to/file.yml"] = "/.github/workflows/*",
   --         ["/path/from/root/of/project"] = "/.github/workflows/*",
   --       },
-  --     },
   --   }
-  -- }
+  -- }}
 
   -- Dockerfile
-  nvim_lsp.dockerls.setup {
-    on_attach = on_attach,
-  }
+  -- nvim_lsp.dockerls.setup {
+  --   on_attach = on_attach,
+  -- }
 
   -- nvim_lsp.jdtls.setup {
   --   on_attach = on_attach,
@@ -220,6 +273,15 @@ return function()
   --   on_attach = on_attach,
   --   root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
   -- }
+
+  nvim_lsp.eslint.setup({
+     on_attach = function(client, bufnr)
+       vim.api.nvim_create_autocmd("BufWritePre", {
+         buffer = bufnr,
+         command = "EslintFixAll",
+       })
+     end,
+  })
 
   nvim_lsp.tsserver.setup {
     on_attach = on_attach,
@@ -237,6 +299,7 @@ return function()
 
   -- Diagnostic symbols in the sign column (gutter)
   local signs = { Error = " ", Warn = " ", Hint = "ﴞ ", Info = " " }
+  -- local signs = { Error = "✗ ", Warn = " ", Hint = "ﴞ ", Info = " " }
   for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })

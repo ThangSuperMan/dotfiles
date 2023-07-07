@@ -44,6 +44,8 @@ return function()
 			-- "json",
 			-- "graphql",
 			-- "tsx",
+			-- "go",
+			-- "hcl",
 			-- "html",
 			-- "jsdoc",
 			-- "rust",

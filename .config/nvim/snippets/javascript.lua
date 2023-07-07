@@ -105,7 +105,7 @@ local use_effect = s(
 -- )
 
 local console_log = s(
-  "lg",
+  { trig = "jj", regTrig = true },
   fmt([[
     console.log({});
   ]],
@@ -153,6 +153,22 @@ local function_component = s(
   )
 )
 
+local const_function = s(
+  "constf",
+  fmt([[
+    const {} = ({}) => {{
+      {}
+    }}
+    {}
+  ]],
+    {
+      i(1, "myFunc"),
+      i(2, ""),
+      i(3, "// TODO:"),
+      i(4),
+    }
+  )
+)
 
 local for_loop = s(-- for([%w_]+) JS For Loop snippet{{{
   { trig = "for([%w_]+)", regTrig = true, hidden = true },
@@ -242,9 +258,11 @@ function {}({}) {{
 local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) --}}}
 
 -- table.insert(snippets, normal_function)
-table.insert(snippets, console_log)
 table.insert(snippets, console_log_object)
 table.insert(snippets, function_component)
+table.insert(snippets, const_function)
+
+table.insert(autosnippets, console_log )
 
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 -- table.insert(autosnippets, console_log)

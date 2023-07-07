@@ -26,6 +26,8 @@ return require('lazy').setup({
 		config = require("plugins.treesitter"),
 	},
 
+  { "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" } },
+
   -- Colorizer
   { 'norcalli/nvim-colorizer.lua', config = require 'plugins.colorizer' },
 
@@ -44,19 +46,11 @@ return require('lazy').setup({
   { 'L3MON4D3/LuaSnip' },
   { 'saadparwaiz1/cmp_luasnip', config = require 'plugins.luasnip' },
 
-  { 'echasnovski/mini.indentscope', config= function()
-    require('mini.indentscope').setup({
-      symbol = '▏',
-    })
-  end
-  },
-
-  { 'christoomey/vim-tmux-navigator' },
-	-- { "psliwka/vim-smoothie" },
-	{ "sainnhe/everforest", config = require("plugins.theme") },
-  { "sainnhe/edge", config = require("plugins.theme") },
-  { "catppuccin/nvim", as = "catppuccin", config = require("plugins.theme") },
-  -- { 'folke/tokyonight.nvim', config = require("plugins.theme") },
+  -- { 'christoomey/vim-tmux-navigator' },
+	{ 'psliwka/vim-smoothie' },
+  { 'dstein64/nvim-scrollview' },
+  -- { 'Th3Whit3Wolf/one-nvim', config = require("plugins.theme") },
+  { 'sainnhe/everforest', config = require("plugins.theme") },
 
   -- { "xiyaowong/nvim-transparent", config = function()
   --   require("transparent").setup({
@@ -74,6 +68,7 @@ return require('lazy').setup({
       vim.g.svelte_preprocessors = "typescript"
     end,
   },
+
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v2.x",
@@ -83,6 +78,7 @@ return require('lazy').setup({
     },
     config = require("plugins.neotree"),
   },
+
   {
     "phaazon/hop.nvim",
     branch = "v2", -- optional but strongly recommended
@@ -91,21 +87,25 @@ return require('lazy').setup({
       require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
       vim.keymap.set("n", "fw", "<cmd>:HopChar2<cr>")
       vim.keymap.set("n", "fe", "<cmd>:HopPattern<cr>")
+      vim.keymap.set("n", "<leader>hl", "<cmd>lua require'hop'.hint_lines()<cr>")
     end,
   },
+  { 'folke/which-key.nvim', config = require 'plugins.which-key' },
   {
-    'voldikss/vim-floaterm',
-    -- keys = {
-    -- 	{ "<C-\\>", "<cmd>FloatermToggle<cr>" },
-    -- 	{ "<C-\\>", "<cmd>FloatermToggle<cr>", { mode = "tnoremap", desc = "Floaterm" } },
-    -- },
-    config = function()
-      vim.g.floaterm_wintype = 'float'
-      vim.g.floaterm_position = 'bottomright'
-      vim.g.floaterm_width = 0.6
-			vim.g.floaterm_height = 0.5
+		"voldikss/vim-floaterm",
+		config = function()
+			vim.g.floaterm_wintype = "float"
+			vim.g.floaterm_position = "center"
+			vim.g.floaterm_width = 0.8
+			vim.g.floaterm_height = 0.6
 			vim.g.floaterm_keymap_toggle = "<C-\\>"
-    end
+		end,
+	},
+  {
+    "akinsho/toggleterm.nvim",
+    config = function()
+      require("plugins.toggleterm")
+    end,
   },
 
   -- Popup window for cmd
@@ -128,25 +128,26 @@ return require('lazy').setup({
   -- Lsp
   { 'neovim/nvim-lspconfig', config = require 'plugins.lsp' },
   { 'onsails/lspkind-nvim', config = require 'plugins.kind' },
+  { 'marilari88/twoslash-queries.nvim' },
 
   { 'MattesGroeger/vim-bookmarks', config = require('plugins.bookmark') },
   { 'tom-anders/telescope-vim-bookmarks.nvim' },
+  -- { 'nvim-telescope/telescope.nvim', config = require('plugins.telescope') },
+  { 'nvim-lua/plenary.nvim' },
+  {  "nvim-telescope/telescope-file-browser.nvim" },
 
-	-- install fzf
-	-- { "junegunn/fzf" },
-  { 'ibhagwan/fzf-lua'
-    -- optional for icon support
-    -- dependencies  = { 'nvim-tree/nvim-web-devicons' }
-  },
+  -- Fzf
+  -- { "junegunn/fzf" },
+	-- { 'junegunn/fzf.vim', config = require("plugins.fzf") },
+  { 'ibhagwan/fzf-lua', config = require("plugins.fzf")},
 
-	-- { "junegunn/fzf.vim", config = require("plugins.fzf") },
   {
 		"vuki656/package-info.nvim",
 		dependencies = "MunifTanjim/nui.nvim",
 		config = function()
 			require("package-info").setup()
-			vim.keymap.set({ "n" }, "<LEADER>ns", require("package-info").show, { silent = true, noremap = true })
-			vim.keymap.set({ "n" }, "<LEADER>nc", require("package-info").hide, { silent = true, noremap = true })
+			-- vim.keymap.set({ "n" }, "<LEADER>ns", require("package-info").show, { silent = true, noremap = true })
+			-- vim.keymap.set({ "n" }, "<LEADER>nc", require("package-info").hide, { silent = true, noremap = true })
 		end,
 	},
 	{
@@ -155,23 +156,6 @@ return require('lazy').setup({
 			require("mason").setup()
 		end,
 	},
-	--  { 'sunjon/shade.nvim', config = require('plugins.shade') }
-	-- {
-	-- 	"glepnir/lspsaga.nvim",
-	-- 	branch = "main",
-	-- 	config = require("plugins.saga"),
-	-- },
-
-  -- { 
-  --   "kkharji/lspsaga.nvim",
-  --   config = require('plugins.saga')
-  -- },
-
-  -- {
-		-- "glepnir/lspsaga.nvim",
-		-- branch = "main",
-		-- config = require("plugins.saga"),
-	-- },
 
   {
   event = "LspAttach",
@@ -187,6 +171,12 @@ return require('lazy').setup({
   },
 
   -- {
+		-- "glepnir/lspsaga.nvim",
+		-- branch = "main",
+		-- config = require("plugins.saga"),
+	-- },
+
+  -- {
   --     "xiyaowong/nvim-transparent",
   --     config = function()
   --       require("transparent").setup({
@@ -200,6 +190,20 @@ return require('lazy').setup({
   --     end,
   --   },
 
+  -- { 'echasnovski/mini.indentscope', config= function()
+  --   require('mini.indentscope').setup({
+  --     symbol = '▏',
+  --   })
+  -- end
+  -- },
+
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require("plugins.indent-blankline")
+    end,
+  },
+
   {
     "dstein64/vim-startuptime",
     -- lazy-load on a command
@@ -210,7 +214,12 @@ return require('lazy').setup({
     end,
   },
 
-  -- use{  'github/copilot.vim', config = require 'plugins.copilot'}
+  -- {  'github/copilot.vim', config = require 'plugins.copilot'},
+  -- { 'Exafunction/codeium.vim' }
+  -- { 'lewis6991/impatient.nvim', config = function()
+  --     require('impatient')
+  --    end 
+  -- }
 
   -- reduce the start up time
   -- use({ 'lewis6991/impatient.nvim', config = function()

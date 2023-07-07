@@ -12,8 +12,8 @@ end
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 -- local jdtls_path = vim.fn.stdpath('data') .. "/lsp_servers/jdtls"
 local jdtls_path = vim.fn.stdpath('data') .. "/mason/packages/jdtls"
-local path_to_lsp_server = jdtls_path .. "/config_mac"
--- local path_to_lsp_server = jdtls_path .. "/config_linux"
+-- local path_to_lsp_server = jdtls_path .. "/config_mac"
+local path_to_lsp_server = jdtls_path .. "/config_linux"
 local path_to_plugins = jdtls_path .. "/plugins/"
 local path_to_jar = path_to_plugins .. "org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar"
 -- local lombok_path = path_to_plugins .. "lombok.jar"

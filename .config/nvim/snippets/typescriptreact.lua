@@ -69,7 +69,18 @@ local const_function = s(
   )
 )
 
+local import_react = s("ir", {
+  t( 'import React from "react";' ),
+})
 
+local onclick_change = s(
+  "onchange",
+  fmt([[ 
+    onChange={}
+  ]],
+    i(1, "")
+  )
+)
 
 local onclick_event = s(
   "onclick",
@@ -95,7 +106,7 @@ local class_name = s(
 local use_state = s(
   "uses",
   fmt([[
-    const [{}, {}] = React.useState<{}>({});
+    const [{}, {}] = useState<{}>({});
   ]],
     {
       i(1, ""),
@@ -109,7 +120,7 @@ local use_state = s(
 local use_effect = s(
   "usee",
   fmt([[
-    React.useEffect(() => {{
+    useEffect(() => {{
       {}
     }}, []);
   ]],
@@ -133,16 +144,16 @@ local use_effect = s(
 --   }
 -- )
 
--- local console_log = s(
---   { trig = "jj", regTrig = true },
---   fmt([[
---     console.log({});
---   ]],
---     {
---       i(1, ""),
---     }
---   )
--- )
+local console_log = s(
+  { trig = "jj", regTrig = true },
+  fmt([[
+    console.log({});
+  ]],
+    {
+      i(1, ""),
+    }
+  )
+)
 
 local random_image = s("random-img", {
   t( "https://source.unsplash.com/random" ),
@@ -171,7 +182,7 @@ local link_tag = s(
 )
 
 local console_log = s(
-  "lg",
+  "jj",
   fmt([[
     console.log({});
   ]],
@@ -193,145 +204,140 @@ local console_log_object = s(
   )
 )
 
-      -- c(2, { t(""), i(1, "myArg") }),
-
-
--- local function_component = s(
---   "fc",
---   fmt([[
---     const [{}, {}] = React.useState<{}>({});
---     import React from 'react'
---
---     const {}() => {{
---       return (
---       <div>{}</div>
---       )
---     }}
---
---     export default
---   ]],
---     {
---       i(1, ""),
---       i(2, ""),
---       c(3, { i(1, "TypeOf"), i(1, "") }),
---       i(4, ""),
---     }
---   )
--- )
-
-
 local function_component = s(
   { trig = "fc", regTrig = true, hidden = true },
   fmt(
     [[
     import React from 'react'; 
 
-    const {} = ({}) => {{
+    function {}(): JSX.Element {{
       return (
-        {}
-      );
-    }} 
+         <div>{}</div>
+      )
+    }}
 
     export default {};
     ]],
     {
       i(1, "functionComponentName"),
-      -- c(2, { i(1, "num"), sn(1, { i(1, "arr"), t(".length") }) }),
-      c(2, { i(1, "arg"), i(1, "") }),
-      i(3, "// TODO:"),
-      -- repeate the insert node number one
+      rep(1),
       rep(1),
     }
   )
 )
 
+-- local function_component = s(
+--   { trig = "fc", regTrig = true, hidden = true },
+--   fmt(
+--     [[
+--     import React from 'react'; 
 
-local for_loop = s(-- for([%w_]+) JS For Loop snippet{{{
-  { trig = "for([%w_]+)", regTrig = true, hidden = true },
-  fmt(
-    [[
-for (let {} = 0; {} < {}; {}++) {{
-  {}
-}}
-{}
-    ]],
-    {
-      d(1, function(_, snip)
-        return sn(1, i(1, snip.captures[1]))
-      end),
-      rep(1),
-      c(2, { i(1, "num"), sn(1, { i(1, "arr"), t(".length") }) }),
-      rep(1),
-      i(3, "// TODO:"),
-      i(4),
-    }
-  )
-) --}}}
+--     const {} = ({}) => {{
+--       return (
+--         {}
+--       );
+--     }} 
 
-local if_fmt_arg = { --{{{
-  i(1, ""),
-  c(2, { i(1, "LHS"), i(1, "10") }),
-  c(3, { i(1, "==="), i(1, "<"), i(1, ">"), i(1, "<="), i(1, ">="), i(1, "!==") }),
-  i(4, "RHS"),
-  i(5, "//TODO:"),
-}
+--     export default {};
+--     ]],
+--     {
+--       i(1, "functionComponentName"),
+--       -- c(2, { i(1, "num"), sn(1, { i(1, "arr"), t(".length") }) }),
+--       c(2, { i(1, "arg"), i(1, "") }),
+--       i(3, "// TODO:"),
+--       -- repeate the insert node number one
+--       rep(1),
+--     }
+--   )
+-- )
 
-local if_fmt_1 = fmt(
-  [[
-{}if ({} {} {}) {};
-    ]],
-  vim.deepcopy(if_fmt_arg)
-)
 
-local if_fmt_2 = fmt(
-  [[
-{}if ({} {} {}) {{
-  {}
-}}
-    ]],
-  vim.deepcopy(if_fmt_arg)
-)
+-- local for_loop = s(-- for([%w_]+) JS For Loop snippet{{{
+--   { trig = "for([%w_]+)", regTrig = true, hidden = true },
+--   fmt(
+--     [[
+-- for (let {} = 0; {} < {}; {}++) {{
+--   {}
+-- }}
+-- {}
+--     ]],
+--     {
+--       d(1, function(_, snip)
+--         return sn(1, i(1, snip.captures[1]))
+--       end),
+--       rep(1),
+--       c(2, { i(1, "num"), sn(1, { i(1, "arr"), t(".length") }) }),
+--       rep(1),
+--       i(3, "// TODO:"),
+--       i(4),
+--     }
+--   )
+-- ) --}}}
 
-local if_snippet = s(
-  { trig = "ifs", regTrig = false, hidden = true },
-  c(1, {
-    if_fmt_2,
-    if_fmt_1,
-  })
-) --}}}
+-- local if_fmt_arg = { --{{{
+--   i(1, ""),
+--   c(2, { i(1, "LHS"), i(1, "10") }),
+--   c(3, { i(1, "==="), i(1, "<"), i(1, ">"), i(1, "<="), i(1, ">="), i(1, "!==") }),
+--   i(4, "RHS"),
+--   i(5, "//TODO:"),
+-- }
 
-local short_hand_if_fmt = fmt(--{{{
-  [[
-if ({}) {}
-{}
-    ]],
-  {
-    d(1, function(_, snip)
-      -- return sn(1, i(1, snip.captures[1]))
-      return sn(1, t(snip.captures[1]))
-    end),
-    d(2, function(_, snip)
-      return sn(2, t(snip.captures[2]))
-    end),
-    i(3, ""),
-  }
-)
-local short_hand_if_statement = s({ trig = "if[>%s](.+)>>(.+)\\", regTrig = true, hidden = true }, short_hand_if_fmt)
+-- local if_fmt_1 = fmt(
+--   [[
+-- {}if ({} {} {}) {};
+--     ]],
+--   vim.deepcopy(if_fmt_arg)
+-- )
 
-local function_fmt = fmt(--{{{
-  [[
-function {}({}) {{
-  {}
-}}
-    ]],
-  {
-    i(1, "myFunc"),
-    c(2, { i(1, "arg"), i(1, "") }),
-    i(3, "//TODO:"),
-  }
-)
+-- local if_fmt_2 = fmt(
+--   [[
+-- {}if ({} {} {}) {{
+--   {}
+-- }}
+--     ]],
+--   vim.deepcopy(if_fmt_arg)
+-- )
 
-local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) --}}}
+-- local if_snippet = s(
+--   { trig = "ifs", regTrig = false, hidden = true },
+--   c(1, {
+--     if_fmt_2,
+--     if_fmt_1,
+--   })
+-- ) --}}}
+
+-- local short_hand_if_fmt = fmt(--{{{
+--   [[
+-- if ({}) {}
+-- {}
+--     ]],
+--   {
+--     d(1, function(_, snip)
+--       -- return sn(1, i(1, snip.captures[1]))
+--       return sn(1, t(snip.captures[1]))
+--     end),
+--     d(2, function(_, snip)
+--       return sn(2, t(snip.captures[2]))
+--     end),
+--     i(3, ""),
+--   }
+-- )
+-- local short_hand_if_statement = s({ trig = "if[>%s](.+)>>(.+)\\", regTrig = true, hidden = true }, short_hand_if_fmt)
+
+-- local function_fmt = fmt(--{{{
+--   [[
+-- function {}({}) {{
+--   {}
+-- }}
+--     ]],
+--   {
+--     i(1, "myFunc"),
+--     c(2, { i(1, "arg"), i(1, "") }),
+--     i(3, "//TODO:"),
+--   }
+-- )
+
+-- local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) --}}}
 
 -- table.insert(snippets, normal_function)
 table.insert(snippets, const_function)
@@ -344,6 +350,11 @@ table.insert(snippets, random_image)
 table.insert(snippets, image_tag)
 table.insert(snippets, link_tag)
 table.insert(snippets, onclick_event)
+table.insert(snippets, onclick_change)
+table.insert(snippets, import_react)
+
+table.insert(autosnippets, console_log)
+table.insert(autosnippets, function_component)
 
 -- End Refactoring --
 

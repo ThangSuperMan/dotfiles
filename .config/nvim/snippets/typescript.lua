@@ -32,6 +32,10 @@ local file_pattern = "*.tsx"
 --   }
 -- )
 
+local todo = s("todo", {
+  t( "// TODO: " ),
+})
+
 local console_log = s(
   { trig = "jj", regTrig = true },
   fmt([[
@@ -55,6 +59,9 @@ local console_log_object = s(
   )
 )
 
+local what_type = s("what-type", {
+  t( "//  ^?" ),
+})
 
 -- local function_component = s(
 --   "fc",
@@ -80,8 +87,26 @@ local console_log_object = s(
 -- )
 
 
+local const_function = s(
+  "constf",
+  fmt([[
+    const {} = ({}) => {{
+      {}
+    }}
+    {}
+  ]],
+    {
+      i(1, "myFunc"),
+      i(2, ""),
+      i(3, "// TODO:"),
+      i(4),
+    }
+  )
+)
+
 local function_component = s(
-  { trig = "fc", regTrig = true, hidden = true },
+  -- { trig = "fc", regTrig = true, hidden = true },
+  "fc",
   fmt(
     [[
     import React from 'react'; 
@@ -195,16 +220,12 @@ local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) -
 
 -- table.insert(snippets, normal_function)
 table.insert(snippets, console_log_object)
+table.insert(snippets, what_type)
+table.insert(snippets, const_function)
+table.insert(snippets, function_component)
+table.insert(snippets, todo)
 
 table.insert(autosnippets, console_log)
--- Auto snippets when finished typed the whole key trigger (Regular expressions)
--- table.insert(autosnippets, console_log)
--- table.insert(autosnippets, function_component)
--- table.insert(autosnippets, for_loop)
--- table.insert(autosnippets, if_snippet)
--- table.insert(autosnippets, function_snippet_func)
--- table.insert(autosnippets, function_component)
--- table.insert(autosnippets, short_hand_if_statement)
 
 -- End Refactoring --
 

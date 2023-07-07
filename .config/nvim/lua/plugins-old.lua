@@ -70,6 +70,20 @@ return require('packer').startup(function()
     end
   })
 
+  use { 'folke/which-key.nvim', config = require 'plugins.which-key' }
+
+  use {
+  "glepnir/lspsaga.nvim",
+    config = function()
+        require("lspsaga").setup({})
+    end,
+    requires = {
+      -- {"nvim-tree/nvim-web-devicons"},
+      --Please make sure you install markdown and markdown_inline parser
+      {"nvim-treesitter/nvim-treesitter"}
+    }
+  }
+
   use { 'christoomey/vim-tmux-navigator' }
   use { 'preservim/tagbar' }
 
@@ -94,12 +108,14 @@ return require('packer').startup(function()
   use { 'sigmasd/deno-nvim' }
 
   -- use { 'nvim-telescope/telescope.nvim', config = require 'plugins.telescope' }
-  use { 'nvim-telescope/telescope.nvim' }
+  use { 'nvim-telescope/telescope.nvim', config = require 'plugins.telescope'  }
+  use { 'nvim-telescope/telescope-file-browser.nvim' }
 
-  use { 'ibhagwan/fzf-lua',
-    -- optional for icon support
-    requires = { 'nvim-tree/nvim-web-devicons' }
-  }
+  -- use { 'ibhagwan/fzf-lua',
+  --   config = require('plugins.fzf'),
+  --   -- optional for icon support
+  --   requires = { 'nvim-tree/nvim-web-devicons' }
+  -- }
 
   -- use { 'junegunn/fzf' }
   -- use { 'junegunn/fzf.vim', config = require('plugins.fzf') }
@@ -125,9 +141,9 @@ return require('packer').startup(function()
   --   branch = "main",
   --   config = require('plugins.saga')
   -- })
-  use { 'kkharji/lspsaga.nvim',
-    config = require('plugins.saga')
-  }  -- nightly
+  -- use { 'kkharji/lspsaga.nvim',
+  --   config = require('plugins.saga')
+  -- }  -- nightly
   use { 'onsails/lspkind-nvim', config = require 'plugins.kind' }
 
   -- debugging
@@ -181,11 +197,18 @@ return require('packer').startup(function()
 
   -- use { 'akinsho/flutter-tools.nvim', config = require 'plugins.flutter-tools' }
 
-  use { 'echasnovski/mini.indentscope', config= function()
-    require('mini.indentscope').setup({
-      symbol = '▏',
-    })
-  end}
+  -- use { 'echasnovski/mini.indentscope', config= function()
+  --   require('mini.indentscope').setup({
+  --     symbol = '▏',
+  --   })
+  -- end}
+
+  use({
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require("plugins.indent-blankline")
+    end,
+  })
 
   use {
     "nvim-neo-tree/neo-tree.nvim",
@@ -220,19 +243,6 @@ return require('packer').startup(function()
     },
     config = require('plugins.neotree')
   }
-
-  use {
-    'voldikss/vim-floaterm',
-    config = function()
-      vim.g.floaterm_wintype = 'float'
-      vim.g.floaterm_position = 'bottomright'
-      vim.g.floaterm_width = 0.6
-			vim.g.floaterm_height = 0.5
-			vim.g.floaterm_keymap_toggle = "<C-\\>"
-    end
-  }
-
-  -- use { 'jose-elias-alvarez/null-ls.nvim', config = require('plugins.null') }
 
   use { 'folke/todo-comments.nvim', config = require('todo-comments').setup({}) }
 
@@ -292,6 +302,14 @@ return require('packer').startup(function()
   --     exclude_grops = {}, -- table: groups you don't want to clear
   --   })
   -- end })
+
+  
+  use {
+    "akinsho/toggleterm.nvim",
+    config = function()
+      require("plugins.toggleterm")
+    end,
+  }
 
   use {
     "dstein64/vim-startuptime",
