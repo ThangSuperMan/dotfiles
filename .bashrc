@@ -1,5 +1,14 @@
-export FZF_HISTORY="--reverse --border rounded --no-info --pointer='' --marker=' ' --ansi --color='16,bg+:-1,gutter:-1,prompt:5,pointer:5,marker:6,border:4,label:4' --border-label=' history ' --prompt='  '"
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/bashrc.pre.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.pre.bash"
+source /Users/thangphan/.config/broot/launcher/bash/br
 
-function fish_user_key_bindings {
-    bind '\cr' 'history --reverse | fzf-tmux -p 40%,40% $FZF_HISTORY | read -r -z __cmd; commandline -i "$__cmd"'
-}
+if [[ $(ps --no-header -p $PPID -o comm) =~ '^alacritty$' ]]; then
+        for wid in $(xdotool search --pid $PPID); do
+            xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -id $wid; done
+fi
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/bashrc.post.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.post.bash"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

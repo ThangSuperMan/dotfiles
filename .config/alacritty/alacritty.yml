@@ -11,10 +11,12 @@ font:
   bold:
     # family: "Recursive"
     family: "JetBrainsMono Nerd Font"
+    # family: "OperatorMonoSSmLig Nerd Font"
     style: Bold
   italic:
-    family: "JetBrainsMono Nerd Font"
-    # family: "Recursive"
+    # family: "JetBrainsMono Nerd Font"
+    # family: "OperatorMonoSSmLig Nerd Font"
+    family: "Recursive"
     style: Italic
   size: 16
   offset:
@@ -71,7 +73,7 @@ window:
   # - transparent: title bar, transparent background and title bar buttons
   # - buttonless: title bar, transparent background, but no title bar buttons
   decorations: full
-  opacity: 1
+  opacity: 0.92
 
   # Startup Mode (changes require restart)
   #
@@ -86,6 +88,78 @@ window:
 env:
   TERM: xterm-256color
 schemes:
+  atom_one_light: &atom_one_light # Default colors
+    primary:
+      background: "0xf8f8f8"
+      foreground: "0x2a2b33"
+
+    normal:
+      black: "0x000000"
+      red: "0xde3d35"
+      green: "0x3e953a"
+      yellow: "0xd2b67b"
+      blue: "0x2f5af3"
+      magenta: "0xa00095"
+      cyan: "0x3e953a"
+      white: "0xbbbbbb"
+
+    bright:
+      black: "0x000000"
+      red: "0xde3d35"
+      green: "0x3e953a"
+      yellow: "0xd2b67b"
+      blue: "0x2f5af3"
+      magenta: "0xa00095"
+      cyan: "0x3e953a"
+      white: "0xffffff"
+  nord: &nord # Default colors
+    primary:
+      background: "#2e3440"
+      foreground: "#d8dee9"
+      dim_foreground: "#a5abb6"
+    cursor:
+      text: "#2e3440"
+      cursor: "#d8dee9"
+    vi_mode_cursor:
+      text: "#2e3440"
+      cursor: "#d8dee9"
+    selection:
+      text: CellForeground
+      background: "#4c566a"
+    search:
+      matches:
+        foreground: CellBackground
+        background: "#88c0d0"
+      # bar:
+      #   background: "#434c5e"
+      #   foreground: "#d8dee9"
+  normal:
+    black: "#3b4252"
+    red: "#bf616a"
+    green: "#a3be8c"
+    yellow: "#ebcb8b"
+    blue: "#81a1c1"
+    magenta: "#b48ead"
+    cyan: "#88c0d0"
+    white: "#e5e9f0"
+  bright:
+    black: "#4c566a"
+    red: "#bf616a"
+    green: "#a3be8c"
+    yellow: "#ebcb8b"
+    blue: "#81a1c1"
+    magenta: "#b48ead"
+    cyan: "#8fbcbb"
+    white: "#eceff4"
+  dim:
+    black: "#373e4d"
+    red: "#94545d"
+    green: "#809575"
+    yellow: "#b29e75"
+    blue: "#68809a"
+    magenta: "#8c738c"
+    cyan: "#6d96a5"
+    white: "#aeb3bb"
   one-dark: &one-dark # Default colors
     primary:
       background: "#282c34"
@@ -345,8 +419,9 @@ schemes:
 # Apply
 # colors: *everforest_light_hard
 # colors: *edge_light
-# colors: *everforest_dark_hard
 colors: *everforest_dark_soft
+# colors: *nord
+# colors: *atom_one_light
 
 draw_bold_text_with_bright_colors: false
 # draw_bold_text_with_bright_colors: false
@@ -360,7 +435,7 @@ key_bindings:
   - { key: C, mods: Command, action: Copy }
   # - { key: Q, mods: Command, action: Quit }
   # - { key: J, mods: Command, chars: "\x02\x73" }
-  - { key: J, mods: Command, chars: "\x02\x54" }
+  # - { key: J, mods: Command, chars: "\x02\x54" }
   # - {
   #     key: N,
   #     mods: Command,
@@ -374,7 +449,7 @@ key_bindings:
   - { key: LBracket, mods: Command|Shift, chars: "\x02\x70" } # Change to the previous tmux window
   # Split the current pane into two, left and right
   - { key: N, mods: Command|Shift, chars: "\x02\x25" }
-  - { key: G, mods: Command, chars: "\x02g" } # open git manager 'jesseduffield/lazygit'
+  - { key: Y, mods: Command, chars: "\x02g" } # open git manager 'jesseduffield/lazygit'
   - { key: Semicolon, mods: Command, chars: "\x02:" } # enter the tmux command prompt
   - { key: Q, mods: Command, chars: ":q\n" } # quit vim
   - { key: N, mods: Command, chars: "\x02\x22" } # Split the current pane into two, top and bottom.

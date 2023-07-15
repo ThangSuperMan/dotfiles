@@ -28,6 +28,9 @@ return require('lazy').setup({
 
   { "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" } },
 
+  -- Git 
+  { 'lewis6991/gitsigns.nvim', config = require 'plugins.gitsigns' },
+
   -- Colorizer
   { 'norcalli/nvim-colorizer.lua', config = require 'plugins.colorizer' },
 
@@ -48,7 +51,7 @@ return require('lazy').setup({
 
   -- { 'christoomey/vim-tmux-navigator' },
 	{ 'psliwka/vim-smoothie' },
-  { 'dstein64/nvim-scrollview' },
+  -- { 'dstein64/nvim-scrollview' },
   -- { 'Th3Whit3Wolf/one-nvim', config = require("plugins.theme") },
   { 'sainnhe/everforest', config = require("plugins.theme") },
 
@@ -90,6 +93,14 @@ return require('lazy').setup({
       vim.keymap.set("n", "<leader>hl", "<cmd>lua require'hop'.hint_lines()<cr>")
     end,
   },
+  {
+    "max397574/better-escape.nvim", config = function()
+      require("better_escape").setup({
+        mapping = { "jk" },
+        timeout = 200
+      })
+    end,
+  },
   { 'folke/which-key.nvim', config = require 'plugins.which-key' },
   {
 		"voldikss/vim-floaterm",
@@ -108,12 +119,16 @@ return require('lazy').setup({
     end,
   },
 
+  {
+    "AndrewRadev/tagalong.vim"
+  },
+
   -- Popup window for cmd
   { 'gelguy/wilder.nvim', config = require 'plugins.wilder' },
   { 'nvim-lua/popup.nvim' },
 
   -- Barbar, bufferline
-  { 'romgrk/barbar.nvim', config = require 'plugins.barbar' },
+  -- { 'romgrk/barbar.nvim', config = require 'plugins.barbar' },
 
   { 'kyazdani42/nvim-web-devicons' },
   { 'ryanoasis/vim-devicons' },
@@ -127,8 +142,14 @@ return require('lazy').setup({
   { 'mhartington/formatter.nvim', config = require 'plugins.prettier' },
   -- Lsp
   { 'neovim/nvim-lspconfig', config = require 'plugins.lsp' },
+  -- { 'jose-elias-alvarez/typescript.nvim' },
   { 'onsails/lspkind-nvim', config = require 'plugins.kind' },
   { 'marilari88/twoslash-queries.nvim' },
+
+  -- Ruby on Rails
+  { 'vim-test/vim-test', config = require 'plugins.rails-test' },
+  { 'AndrewRadev/sideways.vim' },
+  -- { 'tpope/vim-rails' },
 
   { 'MattesGroeger/vim-bookmarks', config = require('plugins.bookmark') },
   { 'tom-anders/telescope-vim-bookmarks.nvim' },
@@ -169,6 +190,7 @@ return require('lazy').setup({
       {"nvim-treesitter/nvim-treesitter"}
     }
   },
+  { "sheerun/vim-polyglot" },
 
   -- {
 		-- "glepnir/lspsaga.nvim",

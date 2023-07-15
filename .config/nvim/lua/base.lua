@@ -5,11 +5,13 @@ vim.cmd [[ autocmd!]]
 vim.cmd [[ autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({higroup = "Substitute", timeout = 200})]]
 vim.cmd [[ augroup END]]
 
+vim.g['closetag_filenames'] = '*.html,*.erb'
+
 vim.o.termguicolors = true
 -- Faster completion
 vim.cmd('set updatetime=300')
 vim.cmd('set timeoutlen=500')
-vim.cmd('set list')
+-- vim.cmd('set list')
 -- vim.cmd('set list listchars=tab:»·,trail:·')
 -- vim.cmd('set backspace=indent,eol,start')
 vim.cmd('set mouse=a')
@@ -61,15 +63,11 @@ vim.opt.backspace = { 'start', 'eol', 'indent' }
 vim.opt.path:append { '**' } -- Finding files - Search down into subfolders
 -- vim.opt.wildignore:append { '*/node_modules/*' }
 
+-- Enable automatic trailing whitespace removal
+vim.cmd([[au BufWritePre *.rb :%s/\s\+$//e]])
+
 -- Go file config
 vim.cmd([[au FileType go set noexpandtab]])
 vim.cmd([[au FileType go set shiftwidth=4]])
 vim.cmd([[au FileType go set softtabstop=4]])
 vim.cmd([[au FileType go set tabstop=4]])
-
--- vim.cmd([[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]])
--- vim.cmd([[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]])
--- vim.cmd([[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]])
--- vim.cmd([[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]])
--- vim.cmd([[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]])
--- vim.cmd([[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]])

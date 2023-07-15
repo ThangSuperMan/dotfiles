@@ -2,39 +2,6 @@ return function()
   local home = vim.fn.expand('~')
   local nvim_lsp = require('lspconfig')
   local protocol = require('vim.lsp.protocol')
-  
-  local another_on_attach = function(client, bufnr)
-    -- require "lsp_signature".on_attach()  -- Note: add in lsp client on-attach
-
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-    -- Mappings.
-    local opts = { noremap = true, silent = true }
-    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    -- buf_set_keymap('n', '<space>oi', ':lua require("jdtls").organize_imports()<CR>', opts)
-    -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-
-    -- Config with nvim nightly
-    -- if client.server_capabilities.documentFormattingProvider then
-    --   vim.api.nvim_command [[augroup Format]]
-    --   vim.api.nvim_command [[autocmd! * <buffer>]]
-    --   vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
-    --   vim.api.nvim_command [[augroup END]]
-    -- end
-
-    -- Format on save (just for java and jsp)
-    -- if client.resolved_capabilities.document_formatting then
-    -- if client.server_capabilities.document_formatting then
-    --   vim.api.nvim_command [[augroup Format]]
-    --   vim.api.nvim_command [[autocmd! * <buffer>]]
-    --   vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
-    --   vim.api.nvim_command [[augroup END]]
-    -- end
-  end
 
   -- Use an on_attach function to only map the following keys
   -- after the language server attaches to the current buffer
@@ -94,19 +61,6 @@ return function()
     on_attach = on_attach,
   }
 
-  -- nvim_lsp.gopls.setup {
-  --   capabilities = capabilities,
-  --   on_attach = on_attach,
-  --   settings = {
-  --       gopls = {
-  --           gofumpt = true,
-  --       },
-  --   },
-  --   flags = {
-  --       debounce_text_changes = 150,
-  --   },
-  -- }
-
   -- npm install -g @prisma/language-server
   require 'lspconfig'.prismals.setup {
     on_attach = on_attach,
@@ -116,7 +70,7 @@ return function()
   -- Setup html
   nvim_lsp.html.setup {
     on_attach = on_attach,
-    filetypes = { "html", "jsp", "ejs" },
+    filetypes = { "html", "jsp",  "ejs", "eruby" },
     capabilities = capabilities,
   }
   -- Setup html
@@ -126,16 +80,16 @@ return function()
 
   -- Solidity
   -- cmd: sudo npm install -g solidity-language-server
-  local lspconfig = require 'lspconfig'
-  nvim_lsp.solidity_ls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    default_config = {
-      cmd = { 'solidity-ls', '--stdio' },
-      filetypes = { 'solidity' },
-      root_dir = lspconfig.util.root_pattern('package.json', '.git'),
-    },
-  }
+  -- local lspconfig = require 'lspconfig'
+  -- nvim_lsp.solidity_ls.setup {
+  --   on_attach = on_attach,
+  --   capabilities = capabilities,
+  --   default_config = {
+  --     cmd = { 'solidity-ls', '--stdio' },
+  --     filetypes = { 'solidity' },
+  --     root_dir = lspconfig.util.root_pattern('package.json', '.git'),
+  --   },
+  -- }
 
   -- Php
   -- nvim_lsp.intelephense.setup{
@@ -245,7 +199,10 @@ nvim_lsp.ansiblels.setup{
 --   on_attach = on_attach
 -- }
 
-
+nvim_lsp.terraformls.setup{
+  on_attach = on_attach
+}
+  
   -- nvim_lsp.yamlls.setup {
   --   on_attach = on_attach,
   --   capability = capabilities,
@@ -273,6 +230,10 @@ nvim_lsp.ansiblels.setup{
   --   on_attach = on_attach,
   --   root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
   -- }
+  
+  nvim_lsp.solargraph.setup{
+    on_attach = on_attach,
+  }
 
   nvim_lsp.eslint.setup({
      on_attach = function(client, bufnr)
@@ -312,8 +273,8 @@ nvim_lsp.ansiblels.setup{
     -- This sets the spacing and the prefix, obviously.
     virtual_text = {
       spacing = 4,
-      -- prefix = '',
-      prefix = '●'
+      prefix = '',
+      -- prefix = '●'
     }
   }
   )

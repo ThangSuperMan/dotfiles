@@ -14,19 +14,36 @@ local rep = require("luasnip.extras").rep
 local snippets, autosnippets = {}, {} --}}}
 
 local group = vim.api.nvim_create_augroup("Typescript React Snippets", { clear = true })
-local file_pattern = "*.dart"
+local file_pattern = "*.rb"
+
+local def = s(
+  "def",
+  fmt([[
+    def {}
+      {}
+    end
+  ]],
+    {
+      i(1, "method_name"),
+      i(2, ""),
+    }
+  )
+)
 
 local print_line = s(
   { trig = "jj", regTrig = true },
   fmt([[
-    print({});
+    puts {}
   ]],
     {
       i(1, ""),
     }
   )
 )
+
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
+table.insert(snippets, def)
+
 table.insert(autosnippets, print_line)
 -- table.insert(autosnippets, short_hand_if_statement)
 

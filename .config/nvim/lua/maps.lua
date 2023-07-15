@@ -16,7 +16,7 @@ vim.g.floaterm_keymap_toggle = '<C-\\>'
 
 -- ESC with kj or jk
 -- keymap.set('i', 'kj', '<esc>', { noremap = true, silent = true })
-keymap.set('i', 'jk', '<esc>', { noremap = true, silent = true })
+-- keymap.set('i', 'jk', '<esc>', { noremap = true, silent = true })
 
 -- Codium (My AI assistant)
 -- vim.g.codium_disable_keymaps = true
@@ -30,6 +30,12 @@ vim.api.nvim_set_keymap('n', '<C-h>', ':wincmd h<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-j>', ':wincmd j<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-k>', ':wincmd k<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-l>', ':wincmd l<CR>', { noremap = true })
+
+-- Sideways
+keymap.set('n', '<C-h>', ':SidewaysLeft<CR>', { noremap = true })
+keymap.set('n', '<C-l>', ':SidewaysRight<CR>', { noremap = true })
+
+-- vim.api.nvim_set_keymap('i', '><Tab>', '><Esc>F<lyt>o</<C-r>"><Esc>O<Space>', { noremap = true })
 
 -- Flutter tool
 -- keymap.set('n', '<leader>fd', '<cmd> FlutterDevices <CR>')
@@ -48,7 +54,7 @@ keymap.set('n', '-', '<C-x>')
 keymap.set('i', 'jk', '<esc>', { noremap = true, silent = true })
 
 -- Ctrl-s to save
-keymap.set('n', '<C-s>', ':w!<CR>', { noremap = true })
+-- keymap.set('n', '<C-s>', ':w!<CR>', { noremap = true })
 -- keymap.set('i', 'ww', '<ESC>:w!<CR>', { noremap = true })
 
 -- Delete a word backwards
