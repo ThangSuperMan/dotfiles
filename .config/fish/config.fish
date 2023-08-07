@@ -154,3 +154,9 @@ starship init fish | source
 # Ruby On Rails
 # ENV variables for connect to Postgresql in with Rails
 # set -xg APPNAME_DATABASE_PASSWORD "thanghandsome"
+# Config postgresql@12 with homebrew
+set -x PATH /opt/homebrew/opt/postgresql@12/bin $PATH
+set -x LDFLAGS "-L/opt/homebrew/opt/postgresql@12/lib"
+set -x CPPFLAGS "-I/opt/homebrew/opt/postgresql@12/include"
+set -x LDFLAGS "-L/opt/homebrew/opt/postgresql@12/lib"
+set -x CPPFLAGS "-I/opt/homebrew/opt/postgresql@12/include"
