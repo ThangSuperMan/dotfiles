@@ -41,8 +41,21 @@ local print_line = s(
   )
 )
 
+local print_line_with_object = s(
+  "lgo",
+  fmt([[ 
+    puts "{}: #{{{}}}"
+  ]],
+    {
+      i(1, ""),
+      i(2, ""),
+    }
+  )
+)
+
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 table.insert(snippets, def)
+table.insert(snippets, print_line_with_object)
 
 table.insert(autosnippets, print_line)
 -- table.insert(autosnippets, short_hand_if_statement)

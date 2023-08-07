@@ -48,7 +48,7 @@ local variable_no_return = s(
 )
 
 local variable_have_return = s(
-  "-",
+  "=",
   fmt([[ 
     <%= {} %>
   ]],

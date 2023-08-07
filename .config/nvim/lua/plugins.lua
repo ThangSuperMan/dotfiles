@@ -49,7 +49,6 @@ return require('lazy').setup({
   { 'L3MON4D3/LuaSnip' },
   { 'saadparwaiz1/cmp_luasnip', config = require 'plugins.luasnip' },
 
-  -- { 'christoomey/vim-tmux-navigator' },
 	{ 'psliwka/vim-smoothie' },
   -- { 'dstein64/nvim-scrollview' },
   -- { 'Th3Whit3Wolf/one-nvim', config = require("plugins.theme") },
@@ -102,6 +101,7 @@ return require('lazy').setup({
     end,
   },
   { 'folke/which-key.nvim', config = require 'plugins.which-key' },
+  -- { 'christoomey/vim-tmux-navigator' },
   {
 		"voldikss/vim-floaterm",
 		config = function()
@@ -117,10 +117,6 @@ return require('lazy').setup({
     config = function()
       require("plugins.toggleterm")
     end,
-  },
-
-  {
-    "AndrewRadev/tagalong.vim"
   },
 
   -- Popup window for cmd
@@ -149,7 +145,8 @@ return require('lazy').setup({
   -- Ruby on Rails
   { 'vim-test/vim-test', config = require 'plugins.rails-test' },
   { 'AndrewRadev/sideways.vim' },
-  -- { 'tpope/vim-rails' },
+  { 'AndrewRadev/tagalong.vim' },
+  { 'tpope/vim-rails' },
 
   { 'MattesGroeger/vim-bookmarks', config = require('plugins.bookmark') },
   { 'tom-anders/telescope-vim-bookmarks.nvim' },
@@ -178,6 +175,24 @@ return require('lazy').setup({
 		end,
 	},
 
+  -- {
+  --   'kkharji/lspsaga.nvim',
+  --       config = function()
+  --       require("lspsaga").setup({})
+  --   end
+  -- },
+  
+  -- {
+  --   'nvimdev/lspsaga.nvim',
+  --   after = 'nvim-lspconfig',
+  --   config = function()
+  --       require('lspsaga').setup({})
+  --   end,
+  --  dependencies = {
+  --    { 'nvim-treesitter/nvim-treesitter' }
+  --  }
+  -- },
+  
   {
   event = "LspAttach",
   "glepnir/lspsaga.nvim",
@@ -190,13 +205,8 @@ return require('lazy').setup({
       {"nvim-treesitter/nvim-treesitter"}
     }
   },
+  
   { "sheerun/vim-polyglot" },
-
-  -- {
-		-- "glepnir/lspsaga.nvim",
-		-- branch = "main",
-		-- config = require("plugins.saga"),
-	-- },
 
   -- {
   --     "xiyaowong/nvim-transparent",
@@ -219,12 +229,12 @@ return require('lazy').setup({
   -- end
   -- },
 
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    config = function()
-      require("plugins.indent-blankline")
-    end,
-  },
+  -- {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   config = function()
+  --     require("plugins.indent-blankline")
+  --   end,
+  -- },
 
   {
     "dstein64/vim-startuptime",

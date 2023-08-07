@@ -3,6 +3,10 @@
 # When true, bold text is drawn using the bright variant of colors.
 # NOTE: download fonts at
 # https://github.com/sainnhe/icursive-nerd-font
+
+# Make the keys run faster when typeing on macos
+# defaults write -g InitialKeyRepeat -int 10
+# defaults write -g KeyRepeat -int 1
 font:
   normal:
     # family: "Cascursive"
@@ -72,7 +76,7 @@ window:
   # - none: neither borders nor title bar
   # - transparent: title bar, transparent background and title bar buttons
   # - buttonless: title bar, transparent background, but no title bar buttons
-  decorations: full
+  decorations: buttonless
   opacity: 0.92
 
   # Startup Mode (changes require restart)
@@ -449,7 +453,7 @@ key_bindings:
   - { key: LBracket, mods: Command|Shift, chars: "\x02\x70" } # Change to the previous tmux window
   # Split the current pane into two, left and right
   - { key: N, mods: Command|Shift, chars: "\x02\x25" }
-  - { key: Y, mods: Command, chars: "\x02g" } # open git manager 'jesseduffield/lazygit'
+  - { key: G, mods: Command, chars: "\x02g" } # open git manager 'jesseduffield/lazygit'
   - { key: Semicolon, mods: Command, chars: "\x02:" } # enter the tmux command prompt
   - { key: Q, mods: Command, chars: ":q\n" } # quit vim
   - { key: N, mods: Command, chars: "\x02\x22" } # Split the current pane into two, top and bottom.

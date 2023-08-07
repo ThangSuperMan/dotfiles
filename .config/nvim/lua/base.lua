@@ -5,15 +5,13 @@ vim.cmd [[ autocmd!]]
 vim.cmd [[ autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({higroup = "Substitute", timeout = 200})]]
 vim.cmd [[ augroup END]]
 
-vim.g['closetag_filenames'] = '*.html,*.erb'
+vim.g['closetag_filenames'] = '*.erb'
 
 vim.o.termguicolors = true
 -- Faster completion
 vim.cmd('set updatetime=300')
 vim.cmd('set timeoutlen=500')
--- vim.cmd('set list')
--- vim.cmd('set list listchars=tab:»·,trail:·')
--- vim.cmd('set backspace=indent,eol,start')
+-- vim.opt.listchars = {eol = "↵'", trail = "·", tab = '»'}
 vim.cmd('set mouse=a')
 vim.cmd('set noshowmode')
 vim.cmd('set hidden') -- Required to keep multiple buffers open multiple buffers
@@ -62,6 +60,14 @@ vim.opt.wrap = false -- No Wrap lines
 vim.opt.backspace = { 'start', 'eol', 'indent' }
 vim.opt.path:append { '**' } -- Finding files - Search down into subfolders
 -- vim.opt.wildignore:append { '*/node_modules/*' }
+
+-- vim.cmd('set list')
+-- Disable tabline when we have more than one
+vim.cmd('set showtabline=0')
+-- vim.cmd('set list listchars=tab:»·,trail:·')
+-- vim.cmd('set listchars=tab:»·,space:·')
+-- vim.cmd('set backspace=indent,eol,start')
+-- vim.cmd('set listchars=space:·,trail:·,tab:»·,extends:>,precedes:<')
 
 -- Enable automatic trailing whitespace removal
 vim.cmd([[au BufWritePre *.rb :%s/\s\+$//e]])

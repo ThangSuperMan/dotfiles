@@ -15,10 +15,10 @@ return function()
 
     -- Mappings.
     local opts = { noremap = true, silent = true }
-    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', '<space>oi', ':lua require("jdtls").organize_imports()<CR>', opts)
+    -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    -- buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    -- buf_set_keymap('n', '<space>oi', ':lua require("jdtls").organize_imports()<CR>', opts)
     -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   end
 
@@ -234,6 +234,10 @@ nvim_lsp.terraformls.setup{
   nvim_lsp.solargraph.setup{
     on_attach = on_attach,
   }
+
+  -- nvim_lsp.ruby_ls.setup({
+  --   cmd = { "bundle", "exec", "ruby-lsp" }
+  -- })
 
   nvim_lsp.eslint.setup({
      on_attach = function(client, bufnr)

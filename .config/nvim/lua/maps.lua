@@ -31,10 +31,6 @@ vim.api.nvim_set_keymap('n', '<C-j>', ':wincmd j<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-k>', ':wincmd k<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-l>', ':wincmd l<CR>', { noremap = true })
 
--- Sideways
-keymap.set('n', '<C-h>', ':SidewaysLeft<CR>', { noremap = true })
-keymap.set('n', '<C-l>', ':SidewaysRight<CR>', { noremap = true })
-
 -- vim.api.nvim_set_keymap('i', '><Tab>', '><Esc>F<lyt>o</<C-r>"><Esc>O<Space>', { noremap = true })
 
 -- Flutter tool
@@ -63,10 +59,6 @@ keymap.set('n', 'dw', 'vb"_d')
 -- turn spelling off or on
 keymap.set('n', ',s', ':setlocal spell!<Cr>', opts)
 
--- Commentary
--- keymap.set('n', '<leader>/', ':Commentary<Cr>', opts)
--- keymap.set('v', '<leader>/', ':Commentary<Cr>', opts)
-
 -- Move to the start/end of current line
 keymap.set('n', 'H', '^', opts)
 keymap.set('n', 'L', 'g_', opts)
@@ -77,13 +69,16 @@ keymap.set('v', 'L', 'g_', opts)
 -- Diagnostic jump can use `<c-o>` to jump back
 keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
 keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
-keymap.set("n", "<leader>oi", '<cmd>lua require("jdtls").organize_imports()<CR>')
+keymap.set("n", "<C-e>", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
+keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
+-- keymap.set("n", "<leader>oi", '<cmd>lua require("jdtls").organize_imports()<CR>')
 -- keymap.set("n", "gd", '<cmd>lua require("jdtls").organize_imports()<CR>', opts)
 keymap.set("n", "gd", '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+keymap.set("n", "<space>rn", '<cmd>Lspsaga rename<CR>', opts)
+-- keymap.set("n", "gd", '<cmd>Lspsaga goto_definition<CR>', opts)
 
 -- Float terminal
-keymap.set('n', '<C-e>', '<Cmd>Lspsaga diagnostic_jump_next<CR>')
+-- keymap.set('n', '<C-e>', '<Cmd>Lspsaga diagnostic_jump_next<CR>')
 
 -- Clean highlight search
 keymap.set('n', '<Esc><Esc>', ':nohlsearch<CR>', opts)
@@ -177,5 +172,16 @@ wk.register({
   ["<leader>i"] = {
     name = "+insert",
     d = { [[i<C-R>=strftime('%Y-%m-%d')<CR><Esc>]], "Insert Current Time" },
+  },
+  ["<leader>r"] = {
+    name = "Rails actions",
+    m = { [[<Cmd>Tmodel<CR>]], "Go to model" },
+    v = { [[<Cmd>Tview<CR>]], "Go to view" },
+    c = { [[<Cmd>Tcontroller<CR>]], "Go to controller" },
+  },
+  ["<leader>s"] = {
+    name = "Sideways",
+    h = { [[<Cmd>SidewaysLeft<CR>]], "Move args to left" },
+    l = { [[<Cmd>SidewaysRight<CR>]], "Move args to right" },
   },
 })
