@@ -104,7 +104,7 @@ local class_name = s(
 -- Use state
 
 local use_state = s(
-  "uses",
+  "us",
   fmt([[
     const [{}, {}] = useState<{}>({});
   ]],
@@ -118,7 +118,7 @@ local use_state = s(
 )
 
 local use_effect = s(
-  "usee",
+  "ue",
   fmt([[
     useEffect(() => {{
       {}

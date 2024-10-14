@@ -80,7 +80,7 @@ local use_state = s(
 local use_effect = s(
   "usee",
   fmt([[
-    React.useEffect(() => {{
+    useEffect(() => {{
       {}
     }}, []);
   ]],
@@ -243,6 +243,8 @@ local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) -
 -- table.insert(snippets, normal_function)
 -- table.insert(snippets, console_log)
 table.insert(snippets, console_log_object)
+table.insert(snippets, const_function)
+table.insert(snippets, use_effect)
 
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 table.insert(autosnippets, console_log)

@@ -63,16 +63,30 @@ local class_name = s(
 
 -- Use state
 
+-- local use_state = s(
+--   "uses",
+--   fmt([[
+--     const [{}, {}] = React.useState<{}>({});
+--   ]],
+--     {
+--       i(1, ""),
+--       i(2, ""),
+--       c(3, { i(1, "TypeOf"), i(1, "") }),
+--       i(4, ""),
+--     }
+--   )
+-- )
+
+-- jotai npm
 local use_state = s(
   "uses",
   fmt([[
-    const [{}, {}] = React.useState<{}>({});
+    const [{}, {}] = useAtom({});
   ]],
     {
       i(1, ""),
       i(2, ""),
-      c(3, { i(1, "TypeOf"), i(1, "") }),
-      i(4, ""),
+      i(3, ""),
     }
   )
 )
@@ -107,7 +121,7 @@ local use_effect = s(
 local console_log = s(
   { trig = "jj", regTrig = true },
   fmt([[
-    console.log({});
+    console.log({})
   ]],
     {
       i(1, ""),
@@ -118,7 +132,7 @@ local console_log = s(
 local console_log_object = s(
   "lgo",
   fmt([[ 
-    console.log("{} :>> ", {});
+    console.log('{}: ', {})
   ]],
     {
       i(1, ""),
@@ -257,10 +271,11 @@ function {}({}) {{
 
 local function_snippet_func = s({ trig = "func" }, vim.deepcopy(function_fmt)) --}}}
 
--- table.insert(snippets, normal_function)
+table.insert(snippets, use_state)
 table.insert(snippets, console_log_object)
 table.insert(snippets, function_component)
 table.insert(snippets, const_function)
+table.insert(snippets, use_effect)
 
 table.insert(autosnippets, console_log )
 

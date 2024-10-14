@@ -4,7 +4,7 @@ return function()
         tabpages = true,
         clickable = true,
         icons = {
-        button = "",
+        button = "x",
         buffer_index = false,
         buffer_number = false,
         active_sep = '',

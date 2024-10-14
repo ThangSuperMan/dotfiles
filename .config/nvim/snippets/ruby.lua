@@ -30,6 +30,16 @@ local def = s(
   )
 )
 
+local debug = s(
+  "debug",
+  fmt([[
+    binding.pry
+  ]],
+    {
+    }
+  )
+)
+
 local print_line = s(
   { trig = "jj", regTrig = true },
   fmt([[
@@ -53,9 +63,21 @@ local print_line_with_object = s(
   )
 )
 
+local email_format = s(
+  "email",
+  fmt([[ 
+    thangphan_01@kms-technology.com 
+  ]],
+    {
+    }
+  )
+)
+
 -- Auto snippets when finished typed the whole key trigger (Regular expressions)
 table.insert(snippets, def)
 table.insert(snippets, print_line_with_object)
+table.insert(snippets, debug)
+table.insert(snippets, email_format)
 
 table.insert(autosnippets, print_line)
 -- table.insert(autosnippets, short_hand_if_statement)
