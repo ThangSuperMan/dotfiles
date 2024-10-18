@@ -1,10 +1,43 @@
+# ███████╗████████╗ █████╗ ██████╗ ███████╗██╗  ██╗██╗██████╗
+# ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔════╝██║  ██║██║██╔══██╗
+# ███████╗   ██║   ███████║██████╔╝███████╗███████║██║██████╔╝
+# ╚════██║   ██║   ██╔══██║██╔══██╗╚════██║██╔══██║██║██╔═══╝
+# ███████║   ██║   ██║  ██║██║  ██║███████║██║  ██║██║██║
+# ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝
+# The minimal, blazing-fast, and infinitely customizable prompt
+# https://starship.rs
+
+
 [character]
-success_symbol = "[](bold green)"
-error_symbol = "[](bold red)"
-vicmd_symbol = "[](bold green)"
+vicmd_symbol = "V"
+
+[golang]
+format = '[ ](bold cyan)'
+
+[nix_shell]
+symbol = '❄️'
+impure_msg = ''
+
+# [nodejs]
+# symbol = "⬢ "
 
 [directory]
 style = "blue bold"
+
+[package]
+disabled = true
+
+[username]
+disabled = true
+
+[hostname]
+disabled = true
+
+[aws]
+disabled = true
+
+[docker_context]
+disabled = true
 
 [git_branch]
 disabled = true
@@ -21,11 +54,5 @@ disabled = true
 [git_status]
 disabled = true
 
-[dart]
-symbol = " "
-
-[nodejs]
-symbol = "⬢ "
-
-[java]
-symbol = "java "
+[vagrant]
+disabled = true
