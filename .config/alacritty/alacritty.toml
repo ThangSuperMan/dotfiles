@@ -1,0 +1,261 @@
+live_config_reload = true
+
+[mouse]
+hide_when_typing = true
+
+[[mouse.bindings]]
+action = "PasteSelection"
+mouse = "Middle"
+
+[selection]
+save_to_clipboard = false
+semantic_escape_chars = ",│`|:\"' ()[]{}<>"
+
+[window]
+decorations = "buttonless"
+dynamic_padding = false
+opacity = 1
+startup_mode = "Windowed"
+
+[window.padding]
+x = 8
+y = 8
+
+[colors]
+draw_bold_text_with_bright_colors = false
+
+[colors.primary]
+background = "#eff1f5"
+foreground = "#4c4f69"
+dim_foreground = "#8c8fa1"
+bright_foreground = "#4c4f69"
+
+[colors.cursor]
+text = "#eff1f5"
+cursor = "#dc8a78"
+
+[colors.vi_mode_cursor]
+text = "#eff1f5"
+cursor = "#7287fd"
+
+[colors.search.matches]
+foreground = "#eff1f5"
+background = "#6c6f85"
+
+[colors.search.focused_match]
+foreground = "#eff1f5"
+background = "#40a02b"
+
+[colors.footer_bar]
+foreground = "#eff1f5"
+background = "#6c6f85"
+
+[colors.hints.start]
+foreground = "#eff1f5"
+background = "#df8e1d"
+
+[colors.hints.end]
+foreground = "#eff1f5"
+background = "#6c6f85"
+
+[colors.selection]
+text = "#eff1f5"
+background = "#dc8a78"
+
+[colors.normal]
+black = "#bcc0cc"
+red = "#d20f39"
+green = "#40a02b"
+yellow = "#df8e1d"
+blue = "#1e66f5"
+magenta = "#ea76cb"
+cyan = "#179299"
+white = "#5c5f77"
+
+[colors.bright]
+black = "#acb0be"
+red = "#d20f39"
+green = "#40a02b"
+yellow = "#df8e1d"
+blue = "#1e66f5"
+magenta = "#ea76cb"
+cyan = "#179299"
+white = "#6c6f85"
+
+[colors.dim]
+black = "#bcc0cc"
+red = "#d20f39"
+green = "#40a02b"
+yellow = "#df8e1d"
+blue = "#1e66f5"
+magenta = "#ea76cb"
+cyan = "#179299"
+white = "#5c5f77"
+
+[[colors.indexed_colors]]
+index = 16
+color = "#fe640b"
+
+[[colors.indexed_colors]]
+index = 17
+color = "#dc8a78"
+
+# Everforest dark theme
+# [colors.primary]
+# background = '#2d353b'
+# foreground = '#d3c6aa'
+
+# # Normal colors
+# [colors.normal]
+# black   = '#475258'
+# red     = '#e67e80'
+# green   = '#a7c080'
+# yellow  = '#dbbc7f'
+# blue    = '#7fbbb3'
+# magenta = '#d699b6'
+# cyan    = '#83c092'
+# white   = '#d3c6aa'
+
+# # Bright colors
+# [colors.bright]
+# black   = '#475258'
+# red     = '#e67e80'
+# green   = '#a7c080'
+# yellow  = '#dbbc7f'
+# blue    = '#7fbbb3'
+# magenta = '#d699b6'
+# cyan    = '#83c092'
+# white   = '#d3c6aa'
+
+[cursor]
+style = "Block"
+unfocused_hollow = true
+blink_interval = 750
+thickness = 0.15
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 16
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+# [font.bold]
+# family = "GohuFont 14 Nerd Font Mono"
+# style = "Bold"
+
+# [font.italic]
+# family = "GohuFont 14 Nerd Font Mono"
+# style = "Italic"
+
+# [font.normal]
+# family = "GohuFont 14 Nerd Font Mono"
+# style = "Regular"
+
+[font.bold]
+family = "VictorMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "VictorMono Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "VictorMono Nerd Font"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 0
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "V"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "C"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002,"
+key = "Comma"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002%"
+key = "N"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002g"
+key = "G"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002:"
+key = "Semicolon"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002K"
+key = "K"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = """
+:q
+"""
+key = "Q"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002\""
+key = "N"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002n"
+key = "Tab"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = "\u0002[/"
+key = "F"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0002n"
+key = "RBracket"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = """
+\u001B:w
+"""
+key = "S"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002c"
+key = "T"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002x"
+key = "W"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "ResetFontSize"
+key = "R"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0002z"
+key = "Z"
+mods = "Command"
